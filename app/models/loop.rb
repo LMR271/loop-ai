@@ -1,4 +1,4 @@
 class Loop < ApplicationRecord
   belongs_to :user
-  belongs_to :insight
+  has_one :insight
 end

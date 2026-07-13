@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_13_154522) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_13_154523) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -25,22 +25,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_13_154522) do
 
   create_table "insights", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.bigint "loop_id", null: false
     t.string "sentiment"
     t.text "summary"
     t.datetime "updated_at", null: false
+    t.index ["loop_id"], name: "index_insights_on_loop_id"
   end
 
   create_table "loops", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
-    t.bigint "insight_id"
     t.string "logo_url"
     t.string "name"
     t.string "slug"
     t.integer "status", default: 0
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["insight_id"], name: "index_loops_on_insight_id"
     t.index ["slug"], name: "index_loops_on_slug", unique: true
     t.index ["user_id"], name: "index_loops_on_user_id"
   end
@@ -68,7 +68,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_13_154522) do
   end
 
   add_foreign_key "feedbacks", "loops"
-  add_foreign_key "loops", "insights"
+  add_foreign_key "insights", "loops"
   add_foreign_key "loops", "users"
   add_foreign_key "questions", "loops"
 end

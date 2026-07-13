@@ -10,14 +10,55 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_13_150856) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_13_154522) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "loop_id", null: false
+    t.string "respondent_email"
+    t.text "transcript"
+    t.datetime "updated_at", null: false
+    t.index ["loop_id"], name: "index_feedbacks_on_loop_id"
+  end
+
+  create_table "insights", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "sentiment"
+    t.text "summary"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "loops", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.bigint "insight_id"
+    t.string "logo_url"
+    t.string "name"
+    t.string "slug"
+    t.integer "status", default: 0
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["insight_id"], name: "index_loops_on_insight_id"
+    t.index ["slug"], name: "index_loops_on_slug", unique: true
+    t.index ["user_id"], name: "index_loops_on_user_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.bigint "loop_id", null: false
+    t.integer "position"
+    t.datetime "updated_at", null: false
+    t.index ["loop_id"], name: "index_questions_on_loop_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "name"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
@@ -25,4 +66,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_13_150856) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "feedbacks", "loops"
+  add_foreign_key "loops", "insights"
+  add_foreign_key "loops", "users"
+  add_foreign_key "questions", "loops"
 end

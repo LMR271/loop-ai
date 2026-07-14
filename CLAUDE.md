@@ -4,9 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-**loop-ai** — a Rails 8.1 app for collecting and analyzing feedback via "loops". A `User` owns `Loop`s; each loop has ordered `Question`s, collects `Feedback` (respondent transcripts), and produces an `Insight` (sentiment + summary). The AI angle — turning raw feedback transcripts into insights — is the focus of active work (branch `feature/lennart-ai-agent-research`).
+**loop-ai** — a Rails 8.1 app for collecting and analyzing feedback via "loops". A `User` owns `Loop`s; each loop has ordered `Question`s, collects `Feedback` (respondent transcripts), and produces an `Insight` (sentiment + summary). The AI angle — provisioning a voice agent per loop, then turning raw feedback transcripts into insights — is the focus of active work (current branch `feature/lennart-agent-creator`).
 
-The app is early-stage scaffolding. `resources :loops` is routed and `LoopsController` has `new`/`create` stubs; the `Questions`, `Feedbacks`, and `Insights` controllers are still empty with no routes. Expect to build out controllers, actions, and views from scratch. A `loops.agent_id` (string) column has been added to associate each loop with an AI agent — the anchor for the feedback-to-insight work on `feature/lennart-ai-agent-research`.
+Working parts today: `LoopsController` is a full CRUD (`index`/`new`/`create`/`edit`/`update`/`destroy`) plus an `activate` member action that provisions the loop's ElevenLabs voice agent; `AnalyseController` (`index` + `show`) renders a feedback-review dashboard, selecting a loop by `slug`. The `Questions`, `Feedbacks`, and `Insights` controllers are still empty class bodies with no routes — build them out as needed. A `loops.agent_id` (string) column holds the ElevenLabs agent ID and is set on activation (see below); it's the anchor for the feedback-to-insight work. API keys come via `.env` (`dotenv-rails` present); `ELEVENLABS_API_KEY` is expected there.
+
+**AI / agent work (branch `feature/lennart-agent-creator`)**: the loop-respondent side targets ElevenLabs conversational agents, wired end-to-end for *provisioning*:
+- `app/services/system_prompt_builder.rb` (`SystemPromptBuilder.new(loop).call`) turns a `Loop`'s `description` (Goal) and `Question`s ordered by `position` (numbered list) into an ElevenLabs system-prompt string plus a fixed Rules block. String-only, no HTTP.
+- `app/services/eleven_labs_agent_creator.rb` (`ElevenLabsAgentCreator.new(loop).call`) POSTs to the ElevenLabs `convai/agents/create` API (via the `rest-client` gem) using that prompt, and returns the new `agent_id`. It has a request timeout and wraps every failure (HTTP error, timeout, unreachable host, missing key, missing `agent_id`) in a single `ElevenLabsAgentCreator::Error` with a readable message.
+- `LoopsController#activate` (`POST /loops/:id/activate`) is the trigger. Design decisions baked in: **provision on activation only** (not on create/edit — no surprise API calls), **create-once** (guarded — skips the call if the loop is already `active` or already has an `agent_id`, so no duplicate agents), and **synchronous** (calls inline and flashes success/error immediately rather than a background job). On success it sets `agent_id` + `status: :active`; on failure the loop stays `draft` with an error flash. The edit view shows an "Activate" button (draft) or an "Active" badge (active). Full design in `docs/superpowers/specs/2026-07-14-activate-loop-provision-agent-design.md`.
+
+Not built yet (deferred, in rough order): the **public respondent flow** (a page where people talk to the agent — nothing public exists, auth is global), **ingesting transcripts** back as `Feedback` (webhook), **generating `Insight`s** from transcripts (LLM), and **re-sync** (pushing question edits to an already-active agent — currently the live prompt drifts after activation).
 
 ## Commands
 
@@ -15,7 +22,7 @@ Ruby 3.3.5, Rails 8.1, PostgreSQL. Use the `bin/` wrappers.
 ```bash
 bin/setup                 # install deps, prepare DB, boot (--skip-server to skip boot)
 bin/dev                   # run the dev server (alias for bin/rails server)
-bin/rails db:seed:replant # wipe and reseed (seeds.rb is currently empty)
+bin/rails db:seed:replant # wipe and reseed (db/seeds.rb: founder user + sample loops)
 
 bin/rails test                              # run all tests (Minitest)
 bin/rails test test/models/loop_test.rb     # single file
@@ -33,11 +40,15 @@ bin/ci                    # run the full CI pipeline locally (see config/ci.rb)
 ## Architecture notes
 
 - **Auth**: Devise (`:database_authenticatable, :registerable, :recoverable, :rememberable, :validatable`). `ApplicationController` enforces `authenticate_user!` globally — each new controller is authenticated by default; use `skip_before_action :authenticate_user!` for public actions (as `PagesController#home` does).
-- **Loop.slug** has a unique index — expect slug-based public URLs (`/loops/:slug`) for respondents. `Loop.status` is an `enum :status, { draft: 0, on_air: 1 }` (integer column, default 0). `Loop` also declares `accepts_nested_attributes_for :questions, allow_destroy: true`, so loop forms manage their ordered questions inline.
+- **Loop.slug** is generated by `has_secure_token :slug` (unique index) and is the lookup key for the analyse dashboard (`/analyse/:slug`, routed but auth-gated — there is no public respondent flow yet). `Loop.status` is `enum :status, { draft: 0, active: 1, closed: 2 }` (integer column, default 0); loops start `draft` and are flipped to `active` by `LoopsController#activate` once their voice agent is provisioned (`closed` is not used yet). `Loop` also declares `accepts_nested_attributes_for :questions, allow_destroy: true` with a `reject_if` that drops blank new questions, so loop forms manage their ordered `Question`s (ordered by `position`) inline. `questions_form_controller.js` (Stimulus) drives add/remove/reorder of question fields client-side, setting `position` and toggling `_destroy`.
+- **Routes**: `config/routes.rb` has a single `resources :loops` block with a `member { post :activate }` route (`activate_loop_path`). (It previously declared `resources :loops` twice — now consolidated.)
+- **Seeds**: `db/seeds.rb` is populated (a founder user + example loops/questions/feedback) and idempotent; `db:seed:replant` wipes and reloads it.
 - **Frontend**: importmap-rails + Turbo + Stimulus (no Node build). Stimulus controllers live in `app/javascript/controllers/`. Styling is Bootstrap 5.3 + Font Awesome via `sassc-rails`; SCSS is organized under `app/assets/stylesheets/{config,components,pages}` and imported through `application.scss`. Forms use `simple_form`.
 - **Background/infra**: Solid Queue (jobs), Solid Cache, Solid Cable — all database-backed, no Redis. Relevant when adding async work (e.g. generating insights from feedback). Separate schemas: `db/queue_schema.rb`, `db/cache_schema.rb`, `db/cable_schema.rb`.
 - **Deploy**: Kamal (Docker) via `config/deploy.yml` and `.kamal/`; Thruster fronts Puma in the container.
 
 ## Conventions
 
-`.rubocop.yml` (omakase) disables `Style/StringLiterals` and `Style/FrozenStringLiteralComment` and sets line length to 120. Match surrounding style; run `bin/rubocop` before committing.
+`.rubocop.yml` is a **custom** config (not rubocop-rails-omakase, despite `bin/rubocop` pulling omakase in) with `NewCops: enable`. It excludes `test/`, `config/`, `db/`, `bin/`, and a few others; disables `Style/StringLiterals`, `Style/FrozenStringLiteralComment`, `Metrics/AbcSize`, `Metrics/CyclomaticComplexity`, and several other cops; and sets line length to 120. Note `Metrics/MethodLength` (max 10) and `Metrics/ClassLength` (max 100) **are** on — keep methods short. The repo is not currently offense-free (`app/controllers/analyse_controller.rb` has pre-existing offenses); avoid adding new ones. Match surrounding style; run `bin/rubocop` before committing.
+
+**Testing gotcha**: the bundled minitest (6.x) ships no `Mock`/`stub`, and no mocking gem is installed. `test/test_helper.rb` provides a small `stub_instance_method(klass, name, replacement) { ... }` helper (swap-and-restore) for stubbing at a seam — use it (e.g. stub `ElevenLabsAgentCreator#call` or its private `#post`) rather than reaching for `.stub`.

@@ -96,4 +96,63 @@ class LoopsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :not_found
   end
+
+  test "activating a draft loop with questions provisions an agent and marks it active" do
+    loop = @user.loops.create!(name: "Ready to launch")
+    loop.questions.create!(body: "What did you think?", position: 1)
+
+    stub_instance_method(ElevenLabsAgentCreator, :call, ->(*) { "agent_test_123" }) do
+      post activate_loop_path(loop)
+    end
+
+    assert_redirected_to edit_loop_path(loop)
+    loop.reload
+    assert loop.active?
+    assert_equal "agent_test_123", loop.agent_id
+  end
+
+  test "activating a loop with no questions is blocked and makes no API call" do
+    loop = @user.loops.create!(name: "No questions yet")
+    called = false
+
+    stub_instance_method(ElevenLabsAgentCreator, :call, ->(*) { called = true }) do
+      post activate_loop_path(loop)
+    end
+
+    assert_not called, "should not create an agent"
+    assert_redirected_to edit_loop_path(loop)
+    loop.reload
+    assert loop.draft?
+    assert_nil loop.agent_id
+  end
+
+  test "activating an already-active loop does not create a second agent" do
+    loop = @user.loops.create!(name: "Already live", status: :active, agent_id: "existing_agent")
+    loop.questions.create!(body: "Still here?", position: 1)
+    called = false
+
+    stub_instance_method(ElevenLabsAgentCreator, :call, ->(*) { called = true }) do
+      post activate_loop_path(loop)
+    end
+
+    assert_not called, "should not create a second agent"
+    assert_redirected_to edit_loop_path(loop)
+    assert_equal "existing_agent", loop.reload.agent_id
+  end
+
+  test "a failed agent creation leaves the loop draft with an error flash" do
+    loop = @user.loops.create!(name: "Will fail")
+    loop.questions.create!(body: "Anything?", position: 1)
+    failing = ->(*) { raise ElevenLabsAgentCreator::Error, "boom" }
+
+    stub_instance_method(ElevenLabsAgentCreator, :call, failing) do
+      post activate_loop_path(loop)
+    end
+
+    assert_redirected_to edit_loop_path(loop)
+    assert_match(/Couldn't create agent/, flash[:alert])
+    loop.reload
+    assert loop.draft?
+    assert_nil loop.agent_id
+  end
 end

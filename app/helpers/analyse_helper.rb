@@ -8,4 +8,12 @@ module AnalyseHelper
     else "last 30 days"
     end
   end
+
+  def chart_title(chart_view)
+    case chart_view
+    when "cumulative" then "Cumulative feedback"
+    when "day_of_week" then "Responses by day of week"
+    else "Feedback volume"
+    end
+  end
 end

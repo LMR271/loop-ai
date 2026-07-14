@@ -1,0 +1,47 @@
+<%= form_with model: loop, data: { controller: "questions-form" } do |form| %>
+  <% if loop.errors.any? %>
+    <div class="alert alert-danger">
+      <%= loop.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", autofocus: true, required: true %>
+  </div>
+
+  <div class="mb-5">
+    <%= form.label :description, "What do you want feedback on?", class: "form-label" %>
+    <%= form.text_area :description, class: "form-control", rows: 4,
+          placeholder: "Describe the product, decision, or experience you want to understand." %>
+  </div>
+
+  <section aria-labelledby="questions-heading">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h2 id="questions-heading" class="h4 mb-1">Conversation questions</h2>
+        <p class="text-muted mb-0">These guide the feedback conversation. Use the arrows to set their order.</p>
+      </div>
+      <button type="button" class="btn btn-outline-primary" data-action="questions-form#add">Add question</button>
+    </div>
+
+    <div data-questions-form-target="list">
+      <%= form.fields_for :questions do |question_fields| %>
+        <%= render "question_fields", question_fields: question_fields %>
+      <% end %>
+    </div>
+
+    <template data-questions-form-target="template">
+      <%= form.fields_for :questions, Question.new, child_index: "NEW_RECORD" do |question_fields| %>
+        <%= render "question_fields", question_fields: question_fields %>
+      <% end %>
+    </template>
+  </section>
+
+  <div class="mt-4 d-flex gap-2">
+    <%= form.submit loop.persisted? ? "Save changes" : "Create loop", class: "btn btn-primary" %>
+    <% if loop.persisted? %>
+      <%= link_to "Cancel", edit_loop_path(loop), class: "btn btn-outline-secondary" %>
+    <% end %>
+  </div>
+<% end %>

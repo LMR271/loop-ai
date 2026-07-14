@@ -1,32 +1,91 @@
 class AnalyseController < ApplicationController
   RANGES = %w[24h 7d 14d 30d custom].freeze
+  CHART_TYPES = %w[bar line].freeze
+  DATA_VIEWS = %w[volume day_of_week cumulative].freeze
+  SORTS = %w[newest name feedback_count].freeze
+  TABS = %w[all_loops per_loop].freeze
 
   def index
     @loops = current_user.loops
     @loop = current_user.loops.order(created_at: :desc).first
-    load_loop_data
+    load_shared_data
     render :show
   end
 
   def show
     @loops = current_user.loops
     @loop = current_user.loops.find_by!(slug: params[:slug])
-    load_loop_data
+    load_shared_data
   end
 
   private
 
-  def load_loop_data
+  def load_shared_data
+    @active_tab = params[:tab].presence_in(TABS) || "per_loop"
     @range = params[:range].presence_in(RANGES) || "30d"
     @from, @to = range_bounds(@range)
 
+    load_per_loop_data
+    load_all_loops_data
+  end
+
+  def load_per_loop_data
+    @chart_type = params[:chart_type].presence_in(CHART_TYPES) || "bar"
+    @data_view = params[:data_view].presence_in(DATA_VIEWS) || "volume"
+
     scoped_feedbacks = @loop ? @loop.feedbacks.where(created_at: @from..@to) : Feedback.none
     @feedbacks = scoped_feedbacks.order(created_at: :desc)
-    @feedback_counts_by_day = if (@to - @from) <= 1.day
+    @feedback_counts_by_day = feedback_counts_by_period(scoped_feedbacks)
+    @day_of_week_counts = scoped_feedbacks.group_by_day_of_week(:created_at, format: "%A").count
+    @active_chart_data = active_chart_data
+  end
+
+  def active_chart_data
+    case @data_view
+    when "day_of_week" then @day_of_week_counts
+    when "cumulative" then cumulative(@feedback_counts_by_day)
+    else @feedback_counts_by_day
+    end
+  end
+
+  def load_all_loops_data
+    @loop_feedback_counts = loop_feedback_counts
+
+    @status_filter = params[:status_filter].presence_in(status_filters) || "all"
+    @sort = params[:sort].presence_in(SORTS) || "newest"
+
+    loops = current_user.loops.includes(:feedbacks)
+    loops = loops.where(status: @status_filter) unless @status_filter == "all"
+    @loops_table = sort_loops(loops)
+  end
+
+  def sort_loops(loops)
+    case @sort
+    when "name" then loops.order(:name)
+    when "feedback_count" then loops.sort_by { |loop_record| -loop_record.feedbacks.size }
+    else loops.order(created_at: :desc)
+    end
+  end
+
+  def status_filters
+    %w[all] + Loop.statuses.keys
+  end
+
+  def feedback_counts_by_period(scoped_feedbacks)
+    if (@to - @from) <= 1.day
       scoped_feedbacks.group_by_hour(:created_at, range: @from..@to).count
     else
       scoped_feedbacks.group_by_day(:created_at, range: @from..@to).count
     end
+  end
+
+  def loop_feedback_counts
+    @loops.to_h { |loop_record| [loop_record.name, loop_record.feedbacks.where(created_at: @from..@to).count] }
+  end
+
+  def cumulative(counts_by_period)
+    running_total = 0
+    counts_by_period.transform_values { |count| running_total += count }
   end
 
   def range_bounds(range)

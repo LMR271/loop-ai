@@ -1,95 +1,228 @@
 <% content_for :title, "Analyse" %>
 
 <div class="container py-4">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Analyse</h1>
-
-    <% if @loops.any? %>
-      <div style="min-width: 260px;">
-        <select class="form-select" onchange="if (this.value) { window.location.href = this.value }">
-          <% @loops.each do |loop_record| %>
-            <option value="<%= analyse_path(loop_record.slug, range: @range, from: params[:from], to: params[:to]) %>" <%= "selected" if @loop && loop_record.id == @loop.id %>>
-              <%= loop_record.name %>
-            </option>
-          <% end %>
-        </select>
-      </div>
-    <% end %>
-  </div>
+  <h1 class="mb-4">Analyse</h1>
 
   <% if @loop.nil? %>
     <div class="alert alert-secondary">
       You don't have any loops yet. Create one to start collecting feedback.
     </div>
   <% else %>
-    <h2 class="mb-4">Overview of #<%= @loop.name %></h2>
+    <% chart_options = {
+         colors: ["#0D6EFD"],
+         suffix: " responses",
+         library: {
+           plugins: { legend: { display: false } },
+           interaction: { mode: "index", intersect: false },
+           scales: { x: { ticks: { autoSkip: true, maxRotation: 45, minRotation: 0 } } }
+         }
+       } %>
 
-    <%= form_with url: analyse_path(@loop.slug), method: :get, data: { controller: "range-filter" }, class: "d-flex flex-wrap align-items-end gap-3 mb-4" do %>
-      <div>
-        <label class="form-label small text-muted mb-1" for="range-select">Date range</label>
-        <select name="range" id="range-select" class="form-select" data-range-filter-target="select" data-action="change->range-filter#toggle">
-          <option value="24h" <%= "selected" if @range == "24h" %>>Last 24 hours</option>
-          <option value="7d" <%= "selected" if @range == "7d" %>>Last 7 days</option>
-          <option value="14d" <%= "selected" if @range == "14d" %>>Last 14 days</option>
-          <option value="30d" <%= "selected" if @range == "30d" %>>Last 30 days</option>
-          <option value="custom" <%= "selected" if @range == "custom" %>>Custom range</option>
-        </select>
-      </div>
+    <ul class="nav nav-tabs mb-4" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link <%= "active" if @active_tab == "all_loops" %>" data-bs-toggle="tab" data-bs-target="#all-loops-pane" type="button" role="tab">All loops</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link <%= "active" if @active_tab == "per_loop" %>" data-bs-toggle="tab" data-bs-target="#per-loop-pane" type="button" role="tab">Per-loop overview</button>
+      </li>
+    </ul>
 
-      <div class="<%= "d-none" unless @range == "custom" %>" data-range-filter-target="customField">
-        <label class="form-label small text-muted mb-1" for="from-date">From</label>
-        <input type="date" name="from" id="from-date" class="form-control" value="<%= params[:from] %>">
-      </div>
-      <div class="<%= "d-none" unless @range == "custom" %>" data-range-filter-target="customField">
-        <label class="form-label small text-muted mb-1" for="to-date">To</label>
-        <input type="date" name="to" id="to-date" class="form-control" value="<%= params[:to] %>">
-      </div>
-      <div class="<%= "d-none" unless @range == "custom" %>" data-range-filter-target="customField">
-        <button type="submit" class="btn btn-outline-primary">Apply</button>
-      </div>
-    <% end %>
+    <div class="tab-content">
+      <div class="tab-pane fade <%= "show active" if @active_tab == "all_loops" %>" id="all-loops-pane" role="tabpanel">
+        <%= form_with url: analyse_path(@loop.slug), method: :get, data: { controller: "range-filter" }, class: "d-flex flex-wrap align-items-end gap-3 mb-4" do %>
+          <%= hidden_field_tag :tab, "all_loops" %>
 
-    <div class="row g-4 mb-4">
-      <div class="col-md-8">
-        <div class="border rounded p-4 h-100" style="min-height: 220px;">
-          <h3 class="h6 text-uppercase text-muted mb-3">Feedback volume (<%= range_label(@range, @from, @to) %>)</h3>
-          <% if @feedback_counts_by_day.values.sum.zero? %>
+          <div>
+            <label class="form-label small text-muted mb-1" for="all-loops-range-select">Date range</label>
+            <select name="range" id="all-loops-range-select" class="form-select" data-range-filter-target="select" data-action="change->range-filter#toggle">
+              <option value="24h" <%= "selected" if @range == "24h" %>>Last 24 hours</option>
+              <option value="7d" <%= "selected" if @range == "7d" %>>Last 7 days</option>
+              <option value="14d" <%= "selected" if @range == "14d" %>>Last 14 days</option>
+              <option value="30d" <%= "selected" if @range == "30d" %>>Last 30 days</option>
+              <option value="custom" <%= "selected" if @range == "custom" %>>Custom range</option>
+            </select>
+          </div>
+
+          <div class="<%= "d-none" unless @range == "custom" %>" data-range-filter-target="customField">
+            <label class="form-label small text-muted mb-1" for="all-loops-from-date">From</label>
+            <input type="date" name="from" id="all-loops-from-date" class="form-control" value="<%= params[:from] %>">
+          </div>
+          <div class="<%= "d-none" unless @range == "custom" %>" data-range-filter-target="customField">
+            <label class="form-label small text-muted mb-1" for="all-loops-to-date">To</label>
+            <input type="date" name="to" id="all-loops-to-date" class="form-control" value="<%= params[:to] %>">
+          </div>
+          <div class="<%= "d-none" unless @range == "custom" %>" data-range-filter-target="customField">
+            <button type="submit" class="btn btn-outline-primary">Apply</button>
+          </div>
+
+          <div>
+            <label class="form-label small text-muted mb-1" for="status-filter-select">Status</label>
+            <select name="status_filter" id="status-filter-select" class="form-select" data-action="change->range-filter#submit">
+              <option value="all" <%= "selected" if @status_filter == "all" %>>All statuses</option>
+              <% Loop.statuses.each_key do |status| %>
+                <option value="<%= status %>" <%= "selected" if @status_filter == status %>><%= status.capitalize %></option>
+              <% end %>
+            </select>
+          </div>
+
+          <div>
+            <label class="form-label small text-muted mb-1" for="sort-select">Sort by</label>
+            <select name="sort" id="sort-select" class="form-select" data-action="change->range-filter#submit">
+              <option value="newest" <%= "selected" if @sort == "newest" %>>Newest first</option>
+              <option value="name" <%= "selected" if @sort == "name" %>>Name (A-Z)</option>
+              <option value="feedback_count" <%= "selected" if @sort == "feedback_count" %>>Most feedback first</option>
+            </select>
+          </div>
+        <% end %>
+
+        <div class="border rounded p-4 mb-4">
+          <h3 class="h6 text-uppercase text-muted mb-3">Feedback per loop (<%= range_label(@range, @from, @to) %>)</h3>
+          <% if @loop_feedback_counts.values.sum.zero? %>
             <div class="d-flex align-items-center justify-content-center text-muted" style="min-height: 160px;">
-              No feedback to chart in this range
+              No feedback across your loops in this range
             </div>
           <% else %>
-            <%= column_chart @feedback_counts_by_day,
-                  colors: ["#0D6EFD"],
-                  suffix: " responses",
-                  library: { plugins: { legend: { display: false } } } %>
+            <%= bar_chart @loop_feedback_counts, **chart_options %>
           <% end %>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="border rounded p-4 h-100 d-flex align-items-center justify-content-center text-muted" style="min-height: 220px;">
-          Summary coming soon
-        </div>
-      </div>
-    </div>
 
-    <h3 class="mb-3">Feedback</h3>
-
-    <% if @feedbacks.empty? %>
-      <div class="alert alert-light border text-center py-5">
-        <%= @loop.feedbacks.any? ? "No feedback in this range" : "No feedback yet" %>
-      </div>
-    <% else %>
-      <div class="d-flex flex-column gap-3">
-        <% @feedbacks.each do |feedback| %>
-          <div class="border rounded p-3">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <span class="fw-semibold"><%= feedback.respondent_email.presence || "Anonymous respondent" %></span>
-              <span class="text-muted small"><%= feedback.created_at.strftime("%b %d, %Y at %I:%M %p") %></span>
-            </div>
-            <p class="mb-0" style="white-space: pre-wrap;"><%= feedback.transcript %></p>
+        <% if @loops_table.empty? %>
+          <div class="alert alert-light border text-center py-4">
+            No loops match this filter
+          </div>
+        <% else %>
+          <div class="table-responsive">
+            <table class="table align-middle">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Status</th>
+                  <th>Created</th>
+                  <th>Feedback</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @loops_table.each do |loop_record| %>
+                  <tr>
+                    <td><%= link_to loop_record.name, analyse_path(loop_record.slug, tab: "per_loop") %></td>
+                    <td><span class="badge text-bg-light"><%= loop_record.status %></span></td>
+                    <td><%= loop_record.created_at.strftime("%b %d, %Y") %></td>
+                    <td><%= loop_record.feedbacks.size %></td>
+                    <td class="text-muted small"><%= truncate(loop_record.description, length: 80) %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           </div>
         <% end %>
       </div>
-    <% end %>
+
+      <div class="tab-pane fade <%= "show active" if @active_tab == "per_loop" %>" id="per-loop-pane" role="tabpanel">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="mb-0">Overview of #<%= @loop.name %></h2>
+
+          <% if @loops.any? %>
+            <div style="min-width: 260px;">
+              <select class="form-select" onchange="if (this.value) { window.location.href = this.value }">
+                <% @loops.each do |loop_record| %>
+                  <option value="<%= analyse_path(loop_record.slug, tab: @active_tab, range: @range, from: params[:from], to: params[:to], chart_type: @chart_type, data_view: @data_view) %>" <%= "selected" if @loop && loop_record.id == @loop.id %>>
+                    <%= loop_record.name %>
+                  </option>
+                <% end %>
+              </select>
+            </div>
+          <% end %>
+        </div>
+
+        <%= form_with url: analyse_path(@loop.slug), method: :get, data: { controller: "range-filter" }, class: "d-flex flex-wrap align-items-end gap-3 mb-4" do %>
+          <%= hidden_field_tag :tab, "per_loop" %>
+
+          <div>
+            <label class="form-label small text-muted mb-1" for="range-select">Date range</label>
+            <select name="range" id="range-select" class="form-select" data-range-filter-target="select" data-action="change->range-filter#toggle">
+              <option value="24h" <%= "selected" if @range == "24h" %>>Last 24 hours</option>
+              <option value="7d" <%= "selected" if @range == "7d" %>>Last 7 days</option>
+              <option value="14d" <%= "selected" if @range == "14d" %>>Last 14 days</option>
+              <option value="30d" <%= "selected" if @range == "30d" %>>Last 30 days</option>
+              <option value="custom" <%= "selected" if @range == "custom" %>>Custom range</option>
+            </select>
+          </div>
+
+          <div class="<%= "d-none" unless @range == "custom" %>" data-range-filter-target="customField">
+            <label class="form-label small text-muted mb-1" for="from-date">From</label>
+            <input type="date" name="from" id="from-date" class="form-control" value="<%= params[:from] %>">
+          </div>
+          <div class="<%= "d-none" unless @range == "custom" %>" data-range-filter-target="customField">
+            <label class="form-label small text-muted mb-1" for="to-date">To</label>
+            <input type="date" name="to" id="to-date" class="form-control" value="<%= params[:to] %>">
+          </div>
+          <div class="<%= "d-none" unless @range == "custom" %>" data-range-filter-target="customField">
+            <button type="submit" class="btn btn-outline-primary">Apply</button>
+          </div>
+
+          <div>
+            <label class="form-label small text-muted mb-1" for="chart-type-select">Chart type</label>
+            <select name="chart_type" id="chart-type-select" class="form-select" data-action="change->range-filter#submit">
+              <option value="bar" <%= "selected" if @chart_type == "bar" %>>Bar</option>
+              <option value="line" <%= "selected" if @chart_type == "line" %>>Line</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="form-label small text-muted mb-1" for="data-view-select">Data</label>
+            <select name="data_view" id="data-view-select" class="form-select" data-action="change->range-filter#submit">
+              <option value="volume" <%= "selected" if @data_view == "volume" %>>Feedback volume</option>
+              <option value="day_of_week" <%= "selected" if @data_view == "day_of_week" %>>Responses by day of week</option>
+              <option value="cumulative" <%= "selected" if @data_view == "cumulative" %>>Cumulative feedback</option>
+            </select>
+          </div>
+        <% end %>
+
+        <div class="row g-4 mb-4">
+          <div class="col-md-8">
+            <div class="border rounded p-4 h-100" style="min-height: 220px;">
+              <h3 class="h6 text-uppercase text-muted mb-3">
+                <%= chart_title(@data_view) %> (<%= range_label(@range, @from, @to) %>)
+              </h3>
+              <% if @active_chart_data.values.sum.zero? %>
+                <div class="d-flex align-items-center justify-content-center text-muted" style="min-height: 160px;">
+                  No feedback to chart in this range
+                </div>
+              <% elsif @chart_type == "line" %>
+                <%= line_chart @active_chart_data, **chart_options %>
+              <% else %>
+                <%= column_chart @active_chart_data, **chart_options %>
+              <% end %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="border rounded p-4 h-100 d-flex align-items-center justify-content-center text-muted" style="min-height: 220px;">
+              Summary coming soon
+            </div>
+          </div>
+        </div>
+
+        <h3 class="mb-3">Feedback</h3>
+
+        <% if @feedbacks.empty? %>
+          <div class="alert alert-light border text-center py-5">
+            <%= @loop.feedbacks.any? ? "No feedback in this range" : "No feedback yet" %>
+          </div>
+        <% else %>
+          <div class="d-flex flex-column gap-3">
+            <% @feedbacks.each do |feedback| %>
+              <div class="border rounded p-3">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <span class="fw-semibold"><%= feedback.respondent_email.presence || "Anonymous respondent" %></span>
+                  <span class="text-muted small"><%= feedback.created_at.strftime("%b %d, %Y at %I:%M %p") %></span>
+                </div>
+                <p class="mb-0" style="white-space: pre-wrap;"><%= feedback.transcript %></p>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 </div>

@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
-  resources :loops, only: [ :index, :destroy ]
+
+  resources :loops, only: [:index, :new, :create, :edit, :update, :destroy]
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   get "analyse", to: "analyse#index", as: :analyse_index

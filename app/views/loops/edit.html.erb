@@ -1,0 +1,7 @@
+<% content_for :title, "Edit #{@loop.name} · Loop AI" %>
+
+<main class="container py-5" style="max-width: 760px;">
+  <h1>Edit <%= @loop.name %></h1>
+  <p class="text-muted mb-4">Keep the conversation focused and in the order that makes sense.</p>
+  <%= render "form", loop: @loop %>
+</main>

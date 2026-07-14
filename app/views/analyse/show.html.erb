@@ -47,27 +47,76 @@
       <div class="<%= "d-none" unless @range == "custom" %>" data-range-filter-target="customField">
         <button type="submit" class="btn btn-outline-primary">Apply</button>
       </div>
+
+      <div>
+        <label class="form-label small text-muted mb-1" for="chart-view-select">Chart view</label>
+        <select name="chart_view" id="chart-view-select" class="form-select" data-action="change->range-filter#submit">
+          <option value="bar" <%= "selected" if @chart_view == "bar" %>>Daily (bar)</option>
+          <option value="line" <%= "selected" if @chart_view == "line" %>>Daily (line)</option>
+          <option value="cumulative" <%= "selected" if @chart_view == "cumulative" %>>Cumulative (area)</option>
+        </select>
+      </div>
     <% end %>
 
     <div class="row g-4 mb-4">
       <div class="col-md-8">
         <div class="border rounded p-4 h-100" style="min-height: 220px;">
-          <h3 class="h6 text-uppercase text-muted mb-3">Feedback volume (<%= range_label(@range, @from, @to) %>)</h3>
+          <h3 class="h6 text-uppercase text-muted mb-3">
+            <%= @chart_view == "cumulative" ? "Cumulative feedback" : "Feedback volume" %> (<%= range_label(@range, @from, @to) %>)
+          </h3>
           <% if @feedback_counts_by_day.values.sum.zero? %>
             <div class="d-flex align-items-center justify-content-center text-muted" style="min-height: 160px;">
               No feedback to chart in this range
             </div>
           <% else %>
-            <%= column_chart @feedback_counts_by_day,
-                  colors: ["#0D6EFD"],
-                  suffix: " responses",
-                  library: { plugins: { legend: { display: false } } } %>
+            <% chart_options = { colors: ["#0D6EFD"], suffix: " responses", library: { plugins: { legend: { display: false } } } } %>
+            <% case @chart_view
+            when "line" %>
+              <%= line_chart @feedback_counts_by_day, **chart_options %>
+            <% when "cumulative" %>
+              <%= area_chart @cumulative_feedback_counts, **chart_options %>
+            <% else %>
+              <%= column_chart @feedback_counts_by_day, **chart_options %>
+            <% end %>
           <% end %>
         </div>
       </div>
       <div class="col-md-4">
         <div class="border rounded p-4 h-100 d-flex align-items-center justify-content-center text-muted" style="min-height: 220px;">
           Summary coming soon
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+      <div class="col-md-6">
+        <div class="border rounded p-4 h-100" style="min-height: 220px;">
+          <h3 class="h6 text-uppercase text-muted mb-3">Responses by day of week (<%= range_label(@range, @from, @to) %>)</h3>
+          <% if @day_of_week_counts.values.sum.zero? %>
+            <div class="d-flex align-items-center justify-content-center text-muted" style="min-height: 160px;">
+              No feedback to chart in this range
+            </div>
+          <% else %>
+            <%= column_chart @day_of_week_counts,
+                  colors: ["#0D6EFD"],
+                  suffix: " responses",
+                  library: { plugins: { legend: { display: false } } } %>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="border rounded p-4 h-100" style="min-height: 220px;">
+          <h3 class="h6 text-uppercase text-muted mb-3">Feedback per loop (<%= range_label(@range, @from, @to) %>)</h3>
+          <% if @loop_feedback_counts.values.sum.zero? %>
+            <div class="d-flex align-items-center justify-content-center text-muted" style="min-height: 160px;">
+              No feedback across your loops in this range
+            </div>
+          <% else %>
+            <%= bar_chart @loop_feedback_counts,
+                  colors: ["#0D6EFD"],
+                  suffix: " responses",
+                  library: { plugins: { legend: { display: false } } } %>
+          <% end %>
         </div>
       </div>
     </div>

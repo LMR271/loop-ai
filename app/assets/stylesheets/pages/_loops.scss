@@ -1,0 +1,60 @@
+.loops-dashboard {
+  max-width: 960px;
+}
+
+.loops-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.loop-card {
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid #e7e5e4;
+  border-radius: .75rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 1.5rem;
+}
+
+.loop-card__content {
+  min-width: 0;
+}
+
+.loop-card__meta {
+  color: #78716c;
+  font-size: .875rem;
+}
+
+.loop-card__actions form {
+  margin: 0;
+}
+
+.loops-empty-state {
+  background: #fff;
+  border: 1px dashed #d6d3d1;
+  border-radius: .75rem;
+  margin: 4rem auto;
+  max-width: 580px;
+  padding: 4rem 2rem;
+}
+
+.loops-empty-state__icon {
+  align-items: center;
+  background: #eef2ff;
+  border-radius: 50%;
+  color: #4f46e5;
+  display: inline-flex;
+  font-size: 2rem;
+  height: 4rem;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  width: 4rem;
+}
+
+@media (max-width: 575px) {
+  .loop-card {
+    flex-direction: column;
+  }
+}

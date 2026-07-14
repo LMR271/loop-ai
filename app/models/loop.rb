@@ -1,9 +1,19 @@
 class Loop < ApplicationRecord
-  enum :status, { draft: 0, on_air: 1 }
-  belongs_to :user
-  has_one :insight, dependent: :destroy
-  has_many :questions, dependent: :destroy
-  has_many :feedbacks, dependent: :destroy
+  has_secure_token :slug
 
-  accepts_nested_attributes_for :questions, allow_destroy: true
+  belongs_to :user
+
+  enum :status, { draft: 0, active: 1, closed: 2 }
+
+  has_many :feedbacks, dependent: :destroy
+  has_one :insight, dependent: :destroy
+  has_many :questions, -> { order(:position, :id) }, dependent: :destroy
+
+  accepts_nested_attributes_for :questions,
+                                allow_destroy: true,
+                                reject_if: lambda { |attributes|
+                                  attributes["body"].blank? && attributes["id"].blank?
+                                }
+
+  validates :name, presence: true
 end

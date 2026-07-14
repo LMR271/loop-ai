@@ -1,7 +1,99 @@
 require "test_helper"
 
 class LoopsControllerTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
+  include Devise::Test::IntegrationHelpers
+
+  setup do
+    @user = User.create!(email: "founder@example.com", password: "password123")
+    sign_in @user
+  end
+
+  test "index only shows the signed-in user's loops" do
+    own_loop = @user.loops.create!(name: "Customer interviews")
+    other_user = User.create!(email: "other@example.com", password: "password123")
+    other_user.loops.create!(name: "Private loop")
+
+    get loops_path
+
+    assert_response :success
+    assert_select "h2", text: own_loop.name
+    assert_select "h2", text: "Private loop", count: 0
+    assert_select "a[href='#{new_loop_path}']", text: "New Loop", count: 1
+  end
+
+  test "deleting a loop also deletes its associated records" do
+    loop = @user.loops.create!(name: "Old research")
+    loop.feedbacks.create!(transcript: "A response")
+    loop.questions.create!(body: "What helped?")
+    loop.create_insight!(summary: "Useful")
+
+    assert_difference("Loop.count", -1) do
+      delete loop_path(loop)
+    end
+
+    assert_redirected_to loops_path
+    assert_equal 0, Feedback.where(loop_id: loop.id).count
+    assert_equal 0, Question.where(loop_id: loop.id).count
+    assert_equal 0, Insight.where(loop_id: loop.id).count
+  end
+
+  test "a user cannot delete another user's loop" do
+    other_user = User.create!(email: "other@example.com", password: "password123")
+    other_loop = other_user.loops.create!(name: "Private loop")
+
+    assert_no_difference("Loop.count") do
+      delete loop_path(other_loop)
+    end
+
+    assert_response :not_found
+  end
+
+  test "founder can create a loop with questions" do
+    assert_difference(["Loop.count", "Question.count"], 1) do
+      post loops_path, params: {
+        loop: {
+          name: "Onboarding research",
+          description: "Learn where new customers get stuck.",
+          questions_attributes: {
+            "0" => { body: "What did you expect when you signed up?", position: 1 }
+          }
+        }
+      }
+    end
+
+    loop = @user.loops.find_by!(name: "Onboarding research")
+    assert_redirected_to edit_loop_path(loop)
+    assert_equal "What did you expect when you signed up?", loop.questions.first.body
+  end
+
+  test "founder can edit, remove, add, and reorder questions" do
+    loop = @user.loops.create!(name: "Existing research")
+    first = loop.questions.create!(body: "First question", position: 1)
+    second = loop.questions.create!(body: "Second question", position: 2)
+
+    patch loop_path(loop), params: {
+      loop: {
+        name: "Updated research",
+        questions_attributes: {
+          "0" => { id: first.id, body: "First question, revised", position: 2 },
+          "1" => { id: second.id, _destroy: "1" },
+          "2" => { body: "New first question", position: 1 }
+        }
+      }
+    }
+
+    assert_redirected_to edit_loop_path(loop)
+    assert_equal "Updated research", loop.reload.name
+    assert_equal ["New first question", "First question, revised"], loop.questions.pluck(:body)
+    assert_equal [1, 2], loop.questions.pluck(:position)
+  end
+
+  test "founder cannot edit another user's loop" do
+    other_user = User.create!(email: "other@example.com", password: "password123")
+    other_loop = other_user.loops.create!(name: "Private research")
+
+    get edit_loop_path(other_loop)
+
+    assert_response :not_found
+  end
 end

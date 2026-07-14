@@ -41,7 +41,23 @@ class LoopsController < ApplicationController
     end
   end
 
+  def activate
+    loop = current_user.loops.find(params[:id])
+    redirect_to edit_loop_path(loop), **activation_outcome(loop)
+  end
+
   private
+
+  # Provisions the ElevenLabs agent (once) and returns the flash to show.
+  def activation_outcome(loop)
+    return { notice: "This loop is already active." } if loop.active? || loop.agent_id.present?
+    return { alert: "Add at least one question before activating." } if loop.questions.empty?
+
+    loop.update!(agent_id: ElevenLabsAgentCreator.new(loop).call, status: :active)
+    { notice: "Loop activated." }
+  rescue ElevenLabsAgentCreator::Error => e
+    { alert: "Couldn't create agent: #{e.message}" }
+  end
 
   def set_loop
     @loop = current_user.loops.includes(:questions).find(params[:id])

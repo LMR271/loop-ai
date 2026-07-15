@@ -1,0 +1,17 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - link [ref=e4] [cursor=pointer]:
+        - /url: "#"
+      - list [ref=e7]:
+        - listitem [ref=e8]:
+          - link "Login" [ref=e9] [cursor=pointer]:
+            - /url: /users/sign_in
+  - generic [ref=e10]:
+    - generic [ref=e11]:
+      - heading "Sign Up logo" [level=1] [ref=e12]
+      - paragraph [ref=e13]: Checking out if the Sign Up Page looks great
+    - generic [ref=e14]:
+      - button "🎙️ Start Interview" [ref=e15] [cursor=pointer]
+      - status
+      - paragraph [ref=e16]: 2 questions

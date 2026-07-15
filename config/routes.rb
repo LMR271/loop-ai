@@ -14,6 +14,9 @@ Rails.application.routes.draw do
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
+  get "dashboard", to: "dashboard#index", as: :dashboard
+  patch "dashboard/stat_preferences", to: "dashboard#update_stat_preferences", as: :dashboard_stat_preferences
+
   get "analyse", to: "analyse#index", as: :analyse_index
   get "analyse/:slug", to: "analyse#show", as: :analyse
 

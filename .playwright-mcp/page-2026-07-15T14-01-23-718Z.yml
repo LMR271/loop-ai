@@ -1,0 +1,69 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - button "Copy as text" [ref=e3]
+    - heading "ActiveRecord::RecordNotFound in RespondentsController#show" [level=1] [ref=e4]
+  - main [ref=e5]:
+    - generic [ref=e6]: Couldn't find Loop with [WHERE "loops"."slug" = $1]
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - text: Extracted source (around line
+        - strong [ref=e10]: "#5"
+        - text: "):"
+      - table [ref=e12]:
+        - rowgroup [ref=e13]:
+          - row [ref=e14]:
+            - cell [ref=e15]:
+              - generic [ref=e16]:
+                - link "3" [ref=e18] [cursor=pointer]:
+                  - /url: vscode://file//Users/lennartreh/code/LMR271/loop-ai/app/controllers/respondents_controller.rb:3
+                - link "4" [ref=e20] [cursor=pointer]:
+                  - /url: vscode://file//Users/lennartreh/code/LMR271/loop-ai/app/controllers/respondents_controller.rb:4
+                - link "5" [ref=e22] [cursor=pointer]:
+                  - /url: vscode://file//Users/lennartreh/code/LMR271/loop-ai/app/controllers/respondents_controller.rb:5
+                - link "6" [ref=e24] [cursor=pointer]:
+                  - /url: vscode://file//Users/lennartreh/code/LMR271/loop-ai/app/controllers/respondents_controller.rb:6
+                - link "7" [ref=e26] [cursor=pointer]:
+                  - /url: vscode://file//Users/lennartreh/code/LMR271/loop-ai/app/controllers/respondents_controller.rb:7
+                - link "8" [ref=e28] [cursor=pointer]:
+                  - /url: vscode://file//Users/lennartreh/code/LMR271/loop-ai/app/controllers/respondents_controller.rb:8
+            - 'cell "def show @loop = Loop .find_by! (slug: params[:slug]) return render :closed unless @loop.active? # checks if the loop is active before `show` renders show.html.erb end" [ref=e29]':
+              - generic [ref=e30]:
+                - generic [ref=e32]: def show
+                - generic [ref=e33]:
+                  - text: "@loop = Loop"
+                  - generic [ref=e34]: .find_by!
+                  - text: "(slug: params[:slug])"
+                - generic [ref=e35]: "return render :closed unless @loop.active? # checks if the loop is active before `show` renders show.html.erb"
+                - generic [ref=e36]: end
+    - paragraph [ref=e38]:
+      - code [ref=e39]: "Rails.root: /Users/lennartreh/code/LMR271/loop-ai"
+    - generic [ref=e40]:
+      - link "Application Trace" [ref=e41] [cursor=pointer]:
+        - /url: "#"
+      - text: "|"
+      - link "Framework Trace" [ref=e42] [cursor=pointer]:
+        - /url: "#"
+      - text: "|"
+      - link "Full Trace" [ref=e43] [cursor=pointer]:
+        - /url: "#"
+      - code [ref=e45]:
+        - generic [ref=e46]:
+          - link "✏️" [ref=e47] [cursor=pointer]:
+            - /url: vscode://file//Users/lennartreh/code/LMR271/loop-ai/app/controllers/respondents_controller.rb:5
+          - 'link "/Users/lennartreh/code/LMR271/loop-ai/app/controllers/respondents_controller.rb:5:in `show''" [ref=e48] [cursor=pointer]':
+            - /url: "#"
+    - heading "Request" [level=2] [ref=e49]
+    - paragraph [ref=e50]: "Parameters:"
+    - generic [ref=e51]: "{\"slug\"=>\"5fvo8vTmJb1excVrf2M7dWV5\"}"
+    - link "Toggle session dump" [ref=e54] [cursor=pointer]:
+      - /url: "#"
+    - link "Toggle env dump" [ref=e57] [cursor=pointer]:
+      - /url: "#"
+    - heading "Response" [level=2] [ref=e58]
+    - paragraph [ref=e59]: "Headers:"
+    - generic [ref=e60]: None
+  - generic [ref=e61]:
+    - generic [ref=e63]:
+      - generic "close" [ref=e65] [cursor=pointer]: ×
+      - generic [ref=e66]: ">>"
+    - textbox [ref=e69]

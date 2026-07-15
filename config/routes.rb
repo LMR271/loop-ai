@@ -2,9 +2,13 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
 
+  get "i/:slug", to: "respondents#show", as: :respondent # routes of external users so they don't need to authenticate when they click on the link
+  get "i/:slug/signed_url", to: "respondents#signed_url", as: :respondent_signed_url
+
   resources :loops do
     member do
       post :activate
+      post :deactivate
     end
   end
 

@@ -8,6 +8,8 @@ class RespondentsController < ApplicationController
 
   def signed_url
     @loop = Loop.find_by!(slug: params[:slug])
+    return head :not_found unless @loop.active?
+
     url = RestClient.get("https://api.elevenlabs.io/v1/convai/conversation/get-signed-url",
                          { params: { agent_id: @loop.agent_id }, "xi-api-key" => ENV.fetch("ELEVENLABS_API_KEY", nil) })
     render json: JSON.parse(url.body)

@@ -1,7 +1,5 @@
-// Import Google fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700|Work+Sans:400,700&display=swap');
-
-// Define fonts for body and headers
+// The font is loaded once from the application layout, which also preconnects to
+// Google Fonts. These variables configure both Bootstrap and application styles.
 $body-font: "Atkinson Hyperlegible Next", sans-serif;
 $headers-font: "Atkinson Hyperlegible Next", sans-serif;
 

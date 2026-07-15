@@ -7,6 +7,9 @@
 @import "bootstrap";
 @import "font-awesome";
 
+// Application typography must follow Bootstrap so our font family wins in the cascade.
+@import "config/typography";
+
 // Your CSS partials
 @import "components/index";
 @import "pages/index";

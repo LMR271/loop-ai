@@ -1,4 +1,6 @@
 class Loop < ApplicationRecord
+  include PgSearch::Model
+
   has_secure_token :slug
 
   belongs_to :user
@@ -16,4 +18,13 @@ class Loop < ApplicationRecord
                                 }
 
   validates :name, presence: true
+
+  pg_search_scope :search_by_name_and_description,
+                  against: {
+                    name: "A",
+                    description: "B"
+                  },
+                  using: {
+                    tsearch: { prefix: true }
+                  }
 end

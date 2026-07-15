@@ -2,7 +2,9 @@ class LoopsController < ApplicationController
   before_action :set_loop, only: %i[edit update]
 
   def index
+    @query = params[:q].to_s.strip
     @loops = current_user.loops.includes(:feedbacks).order(created_at: :desc)
+    @loops = @loops.search_by_name_and_description(@query) if @query.present?
   end
 
   def destroy

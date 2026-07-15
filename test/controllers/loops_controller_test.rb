@@ -18,7 +18,22 @@ class LoopsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "h2", text: own_loop.name
     assert_select "h2", text: "Private loop", count: 0
-    assert_select "a[href='#{new_loop_path}']", text: "New Loop", count: 1
+    assert_select "a[href='#{new_loop_path}']", text: "New Loop", count: 2
+  end
+
+  test "index searches the signed-in user's loops by name and description" do
+    matching_loop = @user.loops.create!(name: "Onboarding interviews", description: "New user experience")
+    @user.loops.create!(name: "Pricing research", description: "Subscription plans")
+    other_user = User.create!(email: "other@example.com", password: "password123")
+    other_user.loops.create!(name: "Private onboarding", description: "Must not be searchable")
+
+    get loops_path, params: { q: "onboard" }
+
+    assert_response :success
+    assert_select "h2", text: matching_loop.name
+    assert_select "h2", text: "Pricing research", count: 0
+    assert_select "h2", text: "Private onboarding", count: 0
+    assert_select "input[name='q'][value='onboard']", count: 1
   end
 
   test "deleting a loop also deletes its associated records" do

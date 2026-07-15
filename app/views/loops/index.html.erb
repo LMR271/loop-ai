@@ -1,11 +1,11 @@
 <% content_for :title, "Your loops · Loop AI" %>
 
-<main class="loops-dashboard container py-5">
+<section class="loops-dashboard">
   <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-5">
     <div>
-      <p class="text-uppercase text-muted fw-semibold small mb-1">Workspace</p>
-      <h1 class="mb-1">Your loops</h1>
-      <p class="text-muted mb-0">Review feedback activity and remove loops you no longer need.</p>
+      <p class="text-uppercase text-muted fw-semibold small mb-1">Feedback loops</p>
+      <h1 class="mb-1"><%= @query.present? ? "Search results" : "Your loops" %></h1>
+      <p class="text-muted mb-0"><%= @query.present? ? "Results for “#{@query}”" : "Review feedback activity and remove loops you no longer need." %></p>
     </div>
     <%= link_to "New Loop", new_loop_path, class: "btn btn-primary btn-lg" %>
   </div>
@@ -37,9 +37,9 @@
   <% else %>
     <section class="loops-empty-state text-center" aria-labelledby="empty-loops-heading">
       <div class="loops-empty-state__icon" aria-hidden="true">↻</div>
-      <h2 id="empty-loops-heading">No loops yet</h2>
-      <p class="text-muted mb-4">Create your first loop to start collecting and understanding customer feedback.</p>
-      <%= link_to "New Loop", new_loop_path, class: "btn btn-primary" %>
+      <h2 id="empty-loops-heading"><%= @query.present? ? "No matching loops" : "No loops yet" %></h2>
+      <p class="text-muted mb-4"><%= @query.present? ? "Try a different search term." : "Create your first loop to start collecting and understanding customer feedback." %></p>
+      <%= link_to(@query.present? ? "Clear search" : "New Loop", @query.present? ? loops_path : new_loop_path, class: "btn btn-primary") %>
     </section>
   <% end %>
-</main>
+</section>

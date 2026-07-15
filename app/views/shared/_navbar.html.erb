@@ -1,35 +1,49 @@
-<nav class="navbar navbar-expand-sm navbar-light navbar-lewagon">
-  <div class="container-fluid">
-    <%= link_to "#", class: "navbar-brand" do %>
-      <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
+<nav class="app-navbar navbar" aria-label="Workspace actions">
+  <% unless user_signed_in? %>
+    <%= link_to root_path, class: "app-navbar__brand", aria: { label: "Loop AI home" } do %>
+      <%= image_tag "lightbulb.svg",
+            alt: "LoopAI",
+            class: "app-navbar__logo" %>
     <% end %>
+  <% end %>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <% if user_signed_in? %>
+    <div class="app-navbar__actions">
+      <%= form_with url: loops_path, method: :get, class: "app-search", role: "search" do |form| %>
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <%= form.search_field :q,
+              value: params[:q],
+              class: "form-control",
+              placeholder: "Search loops",
+              aria: { label: "Search loops" } %>
+      <% end %>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto">
-        <% if user_signed_in? %>
-          <li class="nav-item active">
-            <%= link_to "Loops", loops_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item dropdown">
-          <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
-          </a>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <%= link_to "Action", "#", class: "dropdown-item" %>
-              <%= link_to "Another action", "#", class: "dropdown-item" %>
-              <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
-            </div>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
-          </li>
+      <button type="button" class="btn app-alert-button" aria-label="Notifications">
+        <i class="fa-regular fa-bell" aria-hidden="true"></i>
+      </button>
+
+      <% unless current_page?(new_loop_path) %>
+        <%= link_to new_loop_path, class: "app-new-loop-button" do %>
+          <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          <span>New Loop</span>
         <% end %>
-      </ul>
+      <% end %>
+
+      <div class="dropdown">
+        <button class="btn app-user-menu" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Open account menu">
+          <i class="fa-regular fa-circle-user" aria-hidden="true"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end app-user-menu__dropdown" aria-labelledby="userMenu">
+          <li><%= link_to "Account settings", edit_user_registration_path, class: "dropdown-item" %></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %></li>
+        </ul>
+      </div>
     </div>
-  </div>
+  <% else %>
+    <div class="app-navbar__actions public-navbar__actions">
+      <%= link_to "Log in", new_user_session_path, class: "btn app-login-button" %>
+      <%= link_to "Sign up", new_user_registration_path, class: "app-new-loop-button" %>
+    </div>
+  <% end %>
 </nav>

@@ -23,9 +23,40 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body><%= render "shared/navbar" %>
-<%= render "shared/flashes" %>
+<body>
+  <%= render "shared/flashes" %>
 
-    <%= yield %>
-  </body>
+  <% if user_signed_in? %>
+    <div class="app-shell">
+
+      <div class="app-sidebar-column">
+
+        <%= link_to root_path, class: "app-logo", aria: { label: "Loop AI home" } do %>
+          <%= image_tag "lightbulb.svg", alt: "LoopAI", class: "app-logo__image" %>
+        <% end %>
+
+        <%= render "shared/sidebar" %>
+
+      </div>
+
+      <div class="app-main">
+
+        <%= render "shared/navbar" %>
+
+        <main class="app-content">
+          <%= yield %>
+        </main>
+
+      </div>
+
+    </div>
+  <% else %>
+    <div class="public-shell">
+      <%= render "shared/navbar" %>
+      <main class="app-public-content">
+        <%= yield %>
+      </main>
+    </div>
+  <% end %>
+</body>
 </html>

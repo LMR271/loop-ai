@@ -18,6 +18,9 @@
             <div class="d-flex align-items-center gap-2 mb-2">
               <h2 class="h4 mb-0"><%= loop.name.presence || "Untitled loop" %></h2>
               <span class="badge text-bg-light"><%= loop.status.presence || "draft" %></span>
+              <% if loop.pending_approval? %>
+                <span class="badge text-bg-warning">Pending approval</span>
+              <% end %>
             </div>
             <% if loop.description.present? %>
               <p class="text-muted mb-3"><%= loop.description %></p>
@@ -27,9 +30,14 @@
             </p>
           </div>
           <div class="loop-card__actions">
-            <%= button_to "Delete", loop_path(loop), method: :delete,
-                  class: "btn btn-outline-danger",
-                  form: { data: { turbo_confirm: "Delete #{loop.name.presence || "this loop"}? This also removes its feedback and questions." } } %>
+            <% if current_user_workspace_admin? && loop.pending_approval? %>
+              <%= button_to "Approve", approve_loop_path(loop), method: :post, class: "btn btn-outline-success" %>
+            <% end %>
+            <% if current_user_workspace_admin? %>
+              <%= button_to "Delete", loop_path(loop), method: :delete,
+                    class: "btn btn-outline-danger",
+                    form: { data: { turbo_confirm: "Delete #{loop.name.presence || "this loop"}? This also removes its feedback and questions." } } %>
+            <% end %>
           </div>
         </article>
       <% end %>

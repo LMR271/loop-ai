@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_16_124110) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_16_193100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -41,6 +41,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_124110) do
     t.text "description"
     t.string "logo_url"
     t.string "name"
+    t.boolean "pending_approval", default: false, null: false
     t.string "slug"
     t.integer "status", default: 0
     t.datetime "updated_at", null: false
@@ -58,9 +59,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_124110) do
     t.index ["loop_id"], name: "index_questions_on_loop_id"
   end
 
+  create_table "teams", id: :bigint, default: -> { "nextval('memberships_id_seq'::regclass)" }, force: :cascade do |t|
+    t.bigint "account_owner_id", null: false
+    t.datetime "created_at", null: false
+    t.string "email", null: false
+    t.datetime "invitation_accepted_at"
+    t.datetime "invitation_sent_at"
+    t.string "invitation_token"
+    t.integer "role", default: 1, null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["account_owner_id", "email"], name: "index_memberships_on_account_owner_id_and_email", unique: true
+    t.index ["account_owner_id"], name: "index_memberships_on_account_owner_id"
+    t.index ["invitation_token"], name: "index_memberships_on_invitation_token", unique: true
+    t.index ["user_id"], name: "index_memberships_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.jsonb "dashboard_stat_keys", default: [], null: false
+    t.jsonb "dashboard_stat_keys"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "name"
@@ -76,4 +93,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_124110) do
   add_foreign_key "insights", "loops"
   add_foreign_key "loops", "users"
   add_foreign_key "questions", "loops"
+  add_foreign_key "teams", "users"
+  add_foreign_key "teams", "users", column: "account_owner_id"
 end

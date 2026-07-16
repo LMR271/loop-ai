@@ -7,10 +7,17 @@
       <p class="text-muted mb-0">Keep the conversation focused and in the order that makes sense.</p>
     </div>
     <div class="ms-3 text-end text-nowrap">
-      <% if @loop.active? %>
+      <% if @loop.pending_approval? %>
+        <span class="badge bg-warning fs-6 d-block mb-2">Pending approval</span>
+        <% if current_user_workspace_admin? %>
+          <%= button_to "Approve", approve_loop_path(@loop), class: "btn btn-outline-success btn-sm" %>
+        <% end %>
+      <% elsif @loop.active? %>
         <span class="badge bg-success fs-6 d-block mb-2">Active</span>
-        <%= button_to "Deactivate", deactivate_loop_path(@loop), class: "btn btn-outline-secondary btn-sm" %>
-      <% else %>
+        <% if current_user_workspace_admin? %>
+          <%= button_to "Deactivate", deactivate_loop_path(@loop), class: "btn btn-outline-secondary btn-sm" %>
+        <% end %>
+      <% elsif current_user_workspace_admin? %>
         <%= button_to "Activate", activate_loop_path(@loop), class: "btn btn-primary" %>
       <% end %>
     </div>

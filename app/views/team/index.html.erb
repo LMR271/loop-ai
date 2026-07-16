@@ -1,0 +1,65 @@
+<% content_for :title, "Team" %>
+
+<div class="container py-4">
+  <h1 class="mb-4">Team</h1>
+
+  <%= form_with model: @team_member, url: team_path, class: "d-flex flex-wrap align-items-end gap-3 mb-4" do |form| %>
+    <% if @team_member.errors.any? %>
+      <div class="alert alert-danger w-100">
+        <%= @team_member.errors.full_messages.to_sentence %>
+      </div>
+    <% end %>
+
+    <div>
+      <%= form.label :email, class: "form-label" %>
+      <%= form.email_field :email, class: "form-control", placeholder: "teammate@example.com" %>
+    </div>
+
+    <div>
+      <%= form.label :role, class: "form-label" %>
+      <%= form.select :role, Team.roles.keys.map { |role| [role.capitalize, role] }, {}, class: "form-select" %>
+    </div>
+
+    <div>
+      <%= form.submit "Send invite", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+  <% if @team_members.any? %>
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @team_members.each do |team_member| %>
+            <tr>
+              <td><%= team_member.email %></td>
+              <td><span class="badge text-bg-light"><%= team_member.role.capitalize %></span></td>
+              <td>
+                <% if team_member.accepted? %>
+                  <span class="badge text-bg-success">Joined</span>
+                <% else %>
+                  <span class="badge text-bg-warning">Invited</span>
+                <% end %>
+              </td>
+              <td>
+                <%= button_to "Revoke", team_member_path(team_member), method: :delete, class: "btn btn-sm btn-outline-danger",
+                      form: { data: { turbo_confirm: "Revoke access for #{team_member.email}?" } } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="alert alert-light border text-center py-5">
+      No teammates yet. Invite someone above.
+    </div>
+  <% end %>
+</div>

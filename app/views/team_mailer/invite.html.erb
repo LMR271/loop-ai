@@ -1,0 +1,8 @@
+<p>Hi,</p>
+
+<p><%= @team_member.account_owner.name %> invited you to join their LoopAI workspace as
+  <strong><%= @team_member.role %></strong>.</p>
+
+<p><%= link_to "Accept invitation", @invitation_url %></p>
+
+<p>If you weren't expecting this, you can safely ignore this email.</p>

@@ -19,8 +19,12 @@
     <% end %>
   </div>
 
-  <h2 class="h4 mb-1">Feedback Loops</h2>
-  <p class="text-muted mb-3">Recent Projects</p>
+  <div class="d-flex justify-content-between align-items-center mb-1">
+    <h2 class="h4 mb-0">Recent Loops</h2>
+    <% if @recent_loops.any? %>
+      <%= link_to "View all loops", loops_path, class: "btn btn-sm btn-outline-secondary" %>
+    <% end %>
+  </div>
 
   <% if @recent_loops.any? %>
     <div class="loops-list">

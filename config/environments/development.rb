@@ -44,6 +44,12 @@ Rails.application.configure do
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
+  # Allow ngrok tunnels through host authorization. ElevenLabs webhooks can't reach
+  # localhost, so post-call transcripts arrive via a tunnel in development.
+  config.hosts << ".ngrok-free.dev"
+  config.hosts << ".ngrok-free.app"
+  config.hosts << ".ngrok.io"
+
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 

@@ -10,23 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_15_142119) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_16_124110) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "feedbacks", force: :cascade do |t|
+    t.string "conversation_id"
     t.datetime "created_at", null: false
     t.bigint "loop_id", null: false
     t.string "respondent_email"
+    t.string "sentiment"
+    t.text "sentiment_rationale"
     t.text "transcript"
     t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_feedbacks_on_conversation_id", unique: true
     t.index ["loop_id"], name: "index_feedbacks_on_loop_id"
   end
 
   create_table "insights", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.bigint "loop_id", null: false
-    t.string "sentiment"
     t.text "summary"
     t.datetime "updated_at", null: false
     t.index ["loop_id"], name: "index_insights_on_loop_id"
@@ -57,7 +60,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_15_142119) do
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.jsonb "dashboard_stat_keys"
+    t.jsonb "dashboard_stat_keys", default: [], null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "name"

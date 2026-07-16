@@ -53,6 +53,21 @@
   width: 4rem;
 }
 
+.question-add-control {
+  align-items: center;
+  display: flex;
+  gap: .5rem;
+  justify-content: center;
+  min-height: 52px;
+}
+
+.loop-form__submit {
+  flex: 1;
+  font-size: 1.25rem;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+}
+
 @media (max-width: 575px) {
   .loop-card {
     flex-direction: column;

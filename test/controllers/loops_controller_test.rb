@@ -77,7 +77,7 @@ class LoopsControllerTest < ActionDispatch::IntegrationTest
     end
 
     loop = @user.loops.find_by!(name: "Onboarding research")
-    assert_redirected_to edit_loop_path(loop)
+    assert_redirected_to dashboard_path
     assert_equal "What did you expect when you signed up?", loop.questions.first.body
   end
 

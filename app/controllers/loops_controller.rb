@@ -23,7 +23,7 @@ class LoopsController < ApplicationController
     @loop = current_user.loops.build(loop_params)
 
     if @loop.save
-      redirect_to edit_loop_path(@loop), notice: "Loop created. Add or refine its questions below."
+      redirect_to dashboard_path, notice: "Loop created."
     else
       ensure_question_field
       render :new, status: :unprocessable_entity

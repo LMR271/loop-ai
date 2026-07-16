@@ -17,12 +17,11 @@
   </div>
 
   <section aria-labelledby="questions-heading">
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="mb-3">
       <div>
         <h2 id="questions-heading" class="h4 mb-1">Conversation questions</h2>
         <p class="text-muted mb-0">These guide the feedback conversation. Use the arrows to set their order.</p>
       </div>
-      <button type="button" class="btn btn-outline-primary" data-action="questions-form#add">Add question</button>
     </div>
 
     <div data-questions-form-target="list">
@@ -30,6 +29,11 @@
         <%= render "question_fields", question_fields: question_fields %>
       <% end %>
     </div>
+
+    <button type="button" class="btn app-login-button question-add-control w-100" data-action="questions-form#add">
+      <i class="fa-solid fa-plus" aria-hidden="true"></i>
+      Add another question
+    </button>
 
     <template data-questions-form-target="template">
       <%= form.fields_for :questions, Question.new, child_index: "NEW_RECORD" do |question_fields| %>
@@ -39,9 +43,12 @@
   </section>
 
   <div class="mt-4 d-flex gap-2">
-    <%= form.submit loop.persisted? ? "Save changes" : "Create loop", class: "btn btn-primary" %>
+    <%= button_tag type: "submit", class: "app-new-loop-button loop-form__submit" do %>
+      <span><%= loop.persisted? ? "Save changes" : "Create loop" %></span>
+      <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+    <% end %>
     <% if loop.persisted? %>
-      <%= link_to "Cancel", edit_loop_path(loop), class: "btn btn-outline-secondary" %>
+      <%= link_to "Cancel", edit_loop_path(loop), class: "btn app-login-button" %>
     <% end %>
   </div>
 <% end %>

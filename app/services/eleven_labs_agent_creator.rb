@@ -38,13 +38,31 @@ class ElevenLabsAgentCreator
   end
 
   def request_body
-    { name: @loop.name, conversation_config: conversation_config }
+    { name: @loop.name, conversation_config: conversation_config, platform_settings: platform_settings }
+  end
+
+  # Tells ElevenLabs' analysis LLM to score each finished conversation. The result
+  # comes back in the post-call webhook under analysis.data_collection_results,
+  # so this must be set at creation time — existing agents won't have it.
+  def platform_settings
+    { data_collection: { sentiment: { type: "string", description: sentiment_description } } }
+  end
+
+  def sentiment_description
+    <<~DESCRIPTION.squish
+      Classify how the RESPONDENT (not the agent) felt overall during this conversation.
+      Answer with exactly one word from this list: #{Feedback::SENTIMENT_VALUES.join(', ')}.
+      Use "excited" only for clear enthusiasm, such as volunteering extra ideas or using
+      strong positive language; use "positive" for satisfied but measured.
+      Use "frustrated" for irritation with a specific problem, "negative" for broader dislike.
+      Use "neutral" when the respondent is brief, hard to read, or gives no emotional signal.
+    DESCRIPTION
   end
 
   def conversation_config
     {
-      agent: { prompt: { prompt: SystemPromptBuilder.new(@loop).call, llm: "gemini-2.0-flash" } },
-      tts: { voice_id: "JBFqnCBsd6RMkjVDRZzb" } # a default ElevenLabs voice
+      agent: { prompt: { prompt: SystemPromptBuilder.new(@loop).call, llm: "qwen35-397b-a17b" } },
+      tts: { voice_id: "ePn9OncKq8KyJvrTRqTi" } # a default ElevenLabs voice
     }
   end
 

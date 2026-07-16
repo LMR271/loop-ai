@@ -15,18 +15,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_193100) do
   enable_extension "pg_catalog.plpgsql"
 
   create_table "feedbacks", force: :cascade do |t|
+    t.string "conversation_id"
     t.datetime "created_at", null: false
     t.bigint "loop_id", null: false
     t.string "respondent_email"
+    t.string "sentiment"
+    t.text "sentiment_rationale"
     t.text "transcript"
     t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_feedbacks_on_conversation_id", unique: true
     t.index ["loop_id"], name: "index_feedbacks_on_loop_id"
   end
 
   create_table "insights", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.bigint "loop_id", null: false
-    t.string "sentiment"
     t.text "summary"
     t.datetime "updated_at", null: false
     t.index ["loop_id"], name: "index_insights_on_loop_id"

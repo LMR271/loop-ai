@@ -23,7 +23,7 @@ class LoopsController < ApplicationController
     @loop.pending_approval = !current_user_workspace_admin?
 
     if @loop.save
-      redirect_to edit_loop_path(@loop), notice: "Loop created. Add or refine its questions below."
+      redirect_to dashboard_path, notice: "Loop created."
     else
       ensure_question_field
       render :new, status: :unprocessable_entity
@@ -51,7 +51,7 @@ class LoopsController < ApplicationController
   end
 
   def activate
-    redirect_to edit_loop_path(@loop), **activation_outcome(@loop)
+    redirect_to activation_redirect_path(@loop), **activation_outcome(@loop)
   end
 
   def deactivate
@@ -80,6 +80,12 @@ class LoopsController < ApplicationController
     else
       loop.update!(agent_id: ElevenLabsAgentCreator.new(loop).call, status: :active)
     end
+  end
+
+  def activation_redirect_path(loop)
+    return deploy_path if params[:return_to] == "deploy"
+
+    edit_loop_path(loop)
   end
 
   # Pauses an active loop. Keeps the agent so it can be re-activated without a new API call.

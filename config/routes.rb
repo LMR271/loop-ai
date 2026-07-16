@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   get "i/:slug", to: "respondents#show", as: :respondent # routes of external users so they don't need to authenticate when they click on the link
   get "i/:slug/signed_url", to: "respondents#signed_url", as: :respondent_signed_url
 
+  # ElevenLabs posts finished conversations here. Registered workspace-wide in their
+  # dashboard, so every agent's transcripts arrive on this one endpoint.
+  post "webhooks/elevenlabs", to: "eleven_labs_webhooks#create", as: :eleven_labs_webhook
+
   resources :loops do
     member do
       post :activate
@@ -24,6 +28,8 @@ Rails.application.routes.draw do
 
   get "dashboard", to: "dashboard#index", as: :dashboard
   patch "dashboard/stat_preferences", to: "dashboard#update_stat_preferences", as: :dashboard_stat_preferences
+
+  get "deploy", to: "deploy#index", as: :deploy
 
   get "analyse", to: "analyse#index", as: :analyse_index
   get "analyse/:slug", to: "analyse#show", as: :analyse

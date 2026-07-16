@@ -1,0 +1,146 @@
+.deploy-dashboard {
+  max-width: 960px;
+  width: 100%;
+}
+
+.deploy-list {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.deploy-loop {
+  display: block;
+  padding: 0;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.deploy-loop:hover,
+.deploy-loop[open] {
+  border-color: #d6d3d1;
+  box-shadow: 0 .35rem 1rem rgba(41, 37, 36, .08);
+}
+
+.deploy-loop__summary {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  list-style: none;
+  padding: 1.5rem 1.75rem;
+}
+
+.deploy-loop__summary::-webkit-details-marker {
+  display: none;
+}
+
+.deploy-loop__summary-content {
+  display: grid;
+  gap: .25rem;
+  min-width: 0;
+}
+
+.deploy-loop__name {
+  color: #1c1917;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.deploy-loop__description {
+  color: #78716c;
+}
+
+.deploy-loop__summary-meta {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  gap: .75rem;
+}
+
+.deploy-loop__summary-meta .fa-chevron-down {
+  color: #78716c;
+  transition: transform .2s ease;
+}
+
+.deploy-loop[open] .deploy-loop__summary-meta .fa-chevron-down {
+  transform: rotate(180deg);
+}
+
+.deploy-loop__details {
+  border-top: 1px solid #e7e5e4;
+  display: grid;
+  gap: 1rem;
+  background: #fafaf9;
+  padding: 1.5rem 1.75rem;
+}
+
+.deploy-detail-card {
+  align-items: flex-start;
+  background: #fafaf9;
+  border: 1px solid #e7e5e4;
+  border-radius: .625rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: flex-start;
+  padding: 1.25rem 1.5rem;
+  width: 100%;
+}
+
+.deploy-detail-card__eyebrow {
+  color: #78716c;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  margin-bottom: .25rem;
+  text-transform: uppercase;
+}
+
+.deploy-detail-card form {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.deploy-share-card {
+  align-items: flex-start;
+}
+
+.deploy-share-card__controls {
+  flex: 0 1 430px;
+  max-width: 100%;
+  width: 100%;
+}
+
+.deploy-empty-state {
+  background: #fff;
+  border: 1px dashed #d6d3d1;
+  border-radius: .75rem;
+  margin: 4rem auto;
+  max-width: 580px;
+  padding: 4rem 2rem;
+}
+
+.deploy-empty-state__icon {
+  align-items: center;
+  background: #eef2ff;
+  border-radius: 50%;
+  color: #4f46e5;
+  display: inline-flex;
+  font-size: 1.5rem;
+  height: 4rem;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  width: 4rem;
+}
+
+@media (max-width: 575px) {
+  .deploy-detail-card,
+  .deploy-share-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .deploy-share-card__controls {
+    flex-basis: auto;
+  }
+}

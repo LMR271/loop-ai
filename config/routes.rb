@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#index", as: :dashboard
   patch "dashboard/stat_preferences", to: "dashboard#update_stat_preferences", as: :dashboard_stat_preferences
 
+  get "deploy", to: "deploy#index", as: :deploy
+
   get "analyse", to: "analyse#index", as: :analyse_index
   get "analyse/:slug", to: "analyse#show", as: :analyse
 

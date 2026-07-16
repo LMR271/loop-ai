@@ -45,7 +45,7 @@ class LoopsController < ApplicationController
 
   def activate
     loop = current_user.loops.find(params[:id])
-    redirect_to edit_loop_path(loop), **activation_outcome(loop)
+    redirect_to activation_redirect_path(loop), **activation_outcome(loop)
   end
 
   def deactivate
@@ -74,6 +74,12 @@ class LoopsController < ApplicationController
     else
       loop.update!(agent_id: ElevenLabsAgentCreator.new(loop).call, status: :active)
     end
+  end
+
+  def activation_redirect_path(loop)
+    return deploy_path if params[:return_to] == "deploy"
+
+    edit_loop_path(loop)
   end
 
   # Pauses an active loop. Keeps the agent so it can be re-activated without a new API call.

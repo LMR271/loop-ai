@@ -34,6 +34,9 @@
           <i class="fa-regular fa-circle-user" aria-hidden="true"></i>
         </button>
         <ul class="dropdown-menu dropdown-menu-end app-user-menu__dropdown" aria-labelledby="userMenu">
+          <% if current_user_workspace_admin? %>
+            <li><%= link_to "Team", team_path, class: "dropdown-item" %></li>
+          <% end %>
           <li><%= link_to "Account settings", edit_user_registration_path, class: "dropdown-item" %></li>
           <li><hr class="dropdown-divider"></li>
           <li><%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %></li>

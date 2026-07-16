@@ -9,8 +9,16 @@ Rails.application.routes.draw do
     member do
       post :activate
       post :deactivate
+      post :approve
     end
   end
+
+  get "team", to: "team#index", as: :team
+  post "team", to: "team#create"
+  delete "team/:id", to: "team#destroy", as: :team_member
+
+  get "invitations/:invitation_token", to: "invitations#show", as: :invitation
+  patch "invitations/:invitation_token", to: "invitations#update"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

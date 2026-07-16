@@ -1,0 +1,31 @@
+<% content_for :title, "Join the team" %>
+
+<div class="container py-5" style="max-width: 480px;">
+  <h1 class="mb-2">Join <%= @team_member.account_owner.name %>'s workspace</h1>
+  <p class="text-muted mb-4">You've been invited as <strong><%= @team_member.role %></strong>. Set a password to get started.</p>
+
+  <%= form_with model: @user, url: invitation_path(@team_member.invitation_token), method: :patch do |form| %>
+    <% if @user.errors.any? %>
+      <div class="alert alert-danger">
+        <%= @user.errors.full_messages.to_sentence %>
+      </div>
+    <% end %>
+
+    <div class="mb-3">
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, class: "form-control", autofocus: true, required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :password, class: "form-label" %>
+      <%= form.password_field :password, class: "form-control", required: true %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :password_confirmation, class: "form-label" %>
+      <%= form.password_field :password_confirmation, class: "form-control", required: true %>
+    </div>
+
+    <%= form.submit "Join workspace", class: "btn btn-primary w-100" %>
+  <% end %>
+</div>

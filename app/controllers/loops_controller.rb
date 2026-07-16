@@ -1,26 +1,26 @@
 class LoopsController < ApplicationController
-  before_action :set_loop, only: %i[edit update]
+  before_action :set_loop, only: %i[edit update destroy activate deactivate approve]
+  before_action :require_workspace_admin!, only: %i[destroy activate deactivate approve]
 
   def index
     @query = params[:q].to_s.strip
-    @loops = current_user.loops.includes(:feedbacks).order(created_at: :desc)
+    @loops = current_workspace_owner.loops.includes(:feedbacks).order(created_at: :desc)
     @loops = @loops.search_by_name_and_description(@query) if @query.present?
   end
 
   def destroy
-    loop = current_user.loops.find(params[:id])
-    loop.destroy!
-
+    @loop.destroy!
     redirect_to loops_path, notice: "Loop deleted."
   end
 
   def new
-    @loop = current_user.loops.build
+    @loop = current_workspace_owner.loops.build
     @loop.questions.build
   end
 
   def create
-    @loop = current_user.loops.build(loop_params)
+    @loop = current_workspace_owner.loops.build(loop_params)
+    @loop.pending_approval = !current_user_workspace_admin?
 
     if @loop.save
       redirect_to edit_loop_path(@loop), notice: "Loop created. Add or refine its questions below."
@@ -35,6 +35,8 @@ class LoopsController < ApplicationController
   end
 
   def update
+    @loop.pending_approval = !current_user_workspace_admin?
+
     if @loop.update(loop_params)
       redirect_to edit_loop_path(@loop), notice: "Loop updated."
     else
@@ -43,14 +45,17 @@ class LoopsController < ApplicationController
     end
   end
 
+  def approve
+    @loop.update!(pending_approval: false)
+    redirect_to edit_loop_path(@loop), notice: "Loop approved."
+  end
+
   def activate
-    loop = current_user.loops.find(params[:id])
-    redirect_to edit_loop_path(loop), **activation_outcome(loop)
+    redirect_to edit_loop_path(@loop), **activation_outcome(@loop)
   end
 
   def deactivate
-    loop = current_user.loops.find(params[:id])
-    redirect_to edit_loop_path(loop), **deactivation_outcome(loop)
+    redirect_to edit_loop_path(@loop), **deactivation_outcome(@loop)
   end
 
   private
@@ -59,6 +64,7 @@ class LoopsController < ApplicationController
   def activation_outcome(loop)
     return { notice: "This loop is already active." } if loop.active?
     return { alert: "Add at least one question before activating." } if loop.questions.empty?
+    return { alert: "Approve this loop before activating it." } if loop.pending_approval?
 
     activate_loop!(loop)
     { notice: "Loop activated." }
@@ -85,7 +91,7 @@ class LoopsController < ApplicationController
   end
 
   def set_loop
-    @loop = current_user.loops.includes(:questions).find(params[:id])
+    @loop = current_workspace_owner.loops.includes(:questions).find(params[:id])
   end
 
   def loop_params

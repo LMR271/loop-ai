@@ -19,36 +19,26 @@
     <% end %>
   </div>
 
-  <div class="d-flex justify-content-between align-items-center mb-1">
-    <h2 class="h4 mb-0">Recent Loops</h2>
-    <% if @recent_loops.any? %>
-      <%= link_to "View all loops", loops_path, class: "btn btn-sm btn-outline-secondary" %>
-    <% end %>
-  </div>
-
-  <% if @recent_loops.any? %>
-    <div class="loops-list">
-      <% @recent_loops.each do |loop_record| %>
-        <article class="loop-card" style="justify-content: flex-start; gap: 2rem;">
-          <% if loop_record.logo_url.present? %>
-            <%= image_tag loop_record.logo_url, class: "rounded-circle", style: "width: 100px; height: 100px; object-fit: cover; flex-shrink: 0;" %>
-          <% else %>
-            <div class="rounded-circle" style="width: 100px; height: 100px; flex-shrink: 0; <%= loop_avatar_gradient(loop_record) %>"></div>
-          <% end %>
-
-          <div class="loop-card__content text-start">
-            <h3 class="h5 mb-2">#<%= loop_record.name %></h3>
-            <p class="text-muted mb-3"><%= truncate(loop_record.description, length: 200) %></p>
-            <%= link_to "Analyse", analyse_path(loop_record.slug), class: "btn btn-sm btn-outline-secondary" %>
-          </div>
-        </article>
+  <section class="loops-dashboard">
+    <div class="d-flex justify-content-between align-items-center mb-1">
+      <h2 class="h4 mb-0">Recent Loops</h2>
+      <% if @recent_loops.any? %>
+        <%= link_to "View all loops", loops_path, class: "btn btn-sm btn-outline-secondary" %>
       <% end %>
     </div>
-  <% else %>
-    <div class="loops-empty-state text-center">
-      <p class="text-muted mb-0">No loops yet. Create your first loop to start collecting feedback.</p>
-    </div>
-  <% end %>
+
+    <% if @recent_loops.any? %>
+      <div class="loops-list">
+        <% @recent_loops.each do |loop_record| %>
+          <%= render "loops/card", loop_record: loop_record %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="loops-empty-state text-center">
+        <p class="text-muted mb-0">No loops yet. Create your first loop to start collecting feedback.</p>
+      </div>
+    <% end %>
+  </section>
 </div>
 
 <div class="modal fade" id="stat-settings-modal" tabindex="-1" aria-labelledby="stat-settings-modal-label" aria-hidden="true">

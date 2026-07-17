@@ -59,7 +59,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_193100) do
     t.index ["loop_id"], name: "index_questions_on_loop_id"
   end
 
-  create_table "teams", id: :bigint, default: -> { "nextval('memberships_id_seq'::regclass)" }, force: :cascade do |t|
+  create_table "teams", force: :cascade do |t|
     t.bigint "account_owner_id", null: false
     t.datetime "created_at", null: false
     t.string "email", null: false

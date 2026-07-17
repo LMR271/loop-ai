@@ -1,0 +1,2 @@
+class LoopMailer < ApplicationMailer
+end

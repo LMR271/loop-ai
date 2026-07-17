@@ -1,6 +1,6 @@
 class DashboardController < ApplicationController
   def index
-    @loops = current_workspace_owner.loops
+    @loops = current_workspace_owner.loops.includes(:feedbacks)
     @recent_loops = @loops.order(created_at: :desc).limit(3)
 
     stats = DashboardStats.new(@loops, current_user.dashboard_stat_keys)

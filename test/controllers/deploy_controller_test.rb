@@ -23,6 +23,7 @@ class DeployControllerTest < ActionDispatch::IntegrationTest
     assert_select "summary", text: "Live research", count: 0
     assert_select "summary", text: "Private draft", count: 0
     assert_select "form[action='#{activate_loop_path(draft)}']", count: 1
+    assert_select "a[href='#{edit_loop_path(draft)}']", text: "Edit loop", count: 1
     assert_select "input[value='#{respondent_url(draft.slug)}']", count: 1
   end
 end

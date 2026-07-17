@@ -1,0 +1,29 @@
+<article class="loop-card">
+  <div class="loop-card__content">
+    <div class="d-flex align-items-center gap-2 mb-2">
+      <h2 class="h4 mb-0"><%= loop_record.name.presence || "Untitled loop" %></h2>
+      <span class="badge text-bg-light"><%= loop_record.status.presence || "draft" %></span>
+      <% if loop_record.pending_approval? %>
+        <span class="badge text-bg-warning">Pending approval</span>
+      <% end %>
+    </div>
+    <% if loop_record.description.present? %>
+      <p class="text-muted mb-3"><%= loop_record.description %></p>
+    <% end %>
+    <p class="loop-card__meta mb-0">
+      <%= pluralize(loop_record.feedbacks.size, "response") %> · Created <%= time_ago_in_words(loop_record.created_at) %> ago
+    </p>
+  </div>
+  <div class="loop-card__actions">
+    <%= link_to "Analyse", analyse_path(loop_record.slug), class: "btn btn-outline-secondary" %>
+    <%= link_to "Edit", edit_loop_path(loop_record), class: "btn btn-outline-secondary" %>
+    <% if current_user_workspace_admin? %>
+      <%= button_to "Delete", loop_path(loop_record), method: :delete,
+            class: "btn btn-outline-danger",
+            form: { data: { turbo_confirm: "Delete #{loop_record.name.presence || "this loop"}? This also removes its feedback and questions." } } %>
+    <% end %>
+    <% if current_user_workspace_admin? && loop_record.pending_approval? %>
+      <%= button_to "Approve", approve_loop_path(loop_record), method: :post, class: "btn btn-outline-success" %>
+    <% end %>
+  </div>
+</article>

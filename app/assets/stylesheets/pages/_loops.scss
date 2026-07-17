@@ -1,4 +1,5 @@
 .loops-dashboard {
+  margin: 0 auto;
   max-width: 960px;
 }
 
@@ -29,6 +30,21 @@
 
 .loop-card__actions form {
   margin: 0;
+}
+
+.loop-card__actions {
+  align-items: stretch;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: .5rem;
+  width: max-content;
+}
+
+.loop-card__actions > .btn,
+.loop-card__actions > form,
+.loop-card__actions > form .btn {
+  width: 100%;
 }
 
 .loops-empty-state {

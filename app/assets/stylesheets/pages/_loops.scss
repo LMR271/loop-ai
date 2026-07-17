@@ -5,18 +5,18 @@
 
 .loops-list {
   display: grid;
-  gap: 1rem;
+  gap: $space-4;
 }
 
 .loop-card {
   align-items: flex-start;
-  background: #fff;
-  border: 1px solid #e7e5e4;
-  border-radius: .75rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: $radius-md;
   display: flex;
-  gap: 1rem;
+  gap: $space-4;
   justify-content: space-between;
-  padding: 1.5rem;
+  padding: $space-6;
 }
 
 .loop-card__content {
@@ -24,8 +24,8 @@
 }
 
 .loop-card__meta {
-  color: #78716c;
-  font-size: .875rem;
+  color: var(--color-text-muted);
+  font-size: $font-size-sm;
 }
 
 .loop-card__actions form {
@@ -37,7 +37,7 @@
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
-  gap: .5rem;
+  gap: $space-2;
   width: max-content;
 }
 
@@ -48,40 +48,40 @@
 }
 
 .loops-empty-state {
-  background: #fff;
-  border: 1px dashed #d6d3d1;
-  border-radius: .75rem;
-  margin: 4rem auto;
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border-dashed);
+  border-radius: $radius-md;
+  margin: $space-16 auto;
   max-width: 580px;
-  padding: 4rem 2rem;
+  padding: $space-16 $space-8;
 }
 
 .loops-empty-state__icon {
   align-items: center;
-  background: #eef2ff;
-  border-radius: 50%;
-  color: #4f46e5;
+  background: var(--color-accent-subtle);
+  border-radius: $radius-circle;
+  color: var(--color-accent);
   display: inline-flex;
-  font-size: 2rem;
+  font-size: $font-size-3xl;
   height: 4rem;
   justify-content: center;
-  margin-bottom: 1.25rem;
+  margin-bottom: $space-5;
   width: 4rem;
 }
 
 .question-add-control {
   align-items: center;
   display: flex;
-  gap: .5rem;
+  gap: $space-2;
   justify-content: center;
   min-height: 52px;
 }
 
 .loop-form__submit {
   flex: 1;
-  font-size: 1.25rem;
+  font-size: $font-size-lg;
   justify-content: space-between;
-  padding: 1rem 1.25rem;
+  padding: $space-4 $space-5;
 }
 
 @media (max-width: 575px) {

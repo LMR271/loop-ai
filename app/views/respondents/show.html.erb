@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="text-center mb-4">
     <% if @loop.logo_url.present? %>
-      <img src="<%= @loop.logo_url %>" alt="<%= @loop.name %>" style="max-height: 80px;">
+      <img src="<%= @loop.logo_url %>" alt="<%= @loop.name %>" class="respondent-logo">
     <% end %>
     <h1><%= @loop.name %></h1>
     <p class="lead"><%= @loop.description %></p>

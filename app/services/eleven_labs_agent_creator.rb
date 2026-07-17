@@ -59,11 +59,20 @@ class ElevenLabsAgentCreator
     DESCRIPTION
   end
 
+  # first_message is what makes the agent open the call instead of waiting for the
+  # respondent to speak; an empty one (the default) means dead air until they say "hi".
   def conversation_config
     {
-      agent: { prompt: { prompt: SystemPromptBuilder.new(@loop).call, llm: "qwen35-397b-a17b" } },
+      agent: {
+        prompt: { prompt: prompt_builder.call, llm: "qwen35-397b-a17b" },
+        first_message: prompt_builder.first_message
+      },
       tts: { voice_id: "ePn9OncKq8KyJvrTRqTi" } # a default ElevenLabs voice
     }
+  end
+
+  def prompt_builder
+    @prompt_builder ||= SystemPromptBuilder.new(@loop)
   end
 
   def headers

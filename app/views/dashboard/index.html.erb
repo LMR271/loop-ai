@@ -10,11 +10,7 @@
   <div class="row g-3 mb-5">
     <% @stats.each do |stat| %>
       <div class="col-6 col-md-3">
-        <div class="border rounded p-3 h-100 text-center">
-          <p class="text-uppercase text-muted small mb-1"><%= stat[:label] %></p>
-          <p class="fs-2 fw-bold mb-1"><%= stat[:value] %></p>
-          <p class="text-muted small mb-0"><%= stat[:subtext] %></p>
-        </div>
+        <%= render "stat_card", stat: stat %>
       </div>
     <% end %>
   </div>

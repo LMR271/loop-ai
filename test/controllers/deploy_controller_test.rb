@@ -8,7 +8,7 @@ class DeployControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
   end
 
-  test "shows only the signed-in user's inactive loops" do
+  test "shows the signed-in user's draft and active loops in separate sections" do
     draft = @user.loops.create!(name: "Draft research")
     closed = @user.loops.create!(name: "Paused research", status: :closed)
     @user.loops.create!(name: "Live research", status: :active)
@@ -18,12 +18,27 @@ class DeployControllerTest < ActionDispatch::IntegrationTest
     get deploy_path
 
     assert_response :success
+    assert_select "#draft-loops-heading", text: "Draft Loops"
+    assert_select "#active-loops-heading", text: "Active Loops"
+    assert_select ".deploy-header .deploy-active-overview", text: /Active Loops\s*1\s*1 draft, 1 closed loop/
+    assert_select ".col-lg-4 .deploy-active-overview", count: 0
     assert_select "summary", text: /#{draft.name}/
     assert_select "summary", text: /#{closed.name}/
-    assert_select "summary", text: "Live research", count: 0
+    assert_select ".deploy-active-card", text: /Live research/
+    assert_select ".deploy-active-card .badge", text: "Live"
     assert_select "summary", text: "Private draft", count: 0
+    assert_select ".deploy-active-card", text: "Private draft", count: 0
     assert_select "form[action='#{activate_loop_path(draft)}']", count: 1
-    assert_select "a[href='#{edit_loop_path(draft)}']", text: "Edit loop", count: 1
+    assert_select "a[href='#{edit_loop_path(draft)}']", text: "Edit Loop", count: 1
     assert_select "input[value='#{respondent_url(draft.slug)}']", count: 1
+    assert_select "form[action='#{deactivate_loop_path(@user.loops.find_by!(name: 'Live research'))}']", count: 1
+  end
+
+  test "shows the empty state for each loop group independently" do
+    get deploy_path
+
+    assert_response :success
+    assert_select ".deploy-empty-message", text: "There are no draft loops."
+    assert_select ".deploy-empty-message--centered", text: "There are no currently active loops."
   end
 end

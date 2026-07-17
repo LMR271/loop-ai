@@ -1,68 +1,45 @@
 <% content_for :title, "Deploy loops · Loop AI" %>
 
 <section class="deploy-dashboard mx-auto">
-  <div class="mb-5">
-    <p class="text-uppercase text-muted fw-semibold small mb-1">Deployment</p>
-    <h1 class="mb-1">Deploy your loops</h1>
-    <p class="text-muted mb-0">Select a loop to launch it and share its public interview link.</p>
+  <div class="deploy-header mb-5">
+    <div>
+      <p class="text-uppercase text-muted fw-semibold small mb-1">Deployment</p>
+      <h1 class="mb-1">Deploy your loops</h1>
+      <p class="text-muted mb-0">Select a loop to launch it and share its public interview link.</p>
+    </div>
+
+    <div class="deploy-active-overview">
+      <%= render "dashboard/stat_card", stat: @active_loops_overview %>
+    </div>
   </div>
 
-  <% if @loops.any? %>
-    <section class="deploy-list d-grid gap-3" aria-label="Loops ready to deploy">
-      <% @loops.each do |loop| %>
-        <details class="deploy-loop border rounded">
-          <summary class="deploy-loop__summary">
-            <span class="deploy-loop__summary-content">
-              <span class="deploy-loop__name">#<%= loop.name.presence || "Untitled loop" %></span>
-              <% if loop.description.present? %>
-                <span class="deploy-loop__description"><%= loop.description %></span>
-              <% end %>
-            </span>
-            <span class="deploy-loop__summary-meta">
-              <span class="badge text-bg-light"><%= loop.status %></span>
-              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
-            </span>
-          </summary>
+  <div class="row g-4 align-items-start">
+    <section class="col-lg-8" aria-labelledby="draft-loops-heading">
+      <div class="deploy-section-heading">
+        <h2 id="draft-loops-heading" class="h3 mb-0">Draft Loops</h2>
+      </div>
 
-          <div class="deploy-loop__details">
-            <article class="deploy-detail-card deploy-status-card card">
-              <div class="deploy-status-card__content">
-                <p class="deploy-detail-card__eyebrow">Loop status</p>
-                <h2 class="h5 mb-1">This loop is not live</h2>
-                <p class="text-muted mb-0">Launch it to make it available to respondents.</p>
-              </div>
-              <div class="deploy-status-card__actions">
-                <%= button_to "Launch loop", activate_loop_path(loop),
-                      params: { return_to: "deploy" }, class: "btn btn-primary" %>
-                <%= link_to "Edit loop", edit_loop_path(loop), class: "btn btn-outline-secondary" %>
-              </div>
-            </article>
-
-            <article class="deploy-detail-card deploy-share-card card" data-controller="clipboard">
-              <div>
-                <p class="deploy-detail-card__eyebrow">Public link</p>
-                <h2 class="h5 mb-1">Share this loop</h2>
-                <p class="text-muted mb-0">Copy the link to send respondents to this interview.</p>
-              </div>
-              <div class="respondent-link-controls deploy-share-card__controls">
-                <input id="respondent-link-<%= loop.id %>" type="text" class="form-control bg-white respondent-link-controls__url" readonly
-                       value="<%= respondent_url(loop.slug) %>" aria-label="Public link for <%= loop.name %>"
-                       data-clipboard-target="source">
-                <button class="btn btn-outline-secondary respondent-link-controls__button" type="button" data-action="clipboard#copy"
-                        data-clipboard-target="button">Copy</button>
-                <%= link_to "Open", respondent_url(loop.slug), class: "btn btn-outline-secondary respondent-link-controls__button",
-                      target: "_blank", rel: "noopener" %>
-              </div>
-            </article>
-          </div>
-        </details>
+      <% if @draft_loops.any? %>
+        <div class="deploy-list" aria-label="Draft loops">
+          <%= render partial: "draft_loop", collection: @draft_loops, as: :loop %>
+        </div>
+      <% else %>
+        <p class="deploy-empty-message">There are no draft loops.</p>
       <% end %>
     </section>
-  <% else %>
-    <section class="deploy-empty-state text-center" aria-labelledby="deploy-empty-heading">
-      <div class="deploy-empty-state__icon" aria-hidden="true"><i class="fa-solid fa-rocket"></i></div>
-      <h2 id="deploy-empty-heading">Everything is live</h2>
-      <p class="text-muted mb-0">All of your loops are currently deployed.</p>
+
+    <section class="col-lg-4" aria-labelledby="active-loops-heading">
+      <div class="deploy-section-heading">
+        <h2 id="active-loops-heading" class="h3 mb-0">Active Loops</h2>
+      </div>
+
+      <% if @active_loops.any? %>
+        <div class="deploy-active-list" aria-label="Active loops">
+          <%= render partial: "active_loop", collection: @active_loops, as: :loop %>
+        </div>
+      <% else %>
+        <p class="deploy-empty-message deploy-empty-message--centered">There are no currently active loops.</p>
+      <% end %>
     </section>
-  <% end %>
+  </div>
 </section>

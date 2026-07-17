@@ -55,7 +55,7 @@ class LoopsController < ApplicationController
   end
 
   def deactivate
-    redirect_to edit_loop_path(@loop), **deactivation_outcome(@loop)
+    redirect_to deactivation_redirect_path(@loop), **deactivation_outcome(@loop)
   end
 
   private
@@ -83,6 +83,12 @@ class LoopsController < ApplicationController
   end
 
   def activation_redirect_path(loop)
+    return deploy_path if params[:return_to] == "deploy"
+
+    edit_loop_path(loop)
+  end
+
+  def deactivation_redirect_path(loop)
     return deploy_path if params[:return_to] == "deploy"
 
     edit_loop_path(loop)

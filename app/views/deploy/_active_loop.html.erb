@@ -1,0 +1,16 @@
+<article class="deploy-active-card card" data-controller="clipboard">
+  <div class="deploy-active-card__header">
+    <h3 class="h5 mb-0"><%= loop.name.presence || "Untitled loop" %></h3>
+    <span class="badge text-bg-success">Live</span>
+  </div>
+
+  <label class="visually-hidden" for="active-respondent-link-<%= loop.id %>">Public link for <%= loop.name %></label>
+  <input id="active-respondent-link-<%= loop.id %>" type="text" class="form-control form-control-sm" readonly
+         value="<%= respondent_url(loop.slug) %>" data-clipboard-target="source">
+
+  <div class="deploy-active-card__actions">
+    <%= button_to "Pause Loop", deactivate_loop_path(loop), params: { return_to: "deploy" }, class: "btn btn-outline-secondary btn-sm" %>
+    <%= link_to "Open Loop", respondent_url(loop.slug), class: "btn btn-outline-secondary btn-sm", target: "_blank", rel: "noopener" %>
+    <button class="btn btn-outline-secondary btn-sm" type="button" data-action="clipboard#copy" data-clipboard-target="button">Copy Loop Link</button>
+  </div>
+</article>

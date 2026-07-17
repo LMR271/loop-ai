@@ -84,21 +84,9 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
+# Heroku Postgres provides a single database via DATABASE_URL, so Solid Cache,
+# Solid Queue and Solid Cable share the primary connection rather than getting
+# a database each (their tables live in db/migrate alongside the app's own).
 production:
-  primary: &primary_production
-    <<: *default
-    database: loop_ai_production
-    username: loop_ai
-    password: <%= ENV["LOOP_AI_DATABASE_PASSWORD"] %>
-  cache:
-    <<: *primary_production
-    database: loop_ai_production_cache
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: loop_ai_production_queue
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *primary_production
-    database: loop_ai_production_cable
-    migrations_paths: db/cable_migrate
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>

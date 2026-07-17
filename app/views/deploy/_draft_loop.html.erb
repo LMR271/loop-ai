@@ -16,13 +16,26 @@
     <article class="deploy-detail-card deploy-status-card card">
       <div class="deploy-status-card__content">
         <p class="deploy-detail-card__eyebrow">Loop status</p>
-        <h3 class="h5 mb-1">This loop is not live</h3>
-        <p class="text-muted mb-0">Launch it to make it available to respondents.</p>
+
+        <% if loop.locked? %>
+          <h3 class="h5 mb-1">This loop is currently paused</h3>
+          <p class="text-muted mb-0">
+            This loop has been deployed before and is currently paused. It can be relaunched, but it can no longer be edited.
+          </p>
+        <% else %>
+          <h3 class="h5 mb-1">This loop is not live</h3>
+          <p class="text-muted mb-0">
+            Launch it to make it available to respondents.
+          </p>
+        <% end %>
       </div>
       <div class="deploy-status-card__actions">
         <%= button_to "Launch Loop", activate_loop_path(loop),
               params: { return_to: "deploy" }, class: "btn btn-primary" %>
-        <%= link_to "Edit Loop", edit_loop_path(loop), class: "btn btn-outline-secondary" %>
+
+        <% unless loop.locked? %>
+          <%= link_to "Edit Loop", edit_loop_path(loop), class: "btn btn-outline-secondary" %>
+        <% end %>
       </div>
     </article>
 

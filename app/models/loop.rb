@@ -27,4 +27,12 @@ class Loop < ApplicationRecord
                   using: {
                     tsearch: { prefix: true }
                   }
+
+  def locked?
+    first_deployed_at.present?
+  end
+
+  def editable?
+    !locked?
+  end
 end

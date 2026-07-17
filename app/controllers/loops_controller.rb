@@ -1,5 +1,6 @@
 class LoopsController < ApplicationController
   before_action :set_loop, only: %i[edit update destroy activate deactivate approve]
+  before_action :ensure_editable!, only: %i[edit update]
   before_action :require_workspace_admin!, only: %i[destroy activate deactivate approve]
 
   def index
@@ -76,9 +77,16 @@ class LoopsController < ApplicationController
   # otherwise provisions a new one before going active.
   def activate_loop!(loop)
     if loop.agent_id.present?
-      loop.update!(status: :active)
+      loop.update!(
+        status: :active,
+        first_deployed_at: loop.first_deployed_at || Time.current
+      )
     else
-      loop.update!(agent_id: ElevenLabsAgentCreator.new(loop).call, status: :active)
+      loop.update!(
+        agent_id: ElevenLabsAgentCreator.new(loop).call,
+        status: :active,
+        first_deployed_at: loop.first_deployed_at || Time.current
+      )
     end
   end
 
@@ -99,7 +107,15 @@ class LoopsController < ApplicationController
     return { notice: "This loop is already inactive." } unless loop.active?
 
     loop.update!(status: :closed)
+
     { notice: "Loop deactivated. Respondents can no longer reach it." }
+  end
+
+  def ensure_editable!
+    return unless @loop.locked?
+
+    redirect_to deploy_path,
+                alert: "This loop has already been deployed and can no longer be edited."
   end
 
   def set_loop

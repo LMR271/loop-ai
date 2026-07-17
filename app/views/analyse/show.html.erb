@@ -9,7 +9,6 @@
     </div>
   <% else %>
     <% chart_options = {
-         colors: ["#0D6EFD"],
          suffix: " responses",
          library: {
            plugins: { legend: { display: false } },
@@ -60,7 +59,7 @@
           <div class="border rounded p-4 mb-4">
             <h3 class="h6 text-uppercase text-muted mb-3">Feedback per loop (<%= range_label(@range, @from, @to) %>)</h3>
             <% if @loop_feedback_counts.values.sum.zero? %>
-              <div class="d-flex align-items-center justify-content-center text-muted" style="min-height: 160px;">
+              <div class="analysis-chart-empty d-flex align-items-center justify-content-center text-muted">
                 No feedback across your loops in this range
               </div>
             <% else %>
@@ -127,7 +126,7 @@
           <h2 class="mb-0">Overview of #<%= @loop.name %></h2>
 
           <% if @loops.any? %>
-            <div style="min-width: 260px;">
+            <div class="analysis-loop-select">
               <select class="form-select" onchange="if (this.value) { window.location.href = this.value }">
                 <% @loops.each do |loop_record| %>
                   <option value="<%= analyse_path(loop_record.slug, tab: @active_tab, range: @range, from: params[:from], to: params[:to], chart_type: @chart_type, data_view: @data_view) %>" <%= "selected" if @loop && loop_record.id == @loop.id %>>
@@ -185,12 +184,12 @@
 
         <div class="row g-4 mb-4">
           <div class="col-md-8">
-            <div class="border rounded p-4 h-100" style="min-height: 220px;">
+            <div class="analysis-chart-card h-100">
               <h3 class="h6 text-uppercase text-muted mb-3">
                 <%= chart_title(@data_view) %> (<%= range_label(@range, @from, @to) %>)
               </h3>
               <% if @active_chart_data.values.sum.zero? %>
-                <div class="d-flex align-items-center justify-content-center text-muted" style="min-height: 160px;">
+                <div class="analysis-chart-empty d-flex align-items-center justify-content-center text-muted">
                   No feedback to chart in this range
                 </div>
               <% elsif @chart_type == "line" %>
@@ -201,7 +200,7 @@
             </div>
           </div>
           <div class="col-md-4">
-            <div class="border rounded p-4 h-100 d-flex align-items-center justify-content-center text-muted" style="min-height: 220px;">
+            <div class="analysis-summary-card h-100 d-flex align-items-center justify-content-center text-muted">
               Summary coming soon
             </div>
           </div>
@@ -224,7 +223,7 @@
                     <span class="text-muted small text-nowrap"><%= feedback.created_at.strftime("%b %d, %Y at %I:%M %p") %></span>
                   </div>
                 </div>
-                <p class="mb-0" style="white-space: pre-wrap;"><%= feedback.transcript %></p>
+                <p class="analysis-transcript mb-0"><%= feedback.transcript %></p>
                 <% if feedback.sentiment_rationale.present? %>
                   <p class="text-muted small fst-italic mb-0 mt-2 pt-2 border-top">
                     <i class="fa-solid fa-wand-magic-sparkles me-1"></i><%= feedback.sentiment_rationale %>

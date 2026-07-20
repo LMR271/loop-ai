@@ -15,6 +15,7 @@
 - Ruby 3.3.9, Rails 8.1, PostgreSQL. Use `bin/` wrappers.
 - Rubocop (custom `.rubocop.yml`): `Metrics/MethodLength` max **10**, `Metrics/ClassLength` max **100**, line length **120**. `test/` is excluded from rubocop. Add **no new offenses**; run `bin/rubocop` before each commit.
 - Tests are Minitest. **No mocking gem** — stub at a seam with `stub_instance_method(klass, name, replacement) { ... }` from `test/test_helper.rb`. Never hit the real OpenAI API in tests.
+- **This repo has NO fixtures.** Tests create data inline. A user: `User.create!(email: "founder@example.com", password: "password123")` (use distinct emails within a test). Controller/integration tests `include Devise::Test::IntegrationHelpers` and `sign_in <user>` in `setup`. **Any test snippet in this plan that shows `users(:founder)` or `sign_in users(:founder)` is shorthand — replace it with an inline-created user following this convention, keeping the test's intent identical.** `test/controllers/analyse_controller_test.rb` does not exist yet; create it (with the Devise helper + a signed-in user in `setup`) the first time a task adds to it.
 - Ownership is by workspace: scope through `current_workspace_owner`, never `current_user`.
 - Transcripts are **respondent PII** — never log them; send only transcript text to the LLM, never respondent identity.
 - LLM model id: `gpt-5-mini`, reachable only through the `LlmClient` seam (one-line provider swap). API key via `ENV["OPENAI_API_KEY"]`.

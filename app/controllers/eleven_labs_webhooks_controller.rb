@@ -46,6 +46,7 @@ class ElevenLabsWebhooksController < ApplicationController
   def create_feedback(loop_record)
     feedback = Feedback.create!(feedback_attributes.merge(loop: loop_record))
     LoopMailer.new_feedback(feedback).deliver_later
+    AnalyzeFeedbackJob.perform_later(feedback)
   rescue ActiveRecord::RecordNotUnique
     Rails.logger.info("[ElevenLabs] already recorded conversation #{payload.conversation_id}")
   end

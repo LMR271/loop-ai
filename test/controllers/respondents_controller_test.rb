@@ -12,6 +12,15 @@ class RespondentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "show renders without app chrome (no login/signup links)" do
+    get respondent_url(@loop.slug)
+
+    assert_response :success
+    assert_no_match(/Sign up/, response.body)
+    assert_no_match(/Log in/, response.body)
+    assert_match(/Onboarding feedback/, response.body) # loop-owner branding stays
+  end
+
   # TODO(human): add a test for the closed path.
   # The controller renders `:closed` unless the loop is `active?`. Create a loop
   # with status: :draft (or flip @loop) and assert what the respondent sees when

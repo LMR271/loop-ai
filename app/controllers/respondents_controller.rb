@@ -1,4 +1,5 @@
 class RespondentsController < ApplicationController
+  layout "respondent"
   skip_before_action :authenticate_user!, only: %i[show signed_url]
 
   def show

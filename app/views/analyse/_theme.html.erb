@@ -1,0 +1,15 @@
+<div class="theme-card border rounded p-3">
+  <div class="d-flex justify-content-between align-items-start gap-2 mb-1">
+    <span class="fw-semibold"><%= theme.title %></span>
+    <div class="d-flex align-items-center gap-2">
+      <%= sentiment_badge(theme.sentiment) %>
+      <span class="badge text-bg-light"><%= pluralize(theme.mention_count, "interview") %></span>
+    </div>
+  </div>
+  <p class="text-muted small mb-2"><%= theme.description %></p>
+  <% theme.quotes.each do |quote| %>
+    <blockquote class="border-start ps-2 mb-1 small fst-italic text-muted">
+      "<%= quote.text %>"
+    </blockquote>
+  <% end %>
+</div>

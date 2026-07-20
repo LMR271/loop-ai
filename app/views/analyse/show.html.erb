@@ -200,11 +200,25 @@
             </div>
           </div>
           <div class="col-md-4">
-            <div class="analysis-summary-card h-100 d-flex align-items-center justify-content-center text-muted">
-              Summary coming soon
-            </div>
+            <%= render "insight_panel", loop_record: @loop %>
           </div>
         </div>
+
+        <% if @loop.insight.present? %>
+          <% if @loop.insight.themes.any? %>
+            <h3 class="mb-3">Themes</h3>
+            <div class="d-flex flex-column gap-2 mb-4">
+              <%= render partial: "theme", collection: @loop.insight.themes, as: :theme %>
+            </div>
+          <% end %>
+
+          <% if @loop.insight.feature_requests.any? %>
+            <h3 class="mb-3">Feature requests</h3>
+            <div class="d-flex flex-column gap-2 mb-4">
+              <%= render partial: "feature_request", collection: @loop.insight.feature_requests, as: :feature_request %>
+            </div>
+          <% end %>
+        <% end %>
 
         <h3 class="mb-3">Feedback</h3>
 
@@ -223,7 +237,16 @@
                     <span class="text-muted small text-nowrap"><%= feedback.created_at.strftime("%b %d, %Y at %I:%M %p") %></span>
                   </div>
                 </div>
-                <p class="analysis-transcript mb-0"><%= feedback.transcript %></p>
+                <% if feedback.summary.present? %>
+                  <p class="fw-semibold mb-1"><%= feedback.title %></p>
+                  <p class="mb-2"><%= feedback.summary %></p>
+                  <details class="mb-0">
+                    <summary class="small text-muted">View full transcript</summary>
+                    <p class="analysis-transcript mb-0 mt-2"><%= feedback.transcript %></p>
+                  </details>
+                <% else %>
+                  <p class="analysis-transcript mb-0"><%= feedback.transcript %></p>
+                <% end %>
                 <% if feedback.sentiment_rationale.present? %>
                   <p class="text-muted small fst-italic mb-0 mt-2 pt-2 border-top">
                     <i class="fa-solid fa-wand-magic-sparkles me-1"></i><%= feedback.sentiment_rationale %>

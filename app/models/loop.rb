@@ -35,4 +35,8 @@ class Loop < ApplicationRecord
   def editable?
     !locked?
   end
+
+  def unanalyzed_feedback_count
+    feedbacks.count - (insight&.analyzed_feedback_count || 0)
+  end
 end

@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
   get "analyse", to: "analyse#index", as: :analyse_index
   get "analyse/:slug", to: "analyse#show", as: :analyse
+  post "analyse/:slug/refresh", to: "analyse#refresh", as: :refresh_analyse
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

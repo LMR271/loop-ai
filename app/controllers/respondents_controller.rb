@@ -1,4 +1,5 @@
 class RespondentsController < ApplicationController
+  layout "respondent"
   skip_before_action :authenticate_user!, only: %i[show signed_url]
   # Meant to be embedded on respondents' own sites (see public/widget.js), so it
   # can't keep the SAMEORIGIN default or every third-party iframe would be blocked.

@@ -2,13 +2,17 @@ import { Controller } from "@hotwired/stimulus"
 import { Conversation } from "@elevenlabs/client"
 
 // Drives the public respondent voice interview: fetches a signed URL from our
-// server, then opens an ElevenLabs conversation. Every failure is surfaced in
-// the status element so the respondent is never left staring at a dead button.
+// server, opens an ElevenLabs conversation, and mirrors the live call state
+// onto the orb. Every failure is surfaced in the aria-live status element so
+// the respondent is never left staring at a dead orb.
 export default class extends Controller {
   static values = { slug: String }
-  static targets = ["status", "startButton", "endButton"]
+  static targets = ["status", "startButton", "endButton", "orb", "thankYou"]
+
+  static STATES = ["is-idle", "is-connecting", "is-listening", "is-speaking", "is-ended"]
 
   async start() {
+    this.setOrbState("is-connecting")
     this.setStatus("Connecting…")
     this.startButtonTarget.disabled = true
 
@@ -22,12 +26,12 @@ export default class extends Controller {
       this.conversation = await Conversation.startSession({
         signedUrl,
         onConnect: () => this.connected(),
-        onDisconnect: () => this.reset("Conversation ended."),
+        onDisconnect: () => this.finished(),
         onError: (message) => this.setStatus(`Error: ${message}`),
-        onModeChange: ({ mode }) => this.setStatus(mode === "speaking" ? "Agent is speaking…" : "Listening…")
+        onModeChange: ({ mode }) => this.modeChanged(mode)
       })
     } catch (error) {
-      this.reset(`Couldn't start the interview: ${error.message}`)
+      this.failedToStart(`Couldn't start the interview: ${error.message}`)
     }
   }
 
@@ -35,24 +39,53 @@ export default class extends Controller {
     this.setStatus("Ending…")
     try {
       await this.conversation?.endSession()
-      // onDisconnect resets the UI; reset() here covers the no-session edge case.
+      // onDisconnect → finished() resets the UI; finished() here covers no-session.
     } catch (error) {
-      this.reset(`Couldn't end cleanly: ${error.message}`)
+      this.setStatus(`Couldn't end cleanly: ${error.message}`)
     }
   }
 
   connected() {
+    this.setOrbState("is-listening")
     this.setStatus("Connected — start talking!")
     this.startButtonTarget.hidden = true
     this.endButtonTarget.hidden = false
   }
 
-  reset(message) {
+  modeChanged(mode) {
+    if (mode === "speaking") {
+      this.setOrbState("is-speaking")
+      this.setStatus("Agent is speaking…")
+    } else {
+      this.setOrbState("is-listening")
+      this.setStatus("Listening…")
+    }
+  }
+
+  finished() {
+    if (!this.conversation) return
+      this.conversation = null
+      this.setOrbState("is-ended")
+      this.setStatus("")
+      this.startButtonTarget.hidden = true
+      this.endButtonTarget.hidden = true
+    if (this.hasThankYouTarget) this.thankYouTarget.hidden = false
+  }
+
+  // start() failed before/while connecting: return to idle, keep Start available.
+  failedToStart(message) {
+    this.conversation = null
+    this.setOrbState("is-idle")
     this.setStatus(message)
     this.startButtonTarget.hidden = false
     this.startButtonTarget.disabled = false
     this.endButtonTarget.hidden = true
-    this.conversation = null
+  }
+
+  setOrbState(state) {
+    if (!this.hasOrbTarget) return
+    this.orbTarget.classList.remove(...this.constructor.STATES)
+    this.orbTarget.classList.add(state)
   }
 
   setStatus(text) {

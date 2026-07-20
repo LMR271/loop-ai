@@ -1,12 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["list", "question", "template", "number", "position"]
+  static targets = ["list", "question", "template", "number", "position", "saveForm", "saveContent", "savePreview", "saveError"]
 
   add() {
-    const content = this.templateTarget.innerHTML.replace(/NEW_RECORD/g, Date.now())
-    this.listTarget.insertAdjacentHTML("beforeend", content)
-    this.updateOrder()
+    this.addQuestion()
   }
 
   remove(event) {
@@ -40,11 +38,75 @@ export default class extends Controller {
     this.updateOrder()
   }
 
+  openSaveModal(event) {
+    const question = event.target.closest("[data-questions-form-target='question']")
+    const content = question.querySelector("textarea").value.trim()
+
+    if (!content) {
+      question.querySelector("textarea").focus()
+      return
+    }
+
+    this.saveContentTarget.value = content
+    this.savePreviewTarget.textContent = content
+    this.saveErrorTarget.classList.add("d-none")
+    this.modal("saveQuestionToLibraryModal").show()
+  }
+
+  async saveToLibrary(event) {
+    event.preventDefault()
+    const form = this.saveFormTarget
+    const response = await fetch(form.action, {
+      method: "POST",
+      headers: { Accept: "application/json", "X-CSRF-Token": this.csrfToken() },
+      body: new FormData(form)
+    })
+
+    if (response.ok) {
+      this.modal("saveQuestionToLibraryModal").hide()
+      form.reset()
+      return
+    }
+
+    const result = await response.json()
+    this.saveErrorTarget.textContent = result.errors?.join(", ") || "Couldn't save this question."
+    this.saveErrorTarget.classList.remove("d-none")
+  }
+
+  insertFromLibrary(event) {
+    const { content, useUrl } = event.params
+    this.addQuestion(content)
+    this.modal("insertQuestionFromLibraryModal").hide()
+
+    fetch(useUrl, {
+      method: "POST",
+      headers: { "X-CSRF-Token": this.csrfToken() }
+    })
+  }
+
   updateOrder() {
     this.visibleQuestions().forEach((question, index) => {
       question.querySelector("[data-questions-form-target='number']").textContent = `Question ${index + 1}`
       question.querySelector("[data-questions-form-target='position']").value = index + 1
     })
+  }
+
+  addQuestion(content = "") {
+    const timestamp = Date.now()
+    const question = this.templateTarget.innerHTML.replace(/NEW_RECORD/g, timestamp)
+    this.listTarget.insertAdjacentHTML("beforeend", question)
+    const field = this.visibleQuestions().at(-1).querySelector("textarea")
+    field.value = content
+    this.updateOrder()
+    field.focus()
+  }
+
+  csrfToken() {
+    return document.querySelector("meta[name='csrf-token']")?.content
+  }
+
+  modal(id) {
+    return window.bootstrap.Modal.getOrCreateInstance(document.getElementById(id))
   }
 
   visibleQuestions() {

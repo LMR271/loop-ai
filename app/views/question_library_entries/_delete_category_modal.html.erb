@@ -1,0 +1,31 @@
+<div class="modal fade" id="deleteCategoryModal<%= category.id %>" tabindex="-1" aria-labelledby="deleteCategoryLabel<%= category.id %>" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= form_with url: question_library_category_path(category), method: :delete do |form| %>
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="deleteCategoryLabel<%= category.id %>">Delete category</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>The category "<%= category.name %>" contains <%= pluralize(entries_count, "question") %>.</p>
+          <p class="text-muted">Choose what should happen to those questions.</p>
+          <% if other_categories.any? %>
+            <div class="form-check mb-2">
+              <%= radio_button_tag :destination, "move", true, class: "form-check-input", id: "moveCategory#{category.id}" %>
+              <%= label_tag "moveCategory#{category.id}", "Move them to another category", class: "form-check-label" %>
+            </div>
+            <%= select_tag :move_to, options_from_collection_for_select(other_categories, :id, :name), class: "form-select mb-3" %>
+          <% end %>
+          <div class="form-check">
+            <%= radio_button_tag :destination, "no_category", other_categories.empty?, class: "form-check-input", id: "noCategory#{category.id}" %>
+            <%= label_tag "noCategory#{category.id}", 'Move them to "No Category"', class: "form-check-label" %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn app-login-button" data-bs-dismiss="modal">Cancel</button>
+          <%= form.submit "Delete category", class: "btn btn-outline-danger" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

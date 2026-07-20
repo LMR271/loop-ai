@@ -1,0 +1,48 @@
+<div class="modal fade" id="saveQuestionToLibraryModal" tabindex="-1" aria-labelledby="saveQuestionToLibraryLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= form_with model: QuestionLibraryEntry.new, data: { action: "submit->questions-form#saveToLibrary", questions_form_target: "saveForm" } do |form| %>
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="saveQuestionToLibraryLabel">Save to library</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted small" data-questions-form-target="savePreview"></p>
+          <%= form.hidden_field :content, data: { questions_form_target: "saveContent" } %>
+          <%= form.label :category, class: "form-label" %>
+          <%= form.select :category, options_for_select([["No Category", ""]] + library_categories), {}, class: "form-select" %>
+          <p class="text-muted small mb-0 mt-2">You can assign or change the category later from your Question Library.</p>
+          <div class="invalid-feedback d-block d-none mt-2" data-questions-form-target="saveError"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn app-login-button" data-bs-dismiss="modal">Cancel</button>
+          <%= form.submit "Save question", class: "app-new-loop-button" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="insertQuestionFromLibraryModal" tabindex="-1" aria-labelledby="insertQuestionFromLibraryLabel" aria-hidden="true" data-controller="library-search">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-5" id="insertQuestionFromLibraryLabel">Insert from library</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="app-search library-search mb-3">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+          <input type="search" class="form-control" placeholder="Search questions or categories" aria-label="Search your question library"
+                 data-library-search-target="input" data-action="input->library-search#filter">
+        </div>
+        <% if library_entries.any? %>
+          <%= render "question_library_entries/entry_groups", entries: library_entries, categories: [] %>
+          <p class="text-muted text-center d-none" data-library-search-target="empty">No library questions match your search.</p>
+        <% else %>
+          <p class="text-muted text-center mb-0">Your library is empty. Save a question to reuse it here.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_17_135029) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_20_113000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -49,6 +49,26 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_17_135029) do
     t.bigint "user_id", null: false
     t.index ["slug"], name: "index_loops_on_slug", unique: true
     t.index ["user_id"], name: "index_loops_on_user_id"
+  end
+
+  create_table "question_library_categories", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "name"], name: "index_question_library_categories_on_user_id_and_name", unique: true
+    t.index ["user_id"], name: "index_question_library_categories_on_user_id"
+  end
+
+  create_table "question_library_entries", force: :cascade do |t|
+    t.string "category"
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.integer "times_used", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "category"], name: "index_question_library_entries_on_user_id_and_category"
+    t.index ["user_id"], name: "index_question_library_entries_on_user_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -235,6 +255,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_17_135029) do
   add_foreign_key "feedbacks", "loops"
   add_foreign_key "insights", "loops"
   add_foreign_key "loops", "users"
+  add_foreign_key "question_library_categories", "users"
+  add_foreign_key "question_library_entries", "users"
   add_foreign_key "questions", "loops"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

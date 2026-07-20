@@ -1,4 +1,5 @@
-<%= form_with model: loop, data: { controller: "questions-form" } do |form| %>
+<div data-controller="questions-form">
+<%= form_with model: loop do |form| %>
   <% if loop.errors.any? %>
     <div class="alert alert-danger">
       <%= loop.errors.full_messages.to_sentence %>
@@ -17,11 +18,15 @@
   </div>
 
   <section aria-labelledby="questions-heading">
-    <div class="mb-3">
+    <div class="mb-3 d-flex justify-content-between align-items-end gap-3">
       <div>
         <h2 id="questions-heading" class="h4 mb-1">Conversation questions</h2>
         <p class="text-muted mb-0">These guide the feedback conversation. Use the arrows to set their order.</p>
       </div>
+      <button type="button" class="btn btn-outline-secondary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#insertQuestionFromLibraryModal">
+        <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+        Insert from Library
+      </button>
     </div>
 
     <div data-questions-form-target="list">
@@ -52,3 +57,6 @@
     <% end %>
   </div>
 <% end %>
+
+<%= render "question_library_modal", library_entries: @question_library_entries, library_categories: @question_library_categories %>
+</div>

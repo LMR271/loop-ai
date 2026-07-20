@@ -91,6 +91,18 @@ class LoopsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "What did you expect when you signed up?", loop.questions.first.body
   end
 
+  test "new loop form includes the optional-category library modal" do
+    @user.question_library_entries.create!(category: "Research", content: "What surprised you?")
+
+    get new_loop_path
+
+    assert_response :success
+    assert_select "button", text: /Insert from Library/
+    assert_select "button", text: /Save to Library/
+    assert_select "form[data-questions-form-target='saveForm']", count: 1
+    assert_select "select[name='question_library_entry[category]'] option[value='']", count: 1
+  end
+
   test "founder can edit, remove, add, and reorder questions" do
     loop = @user.loops.create!(name: "Existing research")
     first = loop.questions.create!(body: "First question", position: 1)

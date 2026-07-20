@@ -34,6 +34,7 @@
           <i class="fa-regular fa-circle-user" aria-hidden="true"></i>
         </button>
         <ul class="dropdown-menu dropdown-menu-end app-user-menu__dropdown" aria-labelledby="userMenu">
+          <li><%= link_to "Question Library", question_library_entries_path, class: "dropdown-item" %></li>
           <% if current_user_workspace_admin? %>
             <li><%= link_to "Team", team_path, class: "dropdown-item" %></li>
           <% end %>

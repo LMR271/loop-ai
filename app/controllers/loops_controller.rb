@@ -17,6 +17,7 @@ class LoopsController < ApplicationController
   def new
     @loop = current_workspace_owner.loops.build
     @loop.questions.build
+    prepare_question_library
   end
 
   def create
@@ -27,12 +28,14 @@ class LoopsController < ApplicationController
       redirect_to dashboard_path, notice: "Loop created."
     else
       ensure_question_field
+      prepare_question_library
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
     ensure_question_field
+    prepare_question_library
   end
 
   def update
@@ -42,6 +45,7 @@ class LoopsController < ApplicationController
       redirect_to edit_loop_path(@loop), notice: "Loop updated."
     else
       ensure_question_field
+      prepare_question_library
       render :edit, status: :unprocessable_entity
     end
   end
@@ -132,5 +136,12 @@ class LoopsController < ApplicationController
 
   def ensure_question_field
     @loop.questions.build if @loop.questions.reject(&:marked_for_destruction?).empty?
+  end
+
+  # This is intentionally scoped to the signed-in person rather than the loop's
+  # workspace owner. A future team library can sit alongside this personal scope.
+  def prepare_question_library
+    @question_library_entries = current_user.question_library_entries.alphabetical
+    @question_library_categories = current_user.question_library_categories.order(:name).pluck(:name)
   end
 end

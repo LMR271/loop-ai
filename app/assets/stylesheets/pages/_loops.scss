@@ -84,6 +84,15 @@
   padding: 1rem 1.25rem;
 }
 
+.library-search {
+  max-width: none;
+  width: 100%;
+}
+
+.library-category .list-group-item:last-child {
+  border-bottom: 0;
+}
+
 @media (max-width: 575px) {
   .loop-card {
     flex-direction: column;

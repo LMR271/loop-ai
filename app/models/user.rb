@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :loops
+  has_many :question_library_entries, dependent: :destroy
+  has_many :question_library_categories, dependent: :destroy
   has_many :team_memberships, class_name: "Team", foreign_key: :account_owner_id, dependent: :destroy
   has_many :team_invitations, class_name: "Team", dependent: :destroy
   has_one :accepted_team_membership, -> { where.not(invitation_accepted_at: nil) }, class_name: "Team"

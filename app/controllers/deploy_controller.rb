@@ -2,7 +2,7 @@ class DeployController < ApplicationController
   before_action :set_loop, only: :send_invites
 
   def index
-    loops = current_workspace_owner.loops.includes(:questions).order(created_at: :desc)
+    loops = current_organization.loops.includes(:questions).order(created_at: :desc)
     @draft_loops = loops.where.not(status: :active)
     @active_loops = loops.active
     @active_loops_overview = DashboardStats.new(loops, ["active_loops"]).cards.first
@@ -22,7 +22,7 @@ class DeployController < ApplicationController
   private
 
   def set_loop
-    @loop = current_workspace_owner.loops.find(params[:loop_id])
+    @loop = current_organization.loops.find(params[:loop_id])
   end
 
   def parsed_emails(raw)

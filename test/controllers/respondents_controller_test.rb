@@ -18,7 +18,14 @@ class RespondentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_no_match(/Sign up/, response.body)
     assert_no_match(/Log in/, response.body)
-    assert_match(/Onboarding feedback/, response.body) # loop-owner branding stays
+  end
+
+  test "show hides the internal loop name and shows a generic public intro" do
+    get respondent_url(@loop.slug)
+
+    assert_response :success
+    assert_no_match(/Onboarding feedback/, response.body) # internal name must not leak
+    assert_match(/Share your feedback/, response.body)    # generic public intro
   end
 
   test "show renders the orb start control and a hidden thank-you block" do

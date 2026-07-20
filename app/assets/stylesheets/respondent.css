@@ -45,14 +45,13 @@
   justify-content: center;
   border: 8px solid transparent;
   background:
-    radial-gradient(var(--orb-color), var(--orb-color)) no-repeat 50% 50% / 60% 60%,
-    linear-gradient(#fff, #fff) padding-box,
+    radial-gradient(circle at 50% 35%,
+      var(--lighter-color), var(--orb-color) 58%, var(--darker-color)) padding-box,
     conic-gradient(from var(--orb-angle) at 50% 50%,
       color-mix(in srgb, var(--lighter-color), transparent) 0 72deg,
       var(--darker-color) 100deg 180deg,
       transparent 288deg,
       color-mix(in srgb, var(--lighter-color), transparent)) border-box;
-  background-blend-mode: overlay, normal, normal;
   /* softened halo for a light page */
   box-shadow: 0 0 var(--orb-blur) var(--orb-spread)
               color-mix(in srgb, var(--orb-color) 45%, transparent);

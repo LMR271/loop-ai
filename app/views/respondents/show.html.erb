@@ -1,10 +1,12 @@
 <div class="respondent-card" data-controller="interview" data-interview-slug-value="<%= @loop.slug %>">
   <header class="respondent-card__brand text-center">
     <% if @loop.logo_url.present? %>
-      <img src="<%= @loop.logo_url %>" alt="<%= @loop.name %>" class="respondent-logo">
+      <img src="<%= @loop.logo_url %>" alt="Logo" class="respondent-logo">
     <% end %>
-    <h1 class="respondent-card__title"><%= @loop.name %></h1>
-    <p class="respondent-card__lead"><%= @loop.description %></p>
+    <h1 class="respondent-card__title">Share your feedback</h1>
+    <p class="respondent-card__lead">
+      You've been invited to a short voice conversation. Tap play when you're ready — it only takes a few minutes.
+    </p>
   </header>
 
   <div class="orb is-idle" data-interview-target="orb">

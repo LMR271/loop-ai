@@ -9,6 +9,7 @@ class LoopMailerTest < ActionMailer::TestCase
 
     assert_equal ["respondent@example.com"], mail.to
     assert_equal "Customer interviews wants your feedback", mail.subject
+    assert_equal ["hi@getloop.me"], mail.from
     assert_match "/i/#{loop_record.slug}", mail.body.encoded
   end
 
@@ -21,6 +22,8 @@ class LoopMailerTest < ActionMailer::TestCase
 
     assert_equal ["founder@example.com"], mail.to
     assert_equal "New feedback on Customer interviews", mail.subject
+    assert_equal ["notifications@getloop.me"], mail.from
+    assert_equal ["hi@getloop.me"], mail.reply_to
     assert_match "Positive", mail.body.encoded
   end
 end

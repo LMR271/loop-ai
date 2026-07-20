@@ -21,6 +21,15 @@ class RespondentsControllerTest < ActionDispatch::IntegrationTest
     assert_match(/Onboarding feedback/, response.body) # loop-owner branding stays
   end
 
+  test "show renders the orb start control and a hidden thank-you block" do
+    get respondent_url(@loop.slug)
+
+    assert_response :success
+    assert_match(/class="[^"]*\borb\b/, response.body)
+    assert_match(/data-interview-target="thankYou"/, response.body)
+    assert_match(/you can close this tab/i, response.body)
+  end
+
   # TODO(human): add a test for the closed path.
   # The controller renders `:closed` unless the loop is `active?`. Create a loop
   # with status: :draft (or flip @loop) and assert what the respondent sees when

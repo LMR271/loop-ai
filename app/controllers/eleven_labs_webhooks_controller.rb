@@ -44,7 +44,8 @@ class ElevenLabsWebhooksController < ApplicationController
   # The unique index on conversation_id — not this rescue — is what guarantees
   # idempotency: two simultaneous deliveries would both pass an exists? check.
   def create_feedback(loop_record)
-    Feedback.create!(feedback_attributes.merge(loop: loop_record))
+    feedback = Feedback.create!(feedback_attributes.merge(loop: loop_record))
+    LoopMailer.new_feedback(feedback).deliver_later
   rescue ActiveRecord::RecordNotUnique
     Rails.logger.info("[ElevenLabs] already recorded conversation #{payload.conversation_id}")
   end

@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   patch "dashboard/stat_preferences", to: "dashboard#update_stat_preferences", as: :dashboard_stat_preferences
 
   get "deploy", to: "deploy#index", as: :deploy
+  post "deploy/:loop_id/invites", to: "deploy#send_invites", as: :deploy_invites
 
   get "analyse", to: "analyse#index", as: :analyse_index
   get "analyse/:slug", to: "analyse#show", as: :analyse

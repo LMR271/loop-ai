@@ -53,7 +53,7 @@ founder = User.find_or_create_by!(email: "founder@loopai.dev") do |user|
   user.password_confirmation = "password123"
 end
 
-onboarding_loop = Loop.find_or_create_by!(user: founder, name: "Onboarding Pulse") do |loop_record|
+onboarding_loop = Loop.find_or_create_by!(user: founder, organization: founder.organization, name: "Onboarding Pulse") do |loop_record|
   loop_record.description = "How new users feel in their first week."
   loop_record.status = 1
 end
@@ -108,7 +108,7 @@ end
   end
 end
 
-pricing_loop = Loop.find_or_create_by!(user: founder, name: "Pricing Page Feedback") do |loop_record|
+pricing_loop = Loop.find_or_create_by!(user: founder, organization: founder.organization, name: "Pricing Page Feedback") do |loop_record|
   loop_record.description = "Understanding hesitation around the new pricing tiers."
   loop_record.status = 1
 end
@@ -152,7 +152,7 @@ end
   end
 end
 
-churn_loop = Loop.find_or_create_by!(user: founder, name: "Churned Users Check-in") do |loop_record|
+churn_loop = Loop.find_or_create_by!(user: founder, organization: founder.organization, name: "Churned Users Check-in") do |loop_record|
   loop_record.description = "Learning why customers cancel their subscription."
   loop_record.status = 0
 end
@@ -169,7 +169,7 @@ end
 
 # No feedback yet for this loop, on purpose, to exercise the empty state.
 
-feature_request_loop = Loop.find_or_create_by!(user: founder, name: "Feature Request Roundup") do |loop_record|
+feature_request_loop = Loop.find_or_create_by!(user: founder, organization: founder.organization, name: "Feature Request Roundup") do |loop_record|
   loop_record.description = "Understanding what to build next based on real user requests."
   loop_record.status = 2
 end
@@ -224,7 +224,7 @@ end
   end
 end
 
-support_loop = Loop.find_or_create_by!(user: founder, name: "Support Experience Review") do |loop_record|
+support_loop = Loop.find_or_create_by!(user: founder, organization: founder.organization, name: "Support Experience Review") do |loop_record|
   loop_record.description = "Checking in after a support ticket to see how it went."
   loop_record.status = 1
 end

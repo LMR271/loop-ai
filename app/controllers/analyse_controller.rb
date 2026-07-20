@@ -6,15 +6,15 @@ class AnalyseController < ApplicationController
   TABS = %w[all_loops per_loop].freeze
 
   def index
-    @loops = current_workspace_owner.loops
-    @loop = current_workspace_owner.loops.order(created_at: :desc).first
+    @loops = current_organization.loops
+    @loop = current_organization.loops.order(created_at: :desc).first
     load_shared_data
     render :show
   end
 
   def show
-    @loops = current_workspace_owner.loops
-    @loop = current_workspace_owner.loops.find_by!(slug: params[:slug])
+    @loops = current_organization.loops
+    @loop = current_organization.loops.find_by!(slug: params[:slug])
     load_shared_data
   end
 
@@ -54,7 +54,7 @@ class AnalyseController < ApplicationController
     @status_filter = params[:status_filter].presence_in(status_filters) || "all"
     @sort = params[:sort].presence_in(SORTS) || "newest"
 
-    loops = current_workspace_owner.loops.includes(:feedbacks)
+    loops = current_organization.loops.includes(:feedbacks)
     loops = loops.where(status: @status_filter) unless @status_filter == "all"
     @loops_table = sort_loops(loops)
   end

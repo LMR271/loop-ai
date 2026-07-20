@@ -162,6 +162,19 @@
   min-width: 180px;
 }
 
+.app-user-menu__dropdown .dropdown-item {
+  align-items: center;
+  display: flex;
+  gap: $space-3;
+}
+
+.app-user-menu__dropdown .dropdown-item i {
+  color: var(--color-text-muted);
+  font-size: $font-size-base;
+  text-align: center;
+  width: 1rem;
+}
+
 @media (max-width: 767px) {
   .app-navbar {
     min-height: auto;

@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   post "team", to: "team#create"
   delete "team/:id", to: "team#destroy", as: :team_member
 
+  patch "workspace", to: "workspace#update", as: :workspace
+  delete "workspace", to: "workspace#destroy"
+
   get "invitations/:invitation_token", to: "invitations#show", as: :invitation
   patch "invitations/:invitation_token", to: "invitations#update"
 

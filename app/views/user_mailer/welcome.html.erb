@@ -1,0 +1,7 @@
+<p style="margin: 0 0 16px;">Hi <%= @user.name.presence || "there" %>,</p>
+
+<p style="margin: 0 0 16px;">Welcome to Loop AI! You're all set to start collecting real feedback through conversations instead of forms.</p>
+
+<%= render "mailer/button", text: "Go to your dashboard", url: dashboard_url %>
+
+<p style="margin: 16px 0 0;">Create a loop, add a few questions, and share the link — we'll take it from there.</p>

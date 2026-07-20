@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { registrations: "users/registrations" }
   root to: "pages#home"
 
   get "i/:slug", to: "respondents#show", as: :respondent # routes of external users so they don't need to authenticate when they click on the link

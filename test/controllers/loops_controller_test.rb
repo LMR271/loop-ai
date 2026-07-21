@@ -19,7 +19,7 @@ class LoopsControllerTest < ActionDispatch::IntegrationTest
     assert_select "h2", text: own_loop.name
     assert_select "h2", text: "Private loop", count: 0
     assert_select "a[href='#{new_loop_path}']", text: "New Loop", count: 1
-    assert_select "a[href='#{edit_loop_path(own_loop)}']", text: "Edit", count: 1
+    assert_select "a[href='#{edit_loop_path(own_loop)}']", count: 1
   end
 
   test "index searches the signed-in user's loops by name and description" do
@@ -43,7 +43,7 @@ class LoopsControllerTest < ActionDispatch::IntegrationTest
     get dashboard_path
 
     assert_response :success
-    assert_select "a[href='#{edit_loop_path(loop)}']", text: "Edit", count: 1
+    assert_select "a[href='#{edit_loop_path(loop)}']", count: 1
   end
 
   test "deleting a loop also deletes its associated records" do

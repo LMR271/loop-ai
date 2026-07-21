@@ -12,7 +12,9 @@
         <%= form.label :name, "New category", class: "form-label mb-1" %>
         <%= form.text_field :name, class: "form-control", placeholder: "For example: Customer interviews" %>
       </div>
-      <%= form.submit "Add category", class: "btn app-login-button flex-shrink-0" %>
+      <%= form.button type: "submit", class: "btn btn-primary flex-shrink-0" do %>
+        <i class="fa-solid fa-plus" aria-hidden="true"></i> Add category
+      <% end %>
     </div>
   <% end %>
 

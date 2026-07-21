@@ -1,0 +1,6 @@
+<%= turbo_stream.replace "library_entries" do %>
+  <%= render "question_library_entries/library_entries",
+        entries: current_user.question_library_entries.order(created_at: :desc),
+        categories: current_user.question_library_categories.order(:name),
+        manage: false %>
+<% end %>

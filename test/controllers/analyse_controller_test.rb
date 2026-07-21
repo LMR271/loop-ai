@@ -22,6 +22,18 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
     assert_select ".analysis-card", text: /Onboarding overwhelming/
   end
 
+  test "a loop with no feedback ever shows one unified empty state instead of scattered empty boxes" do
+    loop_record = @user.loops.create!(name: "L")
+
+    get analyse_path(loop_record.slug)
+
+    assert_select "#per-loop-pane" do
+      assert_select ".loops-empty-state", text: /No feedback yet/
+      assert_select ".analysis-stat-row", count: 0
+      assert_select ".analysis-card", count: 0
+    end
+  end
+
   test "refresh regenerates the insight synchronously and flashes success" do
     loop_record = analysable_loop_with_points
     fake = { "overall_sentiment" => "positive", "summary" => "Trending up", "themes" => [], "feature_requests" => [] }

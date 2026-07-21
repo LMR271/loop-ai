@@ -17,6 +17,26 @@
           placeholder: "Describe the product, decision, or experience you want to understand." %>
   </div>
 
+  <% if @loop.image.attached? %>
+    <div class="mb-3">
+      <%= image_tag loop.image.variant(resize_to_limit: [300, 300]),
+          class: "img-fluid rounded border mb-3" %>
+    </div>
+
+    <div class="form-check mb-4">
+      <%= form.check_box :remove_image, class: "form-check-input" %>
+      <%= form.label :remove_image, "Remove current image", class: "form-check-label" %>
+    </div>
+  <% end %>
+
+  <div class="mb-5">
+    <%= form.label :image, "Image (optional)", class: "form-label" %>
+
+    <%= form.file_field :image,
+        class: "form-control",
+        accept: "image/png,image/jpeg,image/webp" %>
+  </div>
+
   <section aria-labelledby="questions-heading">
     <div class="mb-3 d-flex justify-content-between align-items-end gap-3">
       <div>

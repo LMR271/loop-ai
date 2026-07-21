@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_20_090400) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_21_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -49,7 +49,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_20_090400) do
     t.string "overall_sentiment"
     t.text "summary"
     t.datetime "updated_at", null: false
-    t.index ["loop_id"], name: "index_insights_on_loop_id"
+    t.index ["loop_id"], name: "index_insights_on_loop_id", unique: true
   end
 
   create_table "loops", force: :cascade do |t|

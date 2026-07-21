@@ -14,4 +14,17 @@ class AnalyzeLoopJobTest < ActiveJob::TestCase
 
     assert_equal "s", loop_record.reload.insight.summary
   end
+
+  test "degrades gracefully when the analyzer raises LlmClient::Error" do
+    founder = User.create!(email: "founder4@example.com", password: "password123")
+    loop_record = Loop.create!(name: "L", user: founder)
+
+    stub_instance_method(LoopAnalyzer, :call, -> { raise LlmClient::Error, "boom" }) do
+      assert_nothing_raised do
+        AnalyzeLoopJob.perform_now(loop_record)
+      end
+    end
+
+    assert_nil loop_record.reload.insight
+  end
 end

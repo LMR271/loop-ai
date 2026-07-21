@@ -37,6 +37,6 @@ class Loop < ApplicationRecord
   end
 
   def unanalyzed_feedback_count
-    feedbacks.count - (insight&.analyzed_feedback_count || 0)
+    feedbacks.size - (insight&.analyzed_feedback_count || 0)
   end
 end

@@ -27,7 +27,9 @@
         <%= link_to "Open", respondent_url(loop.slug), class: "btn btn-outline-secondary respondent-link-controls__button",
               target: "_blank", rel: "noopener" %>
       </div>
-      <%= button_to "Pause Loop", deactivate_loop_path(loop), params: { return_to: "deploy" }, class: "btn btn-outline-secondary btn-sm" %>
+      <% if current_user_workspace_admin? %>
+        <%= button_to "Pause Loop", deactivate_loop_path(loop), params: { return_to: "deploy" }, class: "btn btn-outline-secondary btn-sm" %>
+      <% end %>
     </article>
 
     <article class="deploy-detail-card card">

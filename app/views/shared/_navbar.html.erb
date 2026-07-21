@@ -51,18 +51,20 @@
 
       <div class="dropdown">
         <button class="btn app-user-menu" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Open account menu">
-          <i class="fa-regular fa-circle-user" aria-hidden="true"></i>
+          <% if current_organization&.logo&.attached? %>
+            <%= image_tag current_organization.logo.variant(resize_to_limit: [64, 64]), class: "app-user-menu__avatar", alt: "" %>
+          <% else %>
+            <i class="fa-regular fa-circle-user" aria-hidden="true"></i>
+          <% end %>
         </button>
         <ul class="dropdown-menu dropdown-menu-end app-user-menu__dropdown" aria-labelledby="userMenu">
           <li><%= link_to "Question Library", question_library_entries_path, class: "dropdown-item" %></li>
-          <% if current_user_workspace_admin? %>
-            <li>
-              <%= link_to team_path, class: "dropdown-item" do %>
-                <i class="fa-solid fa-users" aria-hidden="true"></i>
-                <span>Team</span>
-              <% end %>
-            </li>
-          <% end %>
+          <li>
+            <%= link_to team_path, class: "dropdown-item" do %>
+              <i class="fa-solid fa-users" aria-hidden="true"></i>
+              <span>Team</span>
+            <% end %>
+          </li>
           <li>
             <%= link_to edit_user_registration_path, class: "dropdown-item" do %>
               <i class="fa-solid fa-gear" aria-hidden="true"></i>

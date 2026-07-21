@@ -4,10 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :loops
   has_many :question_library_entries, dependent: :destroy
   has_many :question_library_categories, dependent: :destroy
-  has_many :team_memberships, class_name: "Team", foreign_key: :account_owner_id, dependent: :destroy
   has_one :owned_organization, class_name: "Organization", foreign_key: :owner_id, dependent: :destroy,
                                inverse_of: :owner
   has_many :team_invitations, class_name: "Team", dependent: :destroy

@@ -1,5 +1,5 @@
 class TeamController < ApplicationController
-  before_action :require_workspace_admin!
+  before_action :require_workspace_admin!, only: %i[create update destroy]
 
   def index
     @team_members = current_organization.team_memberships.order(created_at: :desc)
@@ -17,6 +17,12 @@ class TeamController < ApplicationController
       @team_members = current_organization.team_memberships.order(created_at: :desc)
       render :index, status: :unprocessable_entity
     end
+  end
+
+  def update
+    team_member = current_organization.team_memberships.find(params[:id])
+    team_member.update!(team_member_params.slice(:role))
+    redirect_to team_path, notice: "Role updated for #{team_member.email}."
   end
 
   def destroy

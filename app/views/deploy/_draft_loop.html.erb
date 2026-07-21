@@ -30,8 +30,10 @@
         <% end %>
       </div>
       <div class="deploy-status-card__actions">
-        <%= button_to "Launch Loop", activate_loop_path(loop),
-              params: { return_to: "deploy" }, class: "btn btn-primary" %>
+        <% if current_user_workspace_admin? %>
+          <%= button_to "Launch Loop", activate_loop_path(loop),
+                params: { return_to: "deploy" }, class: "btn btn-primary" %>
+        <% end %>
 
         <% unless loop.locked? %>
           <%= link_to "Edit Loop", edit_loop_path(loop), class: "btn btn-outline-secondary" %>

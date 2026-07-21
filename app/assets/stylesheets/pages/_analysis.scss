@@ -73,3 +73,17 @@
   font-weight: 700;
   margin-bottom: 0;
 }
+
+.analysis-section-empty {
+  align-items: center;
+  color: var(--color-text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-8 $space-4;
+  text-align: center;
+}
+
+.analysis-section-empty i {
+  font-size: $font-size-xl;
+}

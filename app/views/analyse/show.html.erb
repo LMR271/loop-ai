@@ -217,7 +217,7 @@
                 <%= render partial: "theme", collection: @loop.insight.themes, as: :theme %>
               </div>
             <% else %>
-              <div class="alert alert-light border small mb-0">No themes yet — collect a few interviews, then Refresh.</div>
+              <%= render "section_empty", icon: "fa-tag", message: "No themes yet — collect a few interviews, then Refresh." %>
             <% end %>
           </section>
 
@@ -229,7 +229,7 @@
                 <%= render partial: "feature_request", collection: @loop.insight.feature_requests, as: :feature_request %>
               </div>
             <% else %>
-              <div class="alert alert-light border small mb-0">No feature requests surfaced yet.</div>
+              <%= render "section_empty", icon: "fa-lightbulb", message: "No feature requests surfaced yet." %>
             <% end %>
           </section>
         <% end %>

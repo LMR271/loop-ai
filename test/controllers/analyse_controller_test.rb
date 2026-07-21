@@ -91,6 +91,17 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
     assert_select ".analysis-card", text: /AI-generated from every interview transcript/
   end
 
+  test "themes and feature requests sections show a scoped empty state when the insight has neither" do
+    loop_record = @user.loops.create!(name: "L")
+    loop_record.feedbacks.create!(transcript: "hi")
+    loop_record.create_insight!(summary: "S", overall_sentiment: "neutral", analyzed_feedback_count: 1)
+
+    get analyse_path(loop_record.slug)
+
+    assert_select ".analysis-section-empty", text: /No themes yet/
+    assert_select ".analysis-section-empty", text: /No feature requests surfaced yet/
+  end
+
   private
 
   def analysable_loop_with_points

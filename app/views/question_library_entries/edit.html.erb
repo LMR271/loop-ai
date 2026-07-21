@@ -1,0 +1,28 @@
+<% content_for :title, "Edit library question · Loop AI" %>
+
+<main class="container py-5" style="max-width: 760px;">
+  <h1 class="mb-1">Edit library question</h1>
+  <p class="text-muted mb-4">Update the question or move it to another category.</p>
+
+  <%= form_with model: @question_library_entry do |form| %>
+    <% if @question_library_entry.errors.any? %>
+      <div class="alert alert-danger"><%= @question_library_entry.errors.full_messages.to_sentence %></div>
+    <% end %>
+    <div class="mb-4">
+      <%= form.label :content, "Question", class: "form-label" %>
+      <%= form.text_area :content, class: "form-control", rows: 3, required: true %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :category, class: "form-label" %>
+      <%= form.text_field :category, class: "form-control", list: "library-categories",
+            placeholder: "Leave blank for No Category" %>
+      <datalist id="library-categories">
+        <% @categories.each do |category| %><option value="<%= category %>"><% end %>
+      </datalist>
+    </div>
+    <div class="d-flex gap-2">
+      <%= form.submit "Save changes", class: "app-new-loop-button" %>
+      <%= link_to "Cancel", question_library_entries_path, class: "btn app-login-button" %>
+    </div>
+  <% end %>
+</main>

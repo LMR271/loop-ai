@@ -53,6 +53,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_20_151402) do
     t.index ["user_id"], name: "index_loops_on_user_id"
   end
 
+  create_table "question_library_categories", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "name"], name: "index_question_library_categories_on_user_id_and_name", unique: true
+    t.index ["user_id"], name: "index_question_library_categories_on_user_id"
+  end
+
+  create_table "question_library_entries", force: :cascade do |t|
+    t.string "category"
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.integer "times_used", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "category"], name: "index_question_library_entries_on_user_id_and_category"
+    t.index ["user_id"], name: "index_question_library_entries_on_user_id"
   create_table "organizations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
@@ -247,6 +265,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_20_151402) do
   add_foreign_key "insights", "loops"
   add_foreign_key "loops", "organizations"
   add_foreign_key "loops", "users"
+  add_foreign_key "question_library_categories", "users"
+  add_foreign_key "question_library_entries", "users"
   add_foreign_key "organizations", "users", column: "owner_id"
   add_foreign_key "questions", "loops"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

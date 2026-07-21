@@ -17,6 +17,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :question_library_entries, path: "question-library", except: %i[new show] do
+    member do
+      post :use
+    end
+  end
+  resources :question_library_categories, path: "question-library/categories", only: %i[create edit update destroy]
+
   get "team", to: "team#index", as: :team
   post "team", to: "team#create"
   delete "team/:id", to: "team#destroy", as: :team_member

@@ -11,7 +11,11 @@
     <%= question_fields.hidden_field :_destroy %>
     <%= question_fields.text_area :body, class: "form-control", rows: 2,
           placeholder: "For example: What is the most frustrating part of your current workflow?" %>
-    <div class="mt-3">
+    <div class="mt-3 d-flex gap-2">
+      <button type="button" class="btn btn-sm btn-outline-secondary" data-action="questions-form#openSaveModal">
+        <i class="fa-regular fa-bookmark" aria-hidden="true"></i>
+        Save to Library
+      </button>
       <button type="button" class="btn btn-sm btn-outline-danger" data-action="questions-form#remove">Remove question</button>
     </div>
   </div>

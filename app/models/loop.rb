@@ -43,4 +43,12 @@ class Loop < ApplicationRecord
   def unanalyzed_feedback_count
     feedbacks.size - (insight&.analyzed_feedback_count || 0)
   end
+
+  def feedbacks_pending_extraction
+    feedbacks.where(extracted_points: {})
+  end
+
+  def pending_extraction_count
+    feedbacks_pending_extraction.size
+  end
 end

@@ -102,6 +102,16 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
     assert_select ".analysis-section-empty", text: /No feature requests surfaced yet/
   end
 
+  test "response cards label the AI-generated summary and use the shared card style" do
+    loop_record = @user.loops.create!(name: "L")
+    loop_record.feedbacks.create!(transcript: "raw words", title: "Title", summary: "Generated summary")
+
+    get analyse_path(loop_record.slug)
+
+    assert_select ".analysis-response-card", text: /AI summary/
+    assert_select ".analysis-response-card", text: /Generated summary/
+  end
+
   private
 
   def analysable_loop_with_points

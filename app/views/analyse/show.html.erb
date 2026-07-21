@@ -235,7 +235,7 @@
         <% end %>
 
         <h3 class="mb-1">Every response</h3>
-        <p class="text-muted small mb-3">Each interview in full. Chips show the themes and requests we pulled from that one conversation.</p>
+        <p class="text-muted small mb-3">Each interview in full. The summary above the transcript is AI-generated — the transcript itself is the respondent's own words.</p>
 
         <% if @feedbacks.empty? %>
           <div class="alert alert-light border text-center py-5">
@@ -244,7 +244,7 @@
         <% else %>
           <div class="d-flex flex-column gap-3">
             <% @feedbacks.each do |feedback| %>
-              <div class="border rounded p-3">
+              <div class="analysis-card analysis-response-card">
                 <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
                   <span class="fw-semibold"><%= feedback.respondent_email.presence || "Anonymous respondent" %></span>
                   <div class="d-flex align-items-center gap-2">
@@ -253,6 +253,7 @@
                   </div>
                 </div>
                 <% if feedback.summary.present? %>
+                  <p class="text-uppercase text-muted small fw-semibold mb-1">AI summary</p>
                   <p class="fw-semibold mb-1"><%= feedback.title %></p>
                   <p class="mb-2"><%= feedback.summary %></p>
                   <details class="mb-0">

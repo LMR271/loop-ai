@@ -1,16 +1,18 @@
 <% content_for :title, "Check your email" %>
 
-<h2>Check your email</h2>
+<div class="page-content--compact container py-5 text-center">
+  <h1 class="mb-2">Check your email</h1>
 
-<p>
-  We've sent a confirmation link to <strong><%= @email %></strong>. Click it to verify
-  your address and activate your account.
-</p>
+  <p>
+    We've sent a confirmation link to <strong><%= @email %></strong>. Click it to verify
+    your address and activate your account.
+  </p>
 
-<p class="text-muted small">
-  The link is valid for 2 days. If it expires, just try logging in with this email
-  address - we'll let you know it still needs confirming and give you the option to
-  resend it.
-</p>
+  <p class="text-muted small">
+    The link is valid for 2 days. If it expires, just try logging in with this email
+    address - we'll let you know it still needs confirming and give you the option to
+    resend it.
+  </p>
 
-<p><%= link_to "Back to log in", new_user_session_path %></p>
+  <%= link_to "Back to log in", new_user_session_path, class: "btn btn-outline-secondary mt-3" %>
+</div>

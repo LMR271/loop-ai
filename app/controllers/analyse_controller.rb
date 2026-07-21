@@ -20,8 +20,12 @@ class AnalyseController < ApplicationController
 
   def refresh
     loop_record = current_organization.loops.find_by!(slug: params[:slug])
-    AnalyzeLoopJob.perform_later(loop_record)
-    redirect_to analyse_path(loop_record.slug), notice: "Analysis started — this can take a moment."
+    analyzer = LoopAnalyzer.new(loop_record)
+    LoopInsightWriter.new(loop_record, analyzer.call, analyzer.analyzed_count).call
+    redirect_to analyse_path(loop_record.slug), notice: "Analysis updated."
+  rescue LlmClient::Error => e
+    Rails.logger.warn("[AnalyseController#refresh] #{e.message}")
+    redirect_to analyse_path(loop_record.slug), alert: "We couldn't generate the analysis just now — please try again."
   end
 
   private

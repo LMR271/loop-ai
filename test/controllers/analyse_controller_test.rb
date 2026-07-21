@@ -81,6 +81,16 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
     assert_match(/Positive/, values[3])
   end
 
+  test "insight card explains that the summary is AI-generated from every transcript" do
+    loop_record = @user.loops.create!(name: "L")
+    loop_record.feedbacks.create!(transcript: "hi")
+
+    get analyse_path(loop_record.slug)
+
+    assert_select ".analysis-card", text: /Summary of all feedback/
+    assert_select ".analysis-card", text: /AI-generated from every interview transcript/
+  end
+
   private
 
   def analysable_loop_with_points

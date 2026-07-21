@@ -39,6 +39,8 @@ class LoopsController < ApplicationController
     @loop.pending_approval = !current_user_workspace_admin?
 
     if @loop.update(loop_params)
+      @loop.image.purge if @loop.remove_image == "1"
+
       redirect_to edit_loop_path(@loop), notice: "Loop updated."
     else
       ensure_question_field
@@ -126,6 +128,8 @@ class LoopsController < ApplicationController
     params.require(:loop).permit(
       :name,
       :description,
+      :image,
+      :remove_image,
       questions_attributes: %i[id body position _destroy]
     )
   end

@@ -8,6 +8,8 @@ class Team < ApplicationRecord
 
   validates :email, presence: true, uniqueness: { scope: :organization_id }
 
+  has_one_attached :image
+
   scope :pending, -> { where(invitation_accepted_at: nil) }
 
   def accepted?

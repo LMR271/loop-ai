@@ -1,0 +1,11 @@
+<% points = Array(feedback.extracted_points["points"]) %>
+<% if points.any? %>
+  <div class="d-flex flex-wrap gap-1 mt-2">
+    <% points.each do |point| %>
+      <% theme = point["kind"] == "theme" %>
+      <span class="badge rounded-pill <%= theme ? "text-bg-info-subtle text-info-emphasis" : "text-bg-primary-subtle text-primary-emphasis" %>">
+        <i class="fa-solid <%= theme ? "fa-tag" : "fa-lightbulb" %> me-1"></i><%= point["title"] %>
+      </span>
+    <% end %>
+  </div>
+<% end %>

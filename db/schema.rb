@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_21_054424) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_21_070000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -81,28 +81,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_21_054424) do
     t.index ["user_id"], name: "index_loops_on_user_id"
   end
 
-  create_table "question_library_categories", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "name", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id", "name"], name: "index_question_library_categories_on_user_id_and_name", unique: true
-    t.index ["user_id"], name: "index_question_library_categories_on_user_id"
-  end
-
-  create_table "question_library_entries", force: :cascade do |t|
-    t.string "category"
-    t.text "content", null: false
-    t.datetime "created_at", null: false
-    t.integer "times_used", default: 0, null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id", "category"], name: "index_question_library_entries_on_user_id_and_category"
-    t.index ["user_id"], name: "index_question_library_entries_on_user_id"
   create_table "organizations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
     t.bigint "owner_id", null: false
+    t.string "theme_background_color", default: "#f7f8fb", null: false
+    t.string "theme_body_font", default: "atkinson", null: false
+    t.string "theme_button_color", default: "#2f3437", null: false
+    t.string "theme_heading_font", default: "atkinson", null: false
+    t.string "theme_primary_text_color", default: "#1f1f1f", null: false
+    t.string "theme_secondary_text_color", default: "#55607a", null: false
     t.datetime "updated_at", null: false
     t.index ["owner_id"], name: "index_organizations_on_owner_id", unique: true
   end
@@ -296,7 +284,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_21_054424) do
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.jsonb "dashboard_stat_keys", default: [], null: false
+    t.jsonb "dashboard_stat_keys"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "name"
@@ -315,8 +303,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_21_054424) do
   add_foreign_key "insights", "loops"
   add_foreign_key "loops", "organizations"
   add_foreign_key "loops", "users"
-  add_foreign_key "question_library_categories", "users"
-  add_foreign_key "question_library_entries", "users"
   add_foreign_key "organizations", "users", column: "owner_id"
   add_foreign_key "question_library_categories", "users"
   add_foreign_key "question_library_entries", "users"

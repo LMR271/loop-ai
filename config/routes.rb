@@ -26,7 +26,8 @@ Rails.application.routes.draw do
 
   get "team", to: "team#index", as: :team
   post "team", to: "team#create"
-  delete "team/:id", to: "team#destroy", as: :team_member
+  patch "team/:id", to: "team#update", as: :team_member
+  delete "team/:id", to: "team#destroy"
 
   patch "workspace", to: "workspace#update", as: :workspace
   delete "workspace", to: "workspace#destroy"

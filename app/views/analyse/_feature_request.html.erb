@@ -1,0 +1,7 @@
+<div class="feature-request-card border rounded p-3">
+  <div class="fw-semibold mb-1"><%= feature_request.title %></div>
+  <p class="text-muted small mb-2"><%= feature_request.description %></p>
+  <% feature_request.quotes.each do |quote| %>
+    <blockquote class="border-start ps-2 mb-1 small fst-italic text-muted">"<%= quote.text %>"</blockquote>
+  <% end %>
+</div>

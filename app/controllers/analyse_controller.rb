@@ -18,6 +18,12 @@ class AnalyseController < ApplicationController
     load_shared_data
   end
 
+  def refresh
+    loop_record = current_organization.loops.find_by!(slug: params[:slug])
+    AnalyzeLoopJob.perform_later(loop_record)
+    redirect_to analyse_path(loop_record.slug), notice: "Analysis started — this can take a moment."
+  end
+
   private
 
   def load_shared_data

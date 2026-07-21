@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_21_070000) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_21_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -42,13 +42,27 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_21_070000) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "feature_requests", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "github_issue_url"
+    t.bigint "insight_id", null: false
+    t.integer "status", default: 0, null: false
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["insight_id"], name: "index_feature_requests_on_insight_id"
+  end
+
   create_table "feedbacks", force: :cascade do |t|
     t.string "conversation_id"
     t.datetime "created_at", null: false
+    t.jsonb "extracted_points", default: {}, null: false
     t.bigint "loop_id", null: false
     t.string "respondent_email"
     t.string "sentiment"
     t.text "sentiment_rationale"
+    t.text "summary"
+    t.string "title"
     t.text "transcript"
     t.datetime "updated_at", null: false
     t.index ["conversation_id"], name: "index_feedbacks_on_conversation_id", unique: true
@@ -56,11 +70,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_21_070000) do
   end
 
   create_table "insights", force: :cascade do |t|
+    t.integer "analyzed_feedback_count", default: 0, null: false
     t.datetime "created_at", null: false
+    t.datetime "generated_at"
     t.bigint "loop_id", null: false
+    t.string "overall_sentiment"
     t.text "summary"
     t.datetime "updated_at", null: false
-    t.index ["loop_id"], name: "index_insights_on_loop_id"
+    t.index ["loop_id"], name: "index_insights_on_loop_id", unique: true
   end
 
   create_table "loops", force: :cascade do |t|
@@ -122,6 +139,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_21_070000) do
     t.integer "position"
     t.datetime "updated_at", null: false
     t.index ["loop_id"], name: "index_questions_on_loop_id"
+  end
+
+  create_table "quotes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "feedback_id", null: false
+    t.bigint "quotable_id", null: false
+    t.string "quotable_type", null: false
+    t.text "text"
+    t.datetime "updated_at", null: false
+    t.index ["feedback_id"], name: "index_quotes_on_feedback_id"
+    t.index ["quotable_type", "quotable_id"], name: "index_quotes_on_quotable"
   end
 
   create_table "solid_cable_messages", force: :cascade do |t|
@@ -282,6 +310,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_21_070000) do
     t.index ["user_id"], name: "index_teams_on_user_id"
   end
 
+  create_table "themes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.bigint "insight_id", null: false
+    t.integer "mention_count", default: 0, null: false
+    t.string "sentiment"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["insight_id"], name: "index_themes_on_insight_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.jsonb "dashboard_stat_keys"
@@ -299,6 +338,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_21_070000) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "feature_requests", "insights"
   add_foreign_key "feedbacks", "loops"
   add_foreign_key "insights", "loops"
   add_foreign_key "loops", "organizations"
@@ -307,6 +347,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_21_070000) do
   add_foreign_key "question_library_categories", "users"
   add_foreign_key "question_library_entries", "users"
   add_foreign_key "questions", "loops"
+  add_foreign_key "quotes", "feedbacks"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
@@ -315,4 +356,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_21_070000) do
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "teams", "organizations"
   add_foreign_key "teams", "users"
+  add_foreign_key "themes", "insights"
 end

@@ -5,6 +5,7 @@ class Feedback < ApplicationRecord
   SENTIMENT_VALUES = %w[excited positive neutral frustrated negative].freeze
 
   belongs_to :loop
+  has_many :quotes, dependent: :destroy
 
   # nil is valid: agents provisioned before data_collection existed return no sentiment,
   # and the extractor degrades to nil rather than raising on an unexpected payload shape.

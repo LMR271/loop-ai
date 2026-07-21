@@ -12,7 +12,10 @@ class RespondentsController < ApplicationController
 
   def signed_url
     @loop = Loop.find_by!(slug: params[:slug])
-    return head :not_found unless @loop.active?
+    # active? alone doesn't guarantee a provisioned agent (seeded/not-yet-activated
+    # loops can be active with a nil agent_id). Never hand a blank id to ElevenLabs —
+    # it 404s, which would surface as a 500. The front-end renders this gracefully.
+    return head :not_found unless @loop.active? && @loop.agent_id.present?
 
     url = RestClient.get("https://api.elevenlabs.io/v1/convai/conversation/get-signed-url",
                          { params: { agent_id: @loop.agent_id }, "xi-api-key" => ENV.fetch("ELEVENLABS_API_KEY", nil) })

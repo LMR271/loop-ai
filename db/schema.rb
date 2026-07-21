@@ -323,7 +323,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_21_100000) do
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.jsonb "dashboard_stat_keys"
+    t.jsonb "dashboard_stat_keys", default: [], null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "name"

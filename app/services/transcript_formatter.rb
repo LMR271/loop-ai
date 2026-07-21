@@ -1,6 +1,6 @@
 # Flattens ElevenLabs' transcript (an array of turn objects) into the plain-text
 # "Agent:"/"Respondent:" form db/seeds.rb already uses, so real and seeded feedback
-# render identically on the Analyse dashboard.
+# render identically on the Analyze dashboard.
 class TranscriptFormatter
   ROLE_LABELS = { "agent" => "Agent", "user" => "Respondent" }.freeze
 

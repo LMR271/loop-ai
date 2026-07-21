@@ -1,4 +1,4 @@
-module AnalyseHelper
+module AnalyzeHelper
   # Only "excited" gets a solid fill — it's the signal worth spotting across a long list.
   # The rest stay subtle so a page of feedback doesn't read as a bag of sweets.
   SENTIMENT_BADGES = {

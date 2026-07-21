@@ -1,0 +1,9 @@
+<div>
+  <% if local_assigns[:eyebrow].present? %>
+    <p class="text-uppercase text-muted fw-semibold small mb-1"><%= eyebrow %></p>
+  <% end %>
+  <h1 class="mb-1"><%= title %></h1>
+  <% if local_assigns[:subtitle].present? %>
+    <p class="text-muted mb-0"><%= subtitle %></p>
+  <% end %>
+</div>

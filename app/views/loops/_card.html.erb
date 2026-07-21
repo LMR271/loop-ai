@@ -15,8 +15,8 @@
     </p>
   </div>
   <div class="loop-card__actions">
-    <%= link_to analyse_path(loop_record.slug), class: "btn btn-outline-secondary",
-          "aria-label": "Analyse #{loop_record.name.presence || "this loop"}", title: "Analyse",
+    <%= link_to analyze_path(loop_record.slug), class: "btn btn-outline-secondary",
+          "aria-label": "Analyze #{loop_record.name.presence || "this loop"}", title: "Analyze",
           data: { controller: "tooltip", bs_placement: "top" } do %>
       <i class="fa-solid fa-chart-simple" aria-hidden="true"></i>
     <% end %>

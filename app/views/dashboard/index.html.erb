@@ -5,8 +5,11 @@
     <%= render "org_setup_banner" %>
   <% end %>
 
-  <div class="d-flex justify-content-end mb-4">
-    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#stat-settings-modal"
+  <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
+    <%= render "shared/page_header", title: "Dashboard",
+          subtitle: "An overview of your feedback loops." %>
+
+    <button type="button" class="btn btn-outline-secondary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#stat-settings-modal"
             aria-label="Customize dashboard stats" title="Customize stats" data-controller="tooltip" data-bs-placement="top">
       <i class="fa-solid fa-gear" aria-hidden="true"></i>
     </button>

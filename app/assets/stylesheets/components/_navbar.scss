@@ -44,6 +44,13 @@
   gap: $space-3;
 }
 
+// Login and Sign up sit side by side here, so Sign up borrows Log in's radius
+// instead of the sharper corners .app-new-loop-button uses everywhere else
+// (e.g. the authenticated "New Loop" button).
+.public-navbar__actions .app-new-loop-button {
+  border-radius: $border-radius;
+}
+
 .app-login-button {
   align-items: center;
   border: 1px solid var(--color-border-strong);

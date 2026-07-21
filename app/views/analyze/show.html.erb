@@ -1,7 +1,7 @@
-<% content_for :title, "Analyse" %>
+<% content_for :title, "Analyze | Loop AI" %>
 
 <div class="container py-4">
-  <h1 class="mb-4">Analyse</h1>
+  <h1 class="mb-4">Analyze</h1>
 
   <% if @loop.nil? %>
     <div class="alert alert-secondary">
@@ -28,7 +28,7 @@
 
     <div class="tab-content">
       <div class="tab-pane fade <%= "show active" if @active_tab == "all_loops" %>" id="all-loops-pane" role="tabpanel">
-        <%= form_with url: analyse_path(@loop.slug), method: :get, data: { controller: "range-filter" } do %>
+        <%= form_with url: analyze_path(@loop.slug), method: :get, data: { controller: "range-filter" } do %>
           <%= hidden_field_tag :tab, "all_loops" %>
 
           <div class="d-flex flex-wrap align-items-end gap-3 mb-4">
@@ -108,7 +108,7 @@
               <tbody>
                 <% @loops_table.each do |loop_record| %>
                   <tr>
-                    <td><%= link_to loop_record.name, analyse_path(loop_record.slug, tab: "per_loop") %></td>
+                    <td><%= link_to loop_record.name, analyze_path(loop_record.slug, tab: "per_loop") %></td>
                     <td><span class="badge text-bg-light"><%= loop_record.status %></span></td>
                     <td><%= loop_record.created_at.strftime("%b %d, %Y") %></td>
                     <td><%= loop_record.feedbacks.size %></td>
@@ -129,7 +129,7 @@
             <div class="analysis-loop-select">
               <select class="form-select" onchange="if (this.value) { window.location.href = this.value }">
                 <% @loops.each do |loop_record| %>
-                  <option value="<%= analyse_path(loop_record.slug, tab: @active_tab, range: @range, from: params[:from], to: params[:to], chart_type: @chart_type, data_view: @data_view) %>" <%= "selected" if @loop && loop_record.id == @loop.id %>>
+                  <option value="<%= analyze_path(loop_record.slug, tab: @active_tab, range: @range, from: params[:from], to: params[:to], chart_type: @chart_type, data_view: @data_view) %>" <%= "selected" if @loop && loop_record.id == @loop.id %>>
                     <%= loop_record.name %>
                   </option>
                 <% end %>
@@ -138,7 +138,7 @@
           <% end %>
         </div>
 
-        <%= form_with url: analyse_path(@loop.slug), method: :get, data: { controller: "range-filter" }, class: "d-flex flex-wrap align-items-end gap-3 mb-4" do %>
+        <%= form_with url: analyze_path(@loop.slug), method: :get, data: { controller: "range-filter" }, class: "d-flex flex-wrap align-items-end gap-3 mb-4" do %>
           <%= hidden_field_tag :tab, "per_loop" %>
 
           <div>

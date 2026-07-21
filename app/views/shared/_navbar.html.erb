@@ -30,7 +30,7 @@
           <% if loops_with_new_feedback.any? %>
             <% loops_with_new_feedback.each do |loop_record| %>
               <li>
-                <%= link_to analyse_path(loop_record.slug), class: "dropdown-item" do %>
+                <%= link_to analyze_path(loop_record.slug), class: "dropdown-item" do %>
                   <strong><%= loop_record.name %></strong> —
                   <%= pluralize(loop_record.unanalyzed_feedback_count, "new response") %>
                 <% end %>
@@ -83,14 +83,8 @@
     </div>
   <% else %>
     <div class="app-navbar__actions public-navbar__actions">
-      <%= link_to new_user_session_path, class: "btn app-login-button" do %>
-        <i class="fa-solid fa-arrow-right-to-bracket" aria-hidden="true"></i>
-        <span>Log in</span>
-      <% end %>
-      <%= link_to new_user_registration_path, class: "btn app-new-loop-button" do %>
-        <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
-        <span>Sign up</span>
-      <% end %>
+      <%= link_to "Log in", new_user_session_path, class: "btn app-login-button" %>
+      <%= link_to "Sign up", new_user_registration_path, class: "btn app-new-loop-button" %>
     </div>
   <% end %>
 </nav>

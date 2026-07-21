@@ -11,7 +11,8 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
 
   test "shows the insight panel and themes when an analysis exists" do
     loop_record = @user.loops.create!(name: "L")
-    insight = loop_record.create_insight!(summary: "Going well", overall_sentiment: "positive", analyzed_feedback_count: 1)
+    insight = loop_record.create_insight!(summary: "Going well", overall_sentiment: "positive",
+                                          analyzed_feedback_count: 1)
     insight.themes.create!(title: "Onboarding overwhelming", mention_count: 3, sentiment: "frustrated")
 
     get analyse_path(loop_record.slug)
@@ -41,6 +42,16 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to analyse_path(loop_record.slug)
     assert_match(/couldn.t|failed|try again/i, flash[:alert])
+  end
+
+  test "backfill enqueues one Stage 1 job per pending feedback" do
+    loop_record = analysable_loop_with_points
+    Feedback.create!(loop: loop_record, transcript: "unanalyzed one")
+
+    assert_enqueued_jobs 1, only: AnalyzeFeedbackJob do
+      post backfill_analyse_path(loop_record.slug)
+    end
+    assert_redirected_to analyse_path(loop_record.slug)
   end
 
   private

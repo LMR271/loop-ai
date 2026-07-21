@@ -28,6 +28,14 @@ class AnalyseController < ApplicationController
     redirect_to analyse_path(loop_record.slug), alert: "We couldn't generate the analysis just now — please try again."
   end
 
+  def backfill
+    loop_record = current_organization.loops.find_by!(slug: params[:slug])
+    loop_record.feedbacks_pending_extraction.find_each { |feedback| AnalyzeFeedbackJob.perform_later(feedback) }
+    count = loop_record.pending_extraction_count
+    notice = "Analyzing #{count} #{'response'.pluralize(count)} in the background — Refresh when it's done."
+    redirect_to analyse_path(loop_record.slug), notice: notice
+  end
+
   private
 
   def load_shared_data
@@ -66,15 +74,7 @@ class AnalyseController < ApplicationController
 
     loops = current_organization.loops.includes(:feedbacks)
     loops = loops.where(status: @status_filter) unless @status_filter == "all"
-    @loops_table = sort_loops(loops)
-  end
-
-  def sort_loops(loops)
-    case @sort
-    when "name" then loops.order(:name)
-    when "feedback_count" then loops.sort_by { |loop_record| -loop_record.feedbacks.size }
-    else loops.order(created_at: :desc)
-    end
+    @loops_table = LoopTableSorter.new(loops, sort: @sort).call
   end
 
   def status_filters

@@ -21,6 +21,8 @@ class AnalyseController < ApplicationController
   def refresh
     loop_record = current_organization.loops.find_by!(slug: params[:slug])
     analyzer = LoopAnalyzer.new(loop_record)
+    return redirect_to analyse_path(loop_record.slug), alert: "Nothing to analyze yet." if analyzer.analyzed_count.zero?
+
     LoopInsightWriter.new(loop_record, analyzer.call, analyzer.analyzed_count).call
     redirect_to analyse_path(loop_record.slug), notice: "Analysis updated."
   rescue LlmClient::Error => e
@@ -30,9 +32,10 @@ class AnalyseController < ApplicationController
 
   def backfill
     loop_record = current_organization.loops.find_by!(slug: params[:slug])
-    loop_record.feedbacks_pending_extraction.find_each { |feedback| AnalyzeFeedbackJob.perform_later(feedback) }
-    count = loop_record.pending_extraction_count
-    notice = "Analyzing #{count} #{'response'.pluralize(count)} in the background — Refresh when it's done."
+    pending = loop_record.feedbacks_pending_extraction.to_a
+    pending.each { |feedback| AnalyzeFeedbackJob.perform_later(feedback) }
+    notice = "Analyzing #{pending.size} #{'response'.pluralize(pending.size)} in the background — " \
+             "Refresh when it's done."
     redirect_to analyse_path(loop_record.slug), notice: notice
   end
 
@@ -69,16 +72,12 @@ class AnalyseController < ApplicationController
   def load_all_loops_data
     @loop_feedback_counts = loop_feedback_counts
 
-    @status_filter = params[:status_filter].presence_in(status_filters) || "all"
+    @status_filter = params[:status_filter].presence_in(%w[all] + Loop.statuses.keys) || "all"
     @sort = params[:sort].presence_in(SORTS) || "newest"
 
     loops = current_organization.loops.includes(:feedbacks)
     loops = loops.where(status: @status_filter) unless @status_filter == "all"
     @loops_table = LoopTableSorter.new(loops, sort: @sort).call
-  end
-
-  def status_filters
-    %w[all] + Loop.statuses.keys
   end
 
   def feedback_counts_by_period(scoped_feedbacks)

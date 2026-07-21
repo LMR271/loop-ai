@@ -44,6 +44,18 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
     assert_match(/couldn.t|failed|try again/i, flash[:alert])
   end
 
+  test "refresh flashes a notice and skips the LLM call when nothing is analyzed" do
+    loop_record = @user.loops.create!(name: "L")
+
+    stub_instance_method(LlmClient, :complete, ->(**) { raise "should not be called" }) do
+      post refresh_analyse_path(loop_record.slug)
+    end
+
+    assert_redirected_to analyse_path(loop_record.slug)
+    assert_match(/nothing to analyze/i, flash[:alert])
+    assert_nil loop_record.reload.insight
+  end
+
   test "backfill enqueues one Stage 1 job per pending feedback" do
     loop_record = analysable_loop_with_points
     Feedback.create!(loop: loop_record, transcript: "unanalyzed one")

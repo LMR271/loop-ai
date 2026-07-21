@@ -1,0 +1,6 @@
+<p style="margin: 0 0 16px;">Hi <%= @team_member.user.name.presence || "there" %>,</p>
+
+<p style="margin: 0 0 16px;">You're in! You've joined <strong><%= @workspace_possessive %></strong> Loop AI workspace as
+  <strong><%= @team_member.role %></strong>.</p>
+
+<%= render "mailer/button", text: "Go to your dashboard", url: dashboard_url %>

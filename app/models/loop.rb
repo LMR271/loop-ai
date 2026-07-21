@@ -1,9 +1,13 @@
 class Loop < ApplicationRecord
   include PgSearch::Model
 
+  has_one_attached :image
+  attr_accessor :remove_image
+
   has_secure_token :slug
 
-  belongs_to :user
+  belongs_to :user, optional: true
+  belongs_to :organization
 
   enum :status, { draft: 0, active: 1, closed: 2 }
 

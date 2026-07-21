@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { registrations: "users/registrations" }
   root to: "pages#home"
 
   get "i/:slug", to: "respondents#show", as: :respondent # routes of external users so they don't need to authenticate when they click on the link
@@ -17,9 +17,19 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :question_library_entries, path: "question-library", except: %i[new show] do
+    member do
+      post :use
+    end
+  end
+  resources :question_library_categories, path: "question-library/categories", only: %i[create edit update destroy]
+
   get "team", to: "team#index", as: :team
   post "team", to: "team#create"
   delete "team/:id", to: "team#destroy", as: :team_member
+
+  patch "workspace", to: "workspace#update", as: :workspace
+  delete "workspace", to: "workspace#destroy"
 
   get "invitations/:invitation_token", to: "invitations#show", as: :invitation
   patch "invitations/:invitation_token", to: "invitations#update"

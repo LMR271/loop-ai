@@ -5,9 +5,9 @@ class WorkspaceController < ApplicationController
   def update
     if current_organization.update(organization_params)
       current_organization.logo.purge if current_organization.remove_logo == "1"
-      redirect_to edit_user_registration_path, notice: "Organization updated."
+      redirect_to update_redirect_path, notice: "Organization updated."
     else
-      redirect_to edit_user_registration_path, alert: current_organization.errors.full_messages.to_sentence
+      redirect_to update_redirect_path, alert: current_organization.errors.full_messages.to_sentence
     end
   end
 
@@ -17,6 +17,12 @@ class WorkspaceController < ApplicationController
   end
 
   private
+
+  def update_redirect_path
+    return dashboard_path if params[:return_to] == "onboarding"
+
+    edit_user_registration_path
+  end
 
   def organization_params
     params.require(:organization).permit(

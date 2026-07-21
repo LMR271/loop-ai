@@ -1,11 +1,5 @@
 module Users
   class RegistrationsController < Devise::RegistrationsController
-    def create
-      super do |resource|
-        UserMailer.welcome(resource).deliver_later if resource.persisted?
-      end
-    end
-
     def destroy
       return if blocked_by_workspace_ownership?
 
@@ -23,6 +17,12 @@ module Users
       redirect_to edit_user_registration_path,
                   alert: "Delete your workspace before deleting your account."
       true
+    end
+
+    # Confirmable blocks sign-in until the email is verified, so a fresh signup
+    # lands on a page saying to check their inbox rather than the sign-in page.
+    def after_inactive_sign_up_path_for(resource)
+      check_email_path(email: resource.email)
     end
   end
 end

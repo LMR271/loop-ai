@@ -5,8 +5,10 @@ require "rails/test_help"
 # Confirmable requires clicking a real confirmation link before sign-in works, but
 # tests build users directly rather than through that email flow - auto-confirm
 # them so existing sign_in-based tests don't each need to opt in individually.
+# Tests that specifically exercise the confirmation flow itself wrap their body in
+# `without_auto_confirm` to get real, unconfirmed users instead.
 User.class_eval do
-  after_initialize { self.confirmed_at ||= Time.current if new_record? }
+  after_initialize { self.confirmed_at ||= Time.current if new_record? && !Thread.current[:skip_auto_confirm] }
 end
 
 module ActiveSupport
@@ -18,6 +20,13 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+
+    def without_auto_confirm
+      Thread.current[:skip_auto_confirm] = true
+      yield
+    ensure
+      Thread.current[:skip_auto_confirm] = false
+    end
 
     # Temporarily replace an instance method with `replacement` for the duration
     # of the block, then restore the original. A minimal stand-in for the mocking

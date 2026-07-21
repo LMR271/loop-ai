@@ -26,19 +26,40 @@ class InvitationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_user_session_path
   end
 
-  test "update creates the account, accepts the invite, signs in, and sends a welcome email" do
-    patch invitation_path(@team_member.invitation_token), params: {
-      user: { name: "Alex Teammate", password: "password123", password_confirmation: "password123" }
-    }
+  test "update creates the account, accepts the invite, and redirects to check your email unconfirmed" do
+    without_auto_confirm do
+      patch invitation_path(@team_member.invitation_token), params: {
+        user: { name: "Alex Teammate", password: "password123", password_confirmation: "password123" }
+      }
+    end
 
-    assert_redirected_to dashboard_path
+    assert_redirected_to check_email_path(email: "teammate@example.com")
 
     @team_member.reload
     assert @team_member.accepted?
     assert_equal "teammate@example.com", @team_member.user.email
+    assert_not @team_member.user.confirmed?
 
     welcome_job = enqueued_jobs.find { |job| job[:args].first == "TeamMailer" }
-    assert welcome_job, "expected a TeamMailer delivery job to be enqueued"
+    assert_nil welcome_job, "the team welcome email should wait until the account is confirmed"
+  end
+
+  test "confirming an invited teammate's account signs them in and sends the team welcome email" do
+    without_auto_confirm do
+      patch invitation_path(@team_member.invitation_token), params: {
+        user: { name: "Alex Teammate", password: "password123", password_confirmation: "password123" }
+      }
+    end
+
+    teammate = @team_member.reload.user
+
+    get user_confirmation_path(confirmation_token: teammate.confirmation_token)
+
+    assert_redirected_to dashboard_path
+    assert_not flash[:show_org_setup], "an invited teammate isn't the workspace owner, so no org setup prompt"
+
+    welcome_job = enqueued_jobs.find { |job| job[:args].first == "TeamMailer" }
+    assert welcome_job, "expected a TeamMailer delivery job to be enqueued after confirming"
     assert_equal "welcome", welcome_job[:args][1]
   end
 

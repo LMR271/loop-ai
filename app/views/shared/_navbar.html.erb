@@ -83,8 +83,14 @@
     </div>
   <% else %>
     <div class="app-navbar__actions public-navbar__actions">
-      <%= link_to "Log in", new_user_session_path, class: "btn app-login-button" %>
-      <%= link_to "Sign up", new_user_registration_path, class: "app-new-loop-button" %>
+      <%= link_to new_user_session_path, class: "btn app-login-button" do %>
+        <i class="fa-solid fa-arrow-right-to-bracket" aria-hidden="true"></i>
+        <span>Log in</span>
+      <% end %>
+      <%= link_to new_user_registration_path, class: "btn app-new-loop-button" do %>
+        <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
+        <span>Sign up</span>
+      <% end %>
     </div>
   <% end %>
 </nav>

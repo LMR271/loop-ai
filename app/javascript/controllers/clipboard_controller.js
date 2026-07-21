@@ -8,9 +8,9 @@ export default class extends Controller {
     this.sourceTarget.select()
 
     if (this.hasButtonTarget) {
-      const original = this.buttonTarget.textContent
-      this.buttonTarget.textContent = "Copied"
-      setTimeout(() => (this.buttonTarget.textContent = original), 1500)
+      const icon = this.buttonTarget.querySelector("i")
+      icon.classList.replace("fa-copy", "fa-check")
+      setTimeout(() => icon.classList.replace("fa-check", "fa-copy"), 1500)
     }
   }
 }

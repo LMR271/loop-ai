@@ -63,8 +63,12 @@
               </td>
               <% if current_user_workspace_admin? %>
                 <td>
-                  <%= button_to "Revoke", team_member_path(team_member), method: :delete, class: "btn btn-sm btn-outline-danger",
-                        form: { data: { turbo_confirm: "Revoke access for #{team_member.email}?" } } %>
+                  <%= button_to team_member_path(team_member), method: :delete, class: "btn btn-sm btn-outline-danger",
+                        "aria-label": "Revoke access for #{team_member.email}", title: "Revoke access",
+                        data: { controller: "tooltip", bs_placement: "top" },
+                        form: { data: { turbo_confirm: "Revoke access for #{team_member.email}?" } } do %>
+                    <i class="fa-solid fa-user-slash" aria-hidden="true"></i>
+                  <% end %>
                 </td>
               <% end %>
             </tr>

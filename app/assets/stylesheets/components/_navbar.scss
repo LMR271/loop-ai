@@ -45,9 +45,12 @@
 }
 
 .app-login-button {
+  align-items: center;
   border: 1px solid var(--color-border-strong);
   color: var(--color-text-control);
+  display: inline-flex;
   font-weight: 600;
+  gap: $space-2;
   padding: $space-2-5 $space-4-5;
 }
 

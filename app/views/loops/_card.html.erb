@@ -15,15 +15,31 @@
     </p>
   </div>
   <div class="loop-card__actions">
-    <%= link_to "Analyse", analyse_path(loop_record.slug), class: "btn btn-outline-secondary" %>
-    <%= link_to "Edit", edit_loop_path(loop_record), class: "btn btn-outline-secondary" %>
+    <%= link_to analyse_path(loop_record.slug), class: "btn btn-outline-secondary",
+          "aria-label": "Analyse #{loop_record.name.presence || "this loop"}", title: "Analyse",
+          data: { controller: "tooltip", bs_placement: "top" } do %>
+      <i class="fa-solid fa-chart-simple" aria-hidden="true"></i>
+    <% end %>
+    <%= link_to edit_loop_path(loop_record), class: "btn btn-outline-secondary",
+          "aria-label": "Edit #{loop_record.name.presence || "this loop"}", title: "Edit",
+          data: { controller: "tooltip", bs_placement: "top" } do %>
+      <i class="fa-solid fa-pen" aria-hidden="true"></i>
+    <% end %>
     <% if current_user_workspace_admin? %>
-      <%= button_to "Delete", loop_path(loop_record), method: :delete,
+      <%= button_to loop_path(loop_record), method: :delete,
             class: "btn btn-outline-danger",
-            form: { data: { turbo_confirm: "Delete #{loop_record.name.presence || "this loop"}? This also removes its feedback and questions." } } %>
+            "aria-label": "Delete #{loop_record.name.presence || "this loop"}", title: "Delete",
+            data: { controller: "tooltip", bs_placement: "top" },
+            form: { data: { turbo_confirm: "Delete #{loop_record.name.presence || "this loop"}? This also removes its feedback and questions." } } do %>
+        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+      <% end %>
     <% end %>
     <% if current_user_workspace_admin? && loop_record.pending_approval? %>
-      <%= button_to "Approve", approve_loop_path(loop_record), method: :post, class: "btn btn-outline-success" %>
+      <%= button_to approve_loop_path(loop_record), method: :post, class: "btn btn-outline-success",
+            "aria-label": "Approve #{loop_record.name.presence || "this loop"}", title: "Approve",
+            data: { controller: "tooltip", bs_placement: "top" } do %>
+        <i class="fa-solid fa-check" aria-hidden="true"></i>
+      <% end %>
     <% end %>
   </div>
 </article>

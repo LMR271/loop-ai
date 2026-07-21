@@ -53,3 +53,23 @@
   color: var(--color-text);
   font-weight: 600;
 }
+
+.analysis-stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-8;
+}
+
+.analysis-stat-row dt {
+  color: var(--color-text-muted);
+  font-size: $font-size-sm;
+  margin-bottom: $space-1;
+  text-transform: uppercase;
+}
+
+.analysis-stat-row dd {
+  color: var(--color-text-strong);
+  font-size: $font-size-2xl;
+  font-weight: 700;
+  margin-bottom: 0;
+}

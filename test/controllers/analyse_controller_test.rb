@@ -67,6 +67,20 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to analyse_path(loop_record.slug)
   end
 
+  test "overview shows a live stat row with response, theme, and feature request counts" do
+    loop_record = @user.loops.create!(name: "L")
+    insight = loop_record.create_insight!(summary: "S", overall_sentiment: "positive", analyzed_feedback_count: 1)
+    insight.themes.create!(title: "T1", mention_count: 1, sentiment: "positive")
+    loop_record.feedbacks.create!(transcript: "hi one")
+    loop_record.feedbacks.create!(transcript: "hi two")
+
+    get analyse_path(loop_record.slug)
+
+    values = css_select(".analysis-stat-row dd").map(&:text)
+    assert_equal ["2", "1", "0"], values[0..2]
+    assert_match(/Positive/, values[3])
+  end
+
   private
 
   def analysable_loop_with_points

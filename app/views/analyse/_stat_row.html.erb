@@ -1,0 +1,18 @@
+<dl class="analysis-stat-row mb-4">
+  <div>
+    <dt>Responses</dt>
+    <dd><%= loop_record.feedbacks.size %></dd>
+  </div>
+  <div>
+    <dt>Themes found</dt>
+    <dd><%= loop_record.insight&.themes&.size || 0 %></dd>
+  </div>
+  <div>
+    <dt>Feature requests</dt>
+    <dd><%= loop_record.insight&.feature_requests&.size || 0 %></dd>
+  </div>
+  <div>
+    <dt>Overall sentiment</dt>
+    <dd><%= sentiment_badge(loop_record.insight&.overall_sentiment) || content_tag(:span, "—", class: "text-muted fs-6") %></dd>
+  </div>
+</dl>

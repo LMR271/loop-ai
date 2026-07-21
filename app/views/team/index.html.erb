@@ -1,7 +1,11 @@
-<% content_for :title, "Team" %>
+<% content_for :title, "Team | Loop AI" %>
 
 <div class="container py-4">
-  <h1 class="mb-4">Team</h1>
+  <div class="mb-4">
+    <%= render "shared/page_header", eyebrow: "Workspace",
+          title: "Team",
+          subtitle: "Invite teammates and manage their access." %>
+  </div>
 
   <% if current_user_workspace_admin? %>
     <%= form_with model: @team_member, url: team_path, class: "d-flex flex-wrap align-items-end gap-3 mb-4" do |form| %>

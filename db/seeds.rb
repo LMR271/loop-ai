@@ -51,7 +51,7 @@ end
 # Analysis-layer seeding (sentiment, per-feedback summaries, and the
 # Insight -> Theme/FeatureRequest -> Quote tree). These write the same records
 # the live LLM pipeline (FeedbackAnalyzer / LoopInsightWriter) would produce,
-# so the Analyse dashboard looks populated without any OpenAI calls.
+# so the Analyze dashboard looks populated without any OpenAI calls.
 # ---------------------------------------------------------------------------
 
 # Expands a {sentiment => weight} hash into a weighted pool and samples it, so a

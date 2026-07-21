@@ -1,3 +1,9 @@
-<div class="text-center mt-5">
-  <h1>This loop isn't accepting responses right now</h1>
+<% content_for :title, "Not accepting responses" %>
+
+<div class="respondent-card">
+  <% if @loop.logo_url.present? %>
+    <img src="<%= @loop.logo_url %>" alt="Logo" class="respondent-logo">
+  <% end %>
+  <h1 class="respondent-card__title">This loop isn't accepting responses right now</h1>
+  <p class="respondent-card__lead">Check back later, or reach out to whoever shared this link with you.</p>
 </div>

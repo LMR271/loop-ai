@@ -55,7 +55,7 @@
       <% end %>
     </div>
 
-    <button type="button" class="btn app-login-button question-add-control w-100" data-action="questions-form#add">
+    <button type="button" class="btn btn-outline-secondary question-add-control w-100" data-action="questions-form#add">
       <i class="fa-solid fa-plus" aria-hidden="true"></i>
       Add another question
     </button>
@@ -68,12 +68,12 @@
   </section>
 
   <div class="mt-4 d-flex gap-2">
-    <%= button_tag type: "submit", class: "btn app-new-loop-button loop-form__submit" do %>
+    <%= button_tag type: "submit", class: "btn btn-primary loop-form__submit" do %>
       <span><%= loop.persisted? ? "Save changes" : "Create loop" %></span>
       <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
     <% end %>
     <% if loop.persisted? %>
-      <%= link_to "Cancel", edit_loop_path(loop), class: "btn app-login-button" %>
+      <%= link_to "Cancel", edit_loop_path(loop), class: "btn btn-outline-secondary" %>
     <% end %>
   </div>
 <% end %>

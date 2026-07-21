@@ -1,8 +1,10 @@
 class WorkspaceController < ApplicationController
+  before_action :require_workspace_admin!, only: :update
   before_action :require_workspace_owner!, only: :destroy
 
   def update
     if current_organization.update(organization_params)
+      current_organization.logo.purge if current_organization.remove_logo == "1"
       redirect_to edit_user_registration_path, notice: "Organization updated."
     else
       redirect_to edit_user_registration_path, alert: current_organization.errors.full_messages.to_sentence
@@ -17,7 +19,10 @@ class WorkspaceController < ApplicationController
   private
 
   def organization_params
-    params.require(:organization).permit(:name)
+    params.require(:organization).permit(
+      :name, :logo, :remove_logo, :theme_heading_font, :theme_body_font,
+      *Organization::THEME_COLOR_ATTRIBUTES
+    )
   end
 
   def require_workspace_owner!

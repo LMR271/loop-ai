@@ -13,7 +13,11 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <% font_families = respondent_google_font_families(@loop) %>
+    <% if font_families.any? %>
+      <link href="https://fonts.googleapis.com/css2?<%= font_families.map { |family| "family=#{family}" }.join('&') %>&display=swap"
+            rel="stylesheet">
+    <% end %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "respondent", "data-turbo-track": "reload" %>
@@ -23,7 +27,7 @@
   <body class="respondent-body">
     <%= render "shared/flashes" %>
 
-    <main class="respondent-page">
+    <main class="respondent-page" style="<%= respondent_theme_style(@loop) %>">
       <%= yield %>
     </main>
   </body>

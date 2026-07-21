@@ -2,6 +2,13 @@ ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
 
+# Confirmable requires clicking a real confirmation link before sign-in works, but
+# tests build users directly rather than through that email flow - auto-confirm
+# them so existing sign_in-based tests don't each need to opt in individually.
+User.class_eval do
+  after_initialize { self.confirmed_at ||= Time.current if new_record? }
+end
+
 module ActiveSupport
   class TestCase
     # Run tests in parallel with specified workers

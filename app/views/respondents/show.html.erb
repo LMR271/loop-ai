@@ -1,22 +1,40 @@
-<div class="container mt-5">
-  <div class="text-center mb-4">
+<div class="respondent-card" data-controller="interview" data-interview-slug-value="<%= @loop.slug %>">
+  <header class="respondent-card__brand text-center">
     <% if @loop.logo_url.present? %>
-      <img src="<%= @loop.logo_url %>" alt="<%= @loop.name %>" style="max-height: 80px;">
+      <img src="<%= @loop.logo_url %>" alt="Logo" class="respondent-logo">
     <% end %>
-    <h1><%= @loop.name %></h1>
-    <p class="lead"><%= @loop.description %></p>
+    <h1 class="respondent-card__title">Share your feedback</h1>
+    <p class="respondent-card__lead">
+      You've been invited to a short voice conversation. Tap play when you're ready — it only takes a few minutes.
+    </p>
+  </header>
+
+  <div class="orb is-idle" data-interview-target="orb">
+    <button type="button"
+            class="orb__play"
+            data-action="click->interview#start"
+            data-interview-target="startButton"
+            aria-label="Start interview">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+    </button>
   </div>
 
-    <div data-controller="interview" data-interview-slug-value="<%= @loop.slug %>">
-      <button data-action="click->interview#start" data-interview-target="startButton" class="btn btn-primary btn-lg">
-        🎙️ Start Interview
-      </button>
-      <button data-action="click->interview#end" data-interview-target="endButton" class="btn btn-outline-danger btn-lg" hidden>
-        ⏹ End Interview
-      </button>
-      <p data-interview-target="status" class="mt-3 fw-semibold" role="status" aria-live="polite"></p>
-      <p class="text-muted mt-1">
-        <small><%= @loop.questions.count %> questions</small>
-      </p>
-    </div>
+  <p data-interview-target="status" class="respondent-status" role="status" aria-live="polite"></p>
+
+  <button type="button"
+          class="btn btn-outline-secondary btn-sm respondent-end"
+          data-action="click->interview#end"
+          data-interview-target="endButton"
+          hidden>
+    End interview
+  </button>
+
+  <div class="respondent-thankyou text-center" data-interview-target="thankYou" hidden>
+    <h2>Thanks for your feedback!</h2>
+    <p class="text-muted">Your response has been recorded — you can close this tab now.</p>
+  </div>
+
+  <p class="respondent-meta text-muted">
+    <small><%= pluralize(@loop.questions.count, "question") %></small>
+  </p>
 </div>

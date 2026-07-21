@@ -1,7 +1,7 @@
 <% content_for :title, "Join the team" %>
 
-<div class="container py-5" style="max-width: 480px;">
-  <h1 class="mb-2">Join <%= @team_member.account_owner.name %>'s workspace</h1>
+<div class="page-content--compact container py-5">
+  <h1 class="mb-2">Join <%= @team_member.organization.owner.name %>'s workspace</h1>
   <p class="text-muted mb-4">You've been invited as <strong><%= @team_member.role %></strong>. Set a password to get started.</p>
 
   <%= form_with model: @user, url: invitation_path(@team_member.invitation_token), method: :patch do |form| %>

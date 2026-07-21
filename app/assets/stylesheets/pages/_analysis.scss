@@ -1,0 +1,32 @@
+// Analysis-specific layout helpers replace former inline presentation rules.
+.page-content--standard {
+  max-width: 47.5rem;
+}
+
+.page-content--compact {
+  max-width: 30rem;
+}
+
+.respondent-logo {
+  max-height: 5rem;
+}
+
+.analysis-chart-empty {
+  min-height: 10rem;
+}
+
+.analysis-loop-select {
+  min-width: 16.25rem;
+}
+
+.analysis-chart-card,
+.analysis-summary-card {
+  border: 1px solid var(--color-border);
+  border-radius: $radius-md;
+  min-height: 13.75rem;
+  padding: $space-6;
+}
+
+.analysis-transcript {
+  white-space: pre-wrap;
+}

@@ -24,10 +24,10 @@ class DeployControllerTest < ActionDispatch::IntegrationTest
     assert_select ".col-lg-4 .deploy-active-overview", count: 0
     assert_select "summary", text: /#{draft.name}/
     assert_select "summary", text: /#{closed.name}/
-    assert_select ".deploy-active-card", text: /Live research/
-    assert_select ".deploy-active-card .badge", text: "Live"
+    assert_select ".deploy-active-list .deploy-loop__name", text: "Live research"
+    assert_select ".deploy-active-list .badge", text: "Live"
     assert_select "summary", text: "Private draft", count: 0
-    assert_select ".deploy-active-card", text: "Private draft", count: 0
+    assert_select ".deploy-active-list", text: /Private draft/, count: 0
     assert_select "form[action='#{activate_loop_path(draft)}']", count: 1
     assert_select "a[href='#{edit_loop_path(draft)}']", text: "Edit Loop", count: 1
     assert_select "input[value='#{respondent_url(draft.slug)}']", count: 1

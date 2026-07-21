@@ -1,35 +1,90 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<% content_for :title, "Settings" %>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
+<div class="container py-4" style="max-width: 640px;">
+  <h1 class="mb-4">Settings</h1>
 
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= f.error_notification %>
 
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+    <section class="settings-card mb-4">
+      <h2 class="h5 mb-1">Profile</h2>
+      <p class="text-muted small mb-4">Your name and login details.</p>
+
+      <%= f.input :name, required: false, autofocus: true %>
+      <%= f.input :email, required: true %>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+      <% end %>
+
+      <%= f.input :password,
+                  hint: "leave it blank if you don't want to change it",
+                  required: false,
+                  input_html: { autocomplete: "new-password" } %>
+      <%= f.input :password_confirmation,
+                  required: false,
+                  input_html: { autocomplete: "new-password" } %>
+    </section>
+
+    <section class="settings-card mb-4">
+      <%= f.input :current_password,
+                  hint: "Enter your current password to save any of the changes above.",
+                  required: true,
+                  input_html: { autocomplete: "current-password" } %>
+
+      <%= f.button :submit, "Save changes", class: "btn btn-primary" %>
+    </section>
+  <% end %>
+
+  <%= simple_form_for(current_organization, url: workspace_path, method: :patch) do |f| %>
+    <section class="settings-card mb-4">
+      <h2 class="h5 mb-1">Organization</h2>
+      <p class="text-muted small mb-4">Shown to your team and in emails sent on your behalf.</p>
+
+      <%= f.input :name, label: "Organization name", required: false %>
+      <%= f.button :submit, "Save organization", class: "btn btn-primary" %>
+    </section>
+  <% end %>
+
+  <% if current_user_workspace_admin? %>
+    <section class="settings-card mb-4">
+      <h2 class="h5 mb-1">Team</h2>
+      <p class="text-muted small mb-3">Invite teammates and manage their roles.</p>
+      <%= link_to "Manage team", team_path, class: "btn btn-outline-secondary btn-sm" %>
+    </section>
+  <% end %>
+
+  <% if current_user.workspace_owner? %>
+    <section class="settings-card settings-card--danger mb-4">
+      <h2 class="h5 mb-1">Delete workspace</h2>
+      <p class="text-muted small mb-3">
+        Permanently deletes all your loops and feedback, and removes every teammate. Your own account stays active.
+      </p>
+
+      <%= form_with url: workspace_path, method: :delete,
+            data: { controller: "type-to-confirm", "type-to-confirm-phrase-value": "DELETE" } do %>
+        <label class="form-label small" for="delete-workspace-confirm">Type <strong>DELETE</strong> to confirm</label>
+        <input type="text" id="delete-workspace-confirm" class="form-control mb-2" autocomplete="off"
+               data-type-to-confirm-target="input" data-action="input->type-to-confirm#check">
+        <button type="submit" class="btn btn-outline-danger btn-sm" data-type-to-confirm-target="submit" disabled>
+          Delete workspace
+        </button>
+      <% end %>
+    </section>
+  <% end %>
+
+  <section class="settings-card settings-card--danger">
+    <h2 class="h5 mb-1">Delete account</h2>
+    <p class="text-muted small mb-3">This can't be undone.</p>
+
+    <%= form_with url: registration_path(resource_name), method: :delete,
+          data: { controller: "type-to-confirm", "type-to-confirm-phrase-value": "DELETE" } do %>
+      <label class="form-label small" for="delete-account-confirm">Type <strong>DELETE</strong> to confirm</label>
+      <input type="text" id="delete-account-confirm" class="form-control mb-2" autocomplete="off"
+             data-type-to-confirm-target="input" data-action="input->type-to-confirm#check">
+      <button type="submit" class="btn btn-outline-danger btn-sm" data-type-to-confirm-target="submit" disabled>
+        Delete account
+      </button>
     <% end %>
-
-    <%= f.input :password,
-                hint: "leave it blank if you don't want to change it",
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :current_password,
-                hint: "we need your current password to confirm your changes",
-                required: true,
-                input_html: { autocomplete: "current-password" } %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+  </section>
+</div>

@@ -5,7 +5,7 @@ class LoopsController < ApplicationController
 
   def index
     @query = params[:q].to_s.strip
-    @loops = current_workspace_owner.loops.includes(:feedbacks).order(created_at: :desc)
+    @loops = current_organization.loops.includes(:feedbacks).order(created_at: :desc)
     @loops = @loops.search_by_name_and_description(@query) if @query.present?
   end
 
@@ -15,14 +15,14 @@ class LoopsController < ApplicationController
   end
 
   def new
-    @loop = current_workspace_owner.loops.build
+    @loop = current_organization.loops.build(user: current_user)
     @loop.questions.build
     prepare_question_library
   end
 
   def create
-    @loop = current_workspace_owner.loops.build(loop_params)
-    @loop.pending_approval = !current_user_workspace_admin?
+    @loop = current_organization.loops.build(loop_params)
+    @loop.assign_attributes(user: current_user, pending_approval: !current_user_workspace_admin?)
 
     if @loop.save
       redirect_to dashboard_path, notice: "Loop created."
@@ -123,7 +123,7 @@ class LoopsController < ApplicationController
   end
 
   def set_loop
-    @loop = current_workspace_owner.loops.includes(:questions).find(params[:id])
+    @loop = current_organization.loops.includes(:questions).find(params[:id])
   end
 
   def loop_params

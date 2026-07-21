@@ -56,6 +56,9 @@ gem "groupdate"
 # HTTP client for calling the ElevenLabs conversational-agent API
 gem "rest-client"
 
+# Sends production email through Postmark's API [https://github.com/ActiveCampaign/postmark-rails]
+gem "postmark-rails"
+
 group :development, :test do
   gem "dotenv-rails"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -74,6 +77,9 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+
+  # Preview sent emails in the browser instead of a real inbox [https://github.com/ryanb/letter_opener]
+  gem "letter_opener"
 end
 
 group :test do

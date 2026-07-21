@@ -1,0 +1,9 @@
+<p>Hi <%= @loop.organization.owner.name %>,</p>
+
+<p>New feedback just came in on <strong><%= @loop.name %></strong>.</p>
+
+<% if @feedback.sentiment.present? %>
+  <p>Sentiment: <strong><%= @feedback.sentiment.capitalize %></strong></p>
+<% end %>
+
+<p><%= link_to "View it in Analyse", @analyse_url %></p>

@@ -1,25 +1,123 @@
-// The following code is to unify the corporate identity of our service. Listed here are predefined colours and typo-types!
+// Shared design primitives. Component styles should use these semantic tokens
+// rather than literal visual values. A future theme only needs to override the
+// custom properties below.
 
 // Typography
 $body-font: "Atkinson Hyperlegible Next", sans-serif;
 $headers-font: "Atkinson Hyperlegible Next", sans-serif;
+$font-size-xs: .75rem;
+$font-size-sm: .875rem;
+$font-size-base: 1rem;
+$font-size-md: 1.2rem;
+$font-size-lg: 1.25rem;
+$font-size-xl: 1.35rem;
+$font-size-2xl: 1.5rem;
+$font-size-3xl: 2rem;
+$font-size-4xl: 2.5rem;
 
-// Colors
-$color-background: #ffffff;
-$color-surface: #ffffff;
+// Spacing
+$space-1: .25rem;
+$space-1-5: .35rem;
+$space-2: .5rem;
+$space-2-25: .55rem;
+$space-2-5: .65rem;
+$space-2-75: .7rem;
+$space-3: .75rem;
+$space-3-5: .875rem;
+$space-4: 1rem;
+$space-4-5: 1.125rem;
+$space-5: 1.25rem;
+$space-5-25: 1.3rem;
+$space-6: 1.5rem;
+$space-7: 1.75rem;
+$space-8: 2rem;
+$space-10: 2.5rem;
+$space-14: 3.5rem;
+$space-16: 4rem;
 
-$color-text: #1f1f1f;
-$color-text-muted: #6b6b6b;
-
-$color-border: #e5e5e5;
-
-$color-primary: #1f1f1f;
-$color-primary-hover: #333333;
-
-// Radius
+// Shape, elevation, and motion
+$radius-none: 0;
+$radius-xs: .0625rem;
+$radius-bootstrap: .125rem;
 $radius-sm: .5rem;
+$radius-card: .625rem;
 $radius-md: .75rem;
 $radius-lg: 1rem;
+$radius-pill: 999px;
+$radius-circle: 50%;
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, .2);
+$shadow-color: rgba(0,0,0,.08);
+$shadow-card: 0 2px 6px $shadow-color;
+$shadow-raised: 0 $space-1-5 $space-4 rgba(41, 37, 36, .08);
+$shadow-dropdown: 0 .5rem 1rem rgba(0, 0, 0, .1);
+$transition-fast: .15s;
+$transition-base: .2s;
+$transition-easing: ease;
 
-// Shadows
-$shadow-card: 0 2px 6px rgba(0,0,0,.08);
+// Default light theme. Keep colour assignments in this one block.
+$color-background: #ffffff;
+$color-background-muted: #f4f4f4;
+$color-surface: #ffffff;
+$color-surface-subtle: #fafaf9;
+$color-surface-hover: #f5f5f5;
+
+$color-text: #1f1f1f;
+$color-text-strong: #1c1917;
+$color-text-muted: #78716c;
+$color-text-control: #292929;
+
+$color-border: #e7e5e4;
+$color-border-subtle: #f0f0f0;
+$color-border-strong: #d9d9d9;
+$color-border-dashed: #d6d3d1;
+$color-border-input: #858585;
+
+$color-primary: #2F3437;
+$color-primary-ink: #1f1f1f;
+$color-primary-hover:  #25292C;
+$color-primary-active: #1B1E20;
+
+$color-success: #1edd88;
+$color-warning: #e67e22;
+$color-danger: #fd1015;
+$color-info: #ffc65a;
+
+$color-accent-subtle: #eef2ff;
+$color-accent: #4f46e5;
+
+$color-focus: rgba(47, 52, 55, .25);
+$color-disabled: #B8B8B8;
+$color-disabled-text: #707070;
+
+$color-on-primary: #ffffff;
+
+:root {
+  --color-background: #{$color-background};
+  --color-background-muted: #{$color-background-muted};
+  --color-surface: #{$color-surface};
+  --color-surface-subtle: #{$color-surface-subtle};
+  --color-surface-hover: #{$color-surface-hover};
+  --color-text: #{$color-text};
+  --color-text-strong: #{$color-text-strong};
+  --color-text-muted: #{$color-text-muted};
+  --color-text-control: #{$color-text-control};
+  --color-border: #{$color-border};
+  --color-border-subtle: #{$color-border-subtle};
+  --color-border-strong: #{$color-border-strong};
+  --color-border-dashed: #{$color-border-dashed};
+  --color-border-input: #{$color-border-input};
+  --color-primary: #{$color-primary};
+  --color-primary-ink: #{$color-primary-ink};
+  --color-primary-hover: #{$color-primary-hover};
+  --color-primary-active: #{$color-primary-active};
+  --color-focus: #{$color-focus};
+  --color-disabled: #{$color-disabled};
+  --color-disabled-text: #{$color-disabled-text};
+  --color-success: #{$color-success};
+  --color-warning: #{$color-warning};
+  --color-danger: #{$color-danger};
+  --color-info: #{$color-info};
+  --color-accent-subtle: #{$color-accent-subtle};
+  --color-accent: #{$color-accent};
+  --color-on-primary: #{$color-on-primary};
+}

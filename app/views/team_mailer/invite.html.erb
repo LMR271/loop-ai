@@ -1,8 +1,8 @@
-<p>Hi,</p>
+<p style="margin: 0 0 16px;">Hi,</p>
 
-<p><%= @team_member.account_owner.name %> invited you to join their LoopAI workspace as
+<p style="margin: 0 0 16px;">You've been invited to join <strong><%= @workspace_possessive %></strong> Loop AI workspace as
   <strong><%= @team_member.role %></strong>.</p>
 
-<p><%= link_to "Accept invitation", @invitation_url %></p>
+<%= render "mailer/button", text: "Accept invitation", url: @invitation_url %>
 
-<p>If you weren't expecting this, you can safely ignore this email.</p>
+<p style="margin: 16px 0 0; color: #666666; font-size: 13px;">If you weren't expecting this, you can safely ignore this email.</p>

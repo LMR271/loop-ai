@@ -8,7 +8,7 @@
 $font-family-sans-serif: $body-font;
 $headings-font-family:   $headers-font;
 $body-bg:                $light-gray;
-$font-size-base:         1rem;
+$font-size-base:         $font-size-base;
 
 // Colors
 $body-color: $gray;
@@ -19,10 +19,10 @@ $danger:     $red;
 $warning:    $orange;
 
 // Buttons & inputs' radius
-$border-radius-sm:            .0625rem;
-$border-radius:               .125rem;
-$border-radius-lg:            .25rem;
-$border-radius-xl:            .5rem;
-$border-radius-xxl:           1rem;
+$border-radius-sm:            $radius-xs;
+$border-radius:               $radius-bootstrap;
+$border-radius-lg:            $space-1;
+$border-radius-xl:            $radius-sm;
+$border-radius-xxl:           $radius-lg;
 
 // Override other variables below!

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { registrations: "users/registrations" }
   root to: "pages#home"
 
   get "i/:slug", to: "respondents#show", as: :respondent # routes of external users so they don't need to authenticate when they click on the link
@@ -28,6 +28,9 @@ Rails.application.routes.draw do
   post "team", to: "team#create"
   delete "team/:id", to: "team#destroy", as: :team_member
 
+  patch "workspace", to: "workspace#update", as: :workspace
+  delete "workspace", to: "workspace#destroy"
+
   get "invitations/:invitation_token", to: "invitations#show", as: :invitation
   patch "invitations/:invitation_token", to: "invitations#update"
 
@@ -37,6 +40,7 @@ Rails.application.routes.draw do
   patch "dashboard/stat_preferences", to: "dashboard#update_stat_preferences", as: :dashboard_stat_preferences
 
   get "deploy", to: "deploy#index", as: :deploy
+  post "deploy/:loop_id/invites", to: "deploy#send_invites", as: :deploy_invites
 
   get "analyse", to: "analyse#index", as: :analyse_index
   get "analyse/:slug", to: "analyse#show", as: :analyse

@@ -6,4 +6,4 @@
   <p>Sentiment: <strong><%= @feedback.sentiment.capitalize %></strong></p>
 <% end %>
 
-<p><%= link_to "View it in Analyse", @analyse_url %></p>
+<%= render "mailer/button", text: "View it in Analyse", url: @analyse_url %>

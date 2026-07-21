@@ -9,7 +9,8 @@ class InvitationsController < ApplicationController
   def update
     return redirect_to new_user_session_path, alert: existing_account_alert if User.exists?(email: @team_member.email)
 
-    @user = User.new(user_params.merge(email: @team_member.email))
+    # skip_confirmation! - they already proved the address by opening this invite email
+    @user = User.new(user_params.merge(email: @team_member.email)).tap(&:skip_confirmation!)
 
     if @user.save
       @team_member.update!(user: @user, invitation_accepted_at: Time.current)

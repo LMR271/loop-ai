@@ -1,9 +1,10 @@
 class LoopMailer < ApplicationMailer
   def invite_respondent(loop_record, email)
     @loop = loop_record
+    @organization_name = loop_record.user.organization_name.presence || loop_record.name
     @respondent_url = respondent_url(loop_record.slug)
 
-    mail to: email, subject: "#{loop_record.name} wants your feedback"
+    mail to: email, subject: "#{@organization_name} wants your feedback"
   end
 
   def new_feedback(feedback)

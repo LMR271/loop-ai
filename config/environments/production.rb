@@ -56,8 +56,9 @@ Rails.application.configure do
   # Raise so a bad Postmark token/config surfaces immediately instead of silently dropping mail.
   config.action_mailer.raise_delivery_errors = true
 
-  # Set host to be used by links generated in mailer templates.
+  # Set host to be used by links and assets (e.g. the logo) in mailer templates.
   config.action_mailer.default_url_options = { host: "getloop.me" }
+  config.action_mailer.asset_host = "https://getloop.me"
 
   # Sends outgoing mail through Postmark's API. Set POSTMARK_API_TOKEN via
   # `heroku config:set POSTMARK_API_TOKEN=...` (Server API Token from the Postmark dashboard).

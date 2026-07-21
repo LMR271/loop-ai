@@ -36,6 +36,14 @@ class ElevenLabsWebhookPayload
     sentiment_result["rationale"]
   end
 
+  def summary_title
+    analysis["call_summary_title"]
+  end
+
+  def transcript_summary
+    analysis["transcript_summary"]
+  end
+
   private
 
   def data

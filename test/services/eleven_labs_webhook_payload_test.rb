@@ -55,4 +55,19 @@ class ElevenLabsWebhookPayloadTest < ActiveSupport::TestCase
   test "identifies non-transcription events" do
     refute ElevenLabsWebhookPayload.new({ "type" => "post_call_audio" }.to_json).transcription?
   end
+
+  test "exposes the summary title and transcript summary from analysis" do
+    raw = file_fixture("elevenlabs_post_call_transcription.json").read
+    payload = ElevenLabsWebhookPayload.new(raw)
+
+    assert_equal "Onboarding Feedback", payload.summary_title
+    assert payload.transcript_summary.to_s.start_with?("The user provided feedback")
+  end
+
+  test "title and summary degrade to nil on a malformed body" do
+    payload = ElevenLabsWebhookPayload.new("not json")
+
+    assert_nil payload.summary_title
+    assert_nil payload.transcript_summary
+  end
 end

@@ -37,6 +37,17 @@ class RespondentsControllerTest < ActionDispatch::IntegrationTest
     assert_match(/you can close this tab/i, response.body)
   end
 
+  test "signed_url returns not_found for an active loop without a provisioned agent" do
+    # Seeded (or otherwise not-yet-provisioned) loops can be active with a nil
+    # agent_id. The controller must not hand that nil to ElevenLabs, which 404s
+    # and would surface as a 500 — it should short-circuit to not_found instead.
+    @loop.update!(agent_id: nil)
+
+    get respondent_signed_url_url(@loop.slug)
+
+    assert_response :not_found
+  end
+
   # TODO(human): add a test for the closed path.
   # The controller renders `:closed` unless the loop is `active?`. Create a loop
   # with status: :draft (or flip @loop) and assert what the respondent sees when

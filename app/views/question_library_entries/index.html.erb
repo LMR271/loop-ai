@@ -1,0 +1,31 @@
+<% content_for :title, "Question Library · Loop AI" %>
+
+<main class="container py-5" style="max-width: 760px;" data-controller="library-search">
+  <div class="mb-4">
+    <h1 class="mb-1">Question Library</h1>
+    <p class="text-muted mb-0">Save reusable questions and keep them organized for your next loop.</p>
+  </div>
+
+  <%= form_with model: @question_library_category, class: "card card-body mb-4" do |form| %>
+    <div class="d-flex align-items-end gap-2">
+      <div class="flex-grow-1">
+        <%= form.label :name, "New category", class: "form-label mb-1" %>
+        <%= form.text_field :name, class: "form-control", placeholder: "For example: Customer interviews" %>
+      </div>
+      <%= form.button type: "submit", class: "btn btn-primary flex-shrink-0" do %>
+        <i class="fa-solid fa-plus" aria-hidden="true"></i> Add category
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="app-search library-search mb-4">
+    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+    <input type="search" class="form-control" placeholder="Search questions or categories"
+           aria-label="Search your question library" data-library-search-target="input" data-action="input->library-search#filter">
+  </div>
+
+  <%= render "library_entries",
+        entries: @question_library_entries,
+        categories: @question_library_categories,
+        manage: true %>
+</main>

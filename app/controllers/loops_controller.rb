@@ -5,7 +5,7 @@ class LoopsController < ApplicationController
 
   def index
     @query = params[:q].to_s.strip
-    @loops = current_workspace_owner.loops.includes(:feedbacks).order(created_at: :desc)
+    @loops = current_organization.loops.includes(:feedbacks).order(created_at: :desc)
     @loops = @loops.search_by_name_and_description(@query) if @query.present?
   end
 
@@ -15,33 +15,39 @@ class LoopsController < ApplicationController
   end
 
   def new
-    @loop = current_workspace_owner.loops.build
+    @loop = current_organization.loops.build(user: current_user)
     @loop.questions.build
+    prepare_question_library
   end
 
   def create
-    @loop = current_workspace_owner.loops.build(loop_params)
-    @loop.pending_approval = !current_user_workspace_admin?
+    @loop = current_organization.loops.build(loop_params)
+    @loop.assign_attributes(user: current_user, pending_approval: !current_user_workspace_admin?)
 
     if @loop.save
       redirect_to dashboard_path, notice: "Loop created."
     else
       ensure_question_field
+      prepare_question_library
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
     ensure_question_field
+    prepare_question_library
   end
 
   def update
     @loop.pending_approval = !current_user_workspace_admin?
 
     if @loop.update(loop_params)
+      @loop.image.purge if @loop.remove_image == "1"
+
       redirect_to edit_loop_path(@loop), notice: "Loop updated."
     else
       ensure_question_field
+      prepare_question_library
       render :edit, status: :unprocessable_entity
     end
   end
@@ -119,18 +125,27 @@ class LoopsController < ApplicationController
   end
 
   def set_loop
-    @loop = current_workspace_owner.loops.includes(:questions).find(params[:id])
+    @loop = current_organization.loops.includes(:questions).find(params[:id])
   end
 
   def loop_params
     params.require(:loop).permit(
       :name,
       :description,
+      :image,
+      :remove_image,
       questions_attributes: %i[id body position _destroy]
     )
   end
 
   def ensure_question_field
     @loop.questions.build if @loop.questions.reject(&:marked_for_destruction?).empty?
+  end
+
+  # This is intentionally scoped to the signed-in person rather than the loop's
+  # workspace owner. A future team library can sit alongside this personal scope.
+  def prepare_question_library
+    @question_library_entries = current_user.question_library_entries.alphabetical
+    @question_library_categories = current_user.question_library_categories.order(:name).pluck(:name)
   end
 end

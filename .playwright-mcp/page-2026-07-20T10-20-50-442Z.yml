@@ -1,0 +1,8 @@
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - heading "Sign Up logo" [level=1] [ref=e5]
+      - paragraph [ref=e6]: Checking out if the Sign Up Page looks great
+    - button "Start interview" [ref=e8] [cursor=pointer]
+    - status
+    - paragraph [ref=e11]: 2 questions

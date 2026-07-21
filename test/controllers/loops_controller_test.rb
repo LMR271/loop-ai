@@ -19,7 +19,7 @@ class LoopsControllerTest < ActionDispatch::IntegrationTest
     assert_select "h2", text: own_loop.name
     assert_select "h2", text: "Private loop", count: 0
     assert_select "a[href='#{new_loop_path}']", text: "New Loop", count: 1
-    assert_select "a[href='#{edit_loop_path(own_loop)}']", text: "Edit", count: 1
+    assert_select "a[href='#{edit_loop_path(own_loop)}']", count: 1
   end
 
   test "index searches the signed-in user's loops by name and description" do
@@ -43,7 +43,7 @@ class LoopsControllerTest < ActionDispatch::IntegrationTest
     get dashboard_path
 
     assert_response :success
-    assert_select "a[href='#{edit_loop_path(loop)}']", text: "Edit", count: 1
+    assert_select "a[href='#{edit_loop_path(loop)}']", count: 1
   end
 
   test "deleting a loop also deletes its associated records" do
@@ -89,6 +89,18 @@ class LoopsControllerTest < ActionDispatch::IntegrationTest
     loop = @user.loops.find_by!(name: "Onboarding research")
     assert_redirected_to dashboard_path
     assert_equal "What did you expect when you signed up?", loop.questions.first.body
+  end
+
+  test "new loop form includes the optional-category library modal" do
+    @user.question_library_entries.create!(category: "Research", content: "What surprised you?")
+
+    get new_loop_path
+
+    assert_response :success
+    assert_select "button", text: /Insert from Library/
+    assert_select "button", text: /Save to Library/
+    assert_select "form[data-questions-form-target='saveForm']", count: 1
+    assert_select "select[name='question_library_entry[category]'] option[value='']", count: 1
   end
 
   test "founder can edit, remove, add, and reorder questions" do

@@ -17,9 +17,20 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :question_library_entries, path: "question-library", except: %i[new show] do
+    member do
+      post :use
+    end
+  end
+  resources :question_library_categories, path: "question-library/categories", only: %i[create edit update destroy]
+
   get "team", to: "team#index", as: :team
   post "team", to: "team#create"
-  delete "team/:id", to: "team#destroy", as: :team_member
+  patch "team/:id", to: "team#update", as: :team_member
+  delete "team/:id", to: "team#destroy"
+
+  patch "workspace", to: "workspace#update", as: :workspace
+  delete "workspace", to: "workspace#destroy"
 
   get "invitations/:invitation_token", to: "invitations#show", as: :invitation
   patch "invitations/:invitation_token", to: "invitations#update"
@@ -34,6 +45,7 @@ Rails.application.routes.draw do
 
   get "analyse", to: "analyse#index", as: :analyse_index
   get "analyse/:slug", to: "analyse#show", as: :analyse
+  post "analyse/:slug/refresh", to: "analyse#refresh", as: :refresh_analyse
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

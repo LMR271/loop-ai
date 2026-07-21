@@ -1,6 +1,8 @@
 require "test_helper"
 
 class ElevenLabsWebhooksControllerTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
+
   SECRET = "wsec_testsecret"
 
   setup do
@@ -48,6 +50,13 @@ class ElevenLabsWebhooksControllerTest < ActionDispatch::IntegrationTest
     assert_equal "They said brilliant.", feedback.sentiment_rationale
     assert_equal "conv_abc", feedback.conversation_id
     assert_equal "Agent: How was it?\nRespondent: Brilliant, honestly.", feedback.transcript
+  end
+
+  test "enqueues analysis for a newly recorded feedback" do
+    assert_enqueued_with(job: AnalyzeFeedbackJob) do
+      post_webhook(payload)
+    end
+    assert_response :ok
   end
 
   test "rejects an invalid signature and writes nothing" do

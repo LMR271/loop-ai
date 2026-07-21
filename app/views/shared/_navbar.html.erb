@@ -18,9 +18,29 @@
               aria: { label: "Search loops" } %>
       <% end %>
 
-      <button type="button" class="btn app-alert-button" aria-label="Notifications">
-        <i class="fa-regular fa-bell" aria-hidden="true"></i>
-      </button>
+      <div class="dropdown">
+        <button type="button" class="btn app-alert-button position-relative" data-bs-toggle="dropdown"
+                aria-label="Notifications" aria-expanded="false">
+          <i class="fa-regular fa-bell" aria-hidden="true"></i>
+          <% if unanalyzed_feedback_total.positive? %>
+            <span class="app-alert-badge badge rounded-pill text-bg-danger"><%= unanalyzed_feedback_total %></span>
+          <% end %>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <% if loops_with_new_feedback.any? %>
+            <% loops_with_new_feedback.each do |loop_record| %>
+              <li>
+                <%= link_to analyse_path(loop_record.slug), class: "dropdown-item" do %>
+                  <strong><%= loop_record.name %></strong> —
+                  <%= pluralize(loop_record.unanalyzed_feedback_count, "new response") %>
+                <% end %>
+              </li>
+            <% end %>
+          <% else %>
+            <li><span class="dropdown-item-text text-muted">No new responses</span></li>
+          <% end %>
+        </ul>
+      </div>
 
       <% unless current_page?(new_loop_path) %>
         <%= link_to new_loop_path, class: "app-new-loop-button" do %>
@@ -31,22 +51,46 @@
 
       <div class="dropdown">
         <button class="btn app-user-menu" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Open account menu">
-          <i class="fa-regular fa-circle-user" aria-hidden="true"></i>
+          <% if current_organization&.logo&.attached? %>
+            <%= image_tag current_organization.logo.variant(resize_to_limit: [64, 64]), class: "app-user-menu__avatar", alt: "" %>
+          <% else %>
+            <i class="fa-regular fa-circle-user" aria-hidden="true"></i>
+          <% end %>
         </button>
         <ul class="dropdown-menu dropdown-menu-end app-user-menu__dropdown" aria-labelledby="userMenu">
-          <% if current_user_workspace_admin? %>
-            <li><%= link_to "Team", team_path, class: "dropdown-item" %></li>
-          <% end %>
-          <li><%= link_to "Account settings", edit_user_registration_path, class: "dropdown-item" %></li>
+          <li><%= link_to "Question Library", question_library_entries_path, class: "dropdown-item" %></li>
+          <li>
+            <%= link_to team_path, class: "dropdown-item" do %>
+              <i class="fa-solid fa-users" aria-hidden="true"></i>
+              <span>Team</span>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to edit_user_registration_path, class: "dropdown-item" do %>
+              <i class="fa-solid fa-gear" aria-hidden="true"></i>
+              <span>Settings</span>
+            <% end %>
+          </li>
           <li><hr class="dropdown-divider"></li>
-          <li><%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %></li>
+          <li>
+            <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" do %>
+              <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>
+              <span>Log out</span>
+            <% end %>
+          </li>
         </ul>
       </div>
     </div>
   <% else %>
     <div class="app-navbar__actions public-navbar__actions">
-      <%= link_to "Log in", new_user_session_path, class: "btn app-login-button" %>
-      <%= link_to "Sign up", new_user_registration_path, class: "app-new-loop-button" %>
+      <%= link_to new_user_session_path, class: "btn app-login-button" do %>
+        <i class="fa-solid fa-arrow-right-to-bracket" aria-hidden="true"></i>
+        <span>Log in</span>
+      <% end %>
+      <%= link_to new_user_registration_path, class: "btn app-new-loop-button" do %>
+        <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
+        <span>Sign up</span>
+      <% end %>
     </div>
   <% end %>
 </nav>

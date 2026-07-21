@@ -12,7 +12,7 @@ class LoopMailer < ApplicationMailer
     @loop = feedback.loop
     @analyse_url = analyse_url(@loop.slug)
 
-    mail to: @loop.user.email, from: ALERTS_SENDER, reply_to: "hi@getloop.me",
+    mail to: @loop.organization.owner.email, from: ALERTS_SENDER, reply_to: "hi@getloop.me",
          subject: "New feedback on #{@loop.name}"
   end
 end

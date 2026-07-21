@@ -45,9 +45,12 @@
 }
 
 .app-login-button {
+  align-items: center;
   border: 1px solid var(--color-border-strong);
   color: var(--color-text-control);
+  display: inline-flex;
   font-weight: 600;
+  gap: $space-2;
   padding: $space-2-5 $space-4-5;
 }
 
@@ -155,11 +158,31 @@
   color: var(--color-text-control);
 }
 
+.app-user-menu__avatar {
+  border-radius: $radius-circle;
+  height: 26px;
+  object-fit: cover;
+  width: 26px;
+}
+
 .app-user-menu__dropdown {
   border-color: var(--color-border-strong);
   border-radius: $radius-sm;
   box-shadow: $shadow-dropdown;
   min-width: 180px;
+}
+
+.app-user-menu__dropdown .dropdown-item {
+  align-items: center;
+  display: flex;
+  gap: $space-3;
+}
+
+.app-user-menu__dropdown .dropdown-item i {
+  color: var(--color-text-muted);
+  font-size: $font-size-base;
+  text-align: center;
+  width: 1rem;
 }
 
 @media (max-width: 767px) {

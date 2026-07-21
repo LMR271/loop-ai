@@ -1,0 +1,138 @@
+/* Respondent (external interview) page — plain CSS on purpose.
+   Uses @property / color-mix / conic-gradient, which the app's libsass
+   (sassc 2.4.0) cannot compile. Loaded only on the respondent layout. */
+
+@property --orb-color   { syntax: "<color>";  initial-value: #6c8cff; inherits: true; }
+@property --orb-angle   { syntax: "<angle>";  initial-value: -90deg;  inherits: true; }
+@property --orb-blur    { syntax: "<length>"; initial-value: 14px;    inherits: true; }
+@property --orb-spread  { syntax: "<length>"; initial-value: 2px;     inherits: true; }
+
+.respondent-page {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  padding: 2rem 1rem;
+  background: var(--org-bg, #f7f8fb);
+  color: var(--org-primary-text, #1b2340);
+  font-family: var(--org-body-font, "Atkinson Hyperlegible Next", sans-serif);
+}
+
+.respondent-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  max-width: 30rem;
+  text-align: center;
+}
+
+.respondent-logo { max-height: 48px; width: auto; margin-bottom: .5rem; }
+.respondent-card__title {
+  font-size: 1.6rem;
+  margin: 0;
+  font-family: var(--org-heading-font, "Atkinson Hyperlegible Next", sans-serif);
+}
+.respondent-card__lead { color: var(--org-secondary-text, #55607a); margin: 0; }
+.respondent-status { min-height: 1.5rem; font-weight: 600; margin: 0; }
+.respondent-meta { margin: 0; color: var(--org-secondary-text, #55607a); }
+
+/* --- Orb ------------------------------------------------------------- */
+.orb {
+  --size: 180px;
+  --lighter-color: color-mix(in srgb, var(--orb-color) 65%, white);
+  --darker-color:  color-mix(in srgb, var(--orb-color) 70%, #1b2340);
+
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 8px solid transparent;
+  background:
+    radial-gradient(circle at 50% 35%,
+      var(--lighter-color), var(--orb-color) 58%, var(--darker-color)) padding-box,
+    conic-gradient(from var(--orb-angle) at 50% 50%,
+      color-mix(in srgb, var(--lighter-color), transparent) 0 72deg,
+      var(--darker-color) 100deg 180deg,
+      transparent 288deg,
+      color-mix(in srgb, var(--lighter-color), transparent)) border-box;
+  /* softened halo for a light page */
+  box-shadow: 0 0 var(--orb-blur) var(--orb-spread)
+              color-mix(in srgb, var(--orb-color) 45%, transparent);
+  animation: orb-color 12s linear infinite, orb-spin 6s linear infinite;
+}
+
+.orb__play {
+  border: 0;
+  background: rgba(255, 255, 255, .85);
+  color: #1b2340;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(27, 35, 64, .18);
+}
+.orb__play svg { width: 26px; height: 26px; fill: currentColor; }
+.orb__play:focus-visible { outline: 3px solid #1b2340; outline-offset: 3px; }
+
+@keyframes orb-color {
+  0%   { --orb-color: #6c8cff; }
+  25%  { --orb-color: #48c6ef; }
+  50%  { --orb-color: #7b5cff; }
+  75%  { --orb-color: #ff7eb3; }
+  100% { --orb-color: #6c8cff; }
+}
+@keyframes orb-spin {
+  0%   { --orb-angle: -90deg; --orb-blur: 14px; --orb-spread: 2px; }
+  50%  {                      --orb-blur: 22px; --orb-spread: 4px; }
+  100% { --orb-angle: 270deg; }
+}
+
+/* --- Orb states ----------------------------------------------------- */
+/* The base .orb already runs both animations (orb-color, orb-spin). Each
+   state class below tunes HOW those animations run so the orb *feels*
+   different at each moment of the call. The two-value syntax targets the
+   two animations in order, e.g. `animation-duration: <color> <spin>`. */
+
+.orb.is-idle {
+  animation-duration: 20s, 20s;
+}
+
+.orb.is-connecting {
+  animation-duration: 13s, 10s;
+}
+
+.orb.is-listening {
+  animation-duration: 17s , 17s;
+}
+
+.orb.is-speaking {
+  animation-duration: 8s, 10s;
+}
+
+.orb.is-ended {
+  animation-play-state: paused;
+  filter: saturate(0.4);
+}
+
+.respondent-end {
+  margin-top: -.25rem;
+  color: var(--org-button, #1b2340);
+  border-color: var(--org-button, #1b2340);
+}
+
+.respondent-end:hover,
+.respondent-end:focus {
+  background: var(--org-button, #1b2340);
+  border-color: var(--org-button, #1b2340);
+  color: #fff;
+}
+.respondent-thankyou h2 { font-size: 1.4rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .orb { animation: none; }
+}

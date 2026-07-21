@@ -1,7 +1,16 @@
-<div class="modal fade" id="saveQuestionToLibraryModal" tabindex="-1" aria-labelledby="saveQuestionToLibraryLabel" aria-hidden="true">
+<div class="modal fade"
+     id="saveQuestionToLibraryModal"
+     tabindex="-1"
+     aria-labelledby="saveQuestionToLibraryLabel"
+     aria-hidden="true"
+     data-controller="save-question-modal">
   <div class="modal-dialog">
     <div class="modal-content">
-      <%= form_with model: QuestionLibraryEntry.new, data: { action: "submit->questions-form#saveToLibrary", questions_form_target: "saveForm" } do |form| %>
+      <%= form_with model: QuestionLibraryEntry.new,
+      data: {
+        action: "submit->category-picker#submit",
+        save_question_modal_target: "form"
+      } do |form| %>
         <div class="modal-header">
           <h2 class="modal-title fs-5" id="saveQuestionToLibraryLabel">Save to library</h2>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -9,10 +18,44 @@
         <div class="modal-body">
           <p class="text-muted small" data-questions-form-target="savePreview"></p>
           <%= form.hidden_field :content, data: { questions_form_target: "saveContent" } %>
-          <%= form.label :category, class: "form-label" %>
-          <%= form.select :category, options_for_select([["No Category", ""]] + library_categories), {}, class: "form-select" %>
+
+          <div data-controller="category-picker">
+
+            <%= form.label :category, class: "form-label" %>
+
+            <%= form.select :category,
+                  options_for_select(
+                    [["No Category", ""]] +
+                    library_categories +
+                    [["+ Create new category...", "__create_new_category__"]]
+                  ),
+                  {},
+                  class: "form-select",
+                  data: {
+                    action: "change->category-picker#toggle",
+                    category_picker_target: "select"
+                  } %>
+
+            <div
+              id="new-category-field"
+              class="mt-3 d-none"
+              data-category-picker-target="field">
+
+              <%= label_tag :new_category, "New category", class: "form-label" %>
+
+              <%= text_field_tag :new_category, nil,
+                  class: "form-control",
+                  placeholder: "Enter a category name",
+                  data: {
+                    category_picker_target: "input"
+                  } %>
+            </div>
+
+          </div>
+
           <p class="text-muted small mb-0 mt-2">You can assign or change the category later from your Question Library.</p>
-          <div class="invalid-feedback d-block d-none mt-2" data-questions-form-target="saveError"></div>
+          <div class="invalid-feedback d-block d-none mt-2"
+               data-save-question-modal-target="error"></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn app-login-button" data-bs-dismiss="modal">Cancel</button>
@@ -36,12 +79,10 @@
           <input type="search" class="form-control" placeholder="Search questions or categories" aria-label="Search your question library"
                  data-library-search-target="input" data-action="input->library-search#filter">
         </div>
-        <% if library_entries.any? %>
-          <%= render "question_library_entries/entry_groups", entries: library_entries, categories: [] %>
-          <p class="text-muted text-center d-none" data-library-search-target="empty">No library questions match your search.</p>
-        <% else %>
-          <p class="text-muted text-center mb-0">Your library is empty. Save a question to reuse it here.</p>
-        <% end %>
+        <%= render "question_library_entries/library_entries",
+              entries: library_entries,
+              categories: [],
+              manage: false %>
       </div>
     </div>
   </div>

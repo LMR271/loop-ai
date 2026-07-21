@@ -12,14 +12,48 @@
       <%= form.label :content, "Question", class: "form-label" %>
       <%= form.text_area :content, class: "form-control", rows: 3, required: true %>
     </div>
-    <div class="mb-4">
+
+    <div class="mb-4" data-controller="category-picker">
+
       <%= form.label :category, class: "form-label" %>
-      <%= form.text_field :category, class: "form-control", list: "library-categories",
-            placeholder: "Leave blank for No Category" %>
-      <datalist id="library-categories">
-        <% @categories.each do |category| %><option value="<%= category %>"><% end %>
-      </datalist>
+
+      <%
+      category_options =
+        [["No Category", ""]] +
+        @categories.map { |name| [name, name] }
+
+      if @question_library_entry.category.present? &&
+        !category_options.any? { |(_, value)| value == @question_library_entry.category }
+        category_options << [@question_library_entry.category, @question_library_entry.category]
+      end
+
+      category_options << ["+ Create new category...", "__create_new_category__"]
+      %>
+
+      <%= form.select :category,
+            options_for_select(category_options, @question_library_entry.category),
+            {},
+            class: "form-select",
+            data: {
+              action: "change->category-picker#toggle",
+              category_picker_target: "select"
+            } %>
+
+      <div class="mt-3 d-none" data-category-picker-target="field">
+
+        <%= label_tag :new_category, "New category", class: "form-label" %>
+
+        <%= text_field_tag :new_category, nil,
+            class: "form-control",
+            placeholder: "Enter a category name",
+            data: {
+              category_picker_target: "input"
+            } %>
+
+      </div>
+
     </div>
+
     <div class="d-flex gap-2">
       <%= form.submit "Save changes", class: "app-new-loop-button" %>
       <%= link_to "Cancel", question_library_entries_path, class: "btn app-login-button" %>

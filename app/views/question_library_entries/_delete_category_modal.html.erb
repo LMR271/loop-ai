@@ -1,7 +1,8 @@
-<div class="modal fade" id="deleteCategoryModal<%= category.id %>" tabindex="-1" aria-labelledby="deleteCategoryLabel<%= category.id %>" aria-hidden="true">
+<div class="modal fade" id="deleteCategoryModal<%= category.id %>" tabindex="-1" aria-labelledby="deleteCategoryLabel<%= category.id %>" aria-hidden="true" data-controller="delete-category-modal">
   <div class="modal-dialog">
     <div class="modal-content">
-      <%= form_with url: question_library_category_path(category), method: :delete do |form| %>
+      <%= form_with url: question_library_category_path(category), method: :delete,
+            data: { delete_category_modal_target: "form" } do |form| %>
         <div class="modal-header">
           <h2 class="modal-title fs-5" id="deleteCategoryLabel<%= category.id %>">Delete category</h2>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

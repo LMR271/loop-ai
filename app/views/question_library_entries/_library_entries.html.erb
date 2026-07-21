@@ -1,0 +1,23 @@
+<%= turbo_frame_tag "library_entries" do %>
+  <% if entries.any? || categories.any? %>
+    <%= render "question_library_entries/entry_groups",
+          entries: entries,
+          categories: categories,
+          manage: local_assigns[:manage] %>
+
+    <p class="text-muted text-center d-none"
+       data-library-search-target="empty">
+      No library questions match your search.
+    </p>
+  <% else %>
+      <div class="loops-empty-state text-center">
+        <div class="loops-empty-state__icon">
+          <i class="fa-regular fa-lightbulb" aria-hidden="true"></i>
+        </div>
+        <h2 class="h4">Your library is empty</h2>
+        <p class="text-muted mb-0">
+          Save a question while creating a loop to reuse it here.
+        </p>
+      </div>
+  <% end %>
+<% end %>

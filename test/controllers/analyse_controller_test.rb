@@ -11,14 +11,15 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
 
   test "shows the insight panel and themes when an analysis exists" do
     loop_record = @user.loops.create!(name: "L")
+    loop_record.feedbacks.create!(transcript: "hi")
     insight = loop_record.create_insight!(summary: "Going well", overall_sentiment: "positive",
                                           analyzed_feedback_count: 1)
     insight.themes.create!(title: "Onboarding overwhelming", mention_count: 3, sentiment: "frustrated")
 
     get analyse_path(loop_record.slug)
 
-    assert_select ".analysis-summary-card", text: /Going well/
-    assert_select ".theme-card", text: /Onboarding overwhelming/
+    assert_select ".analysis-card", text: /Going well/
+    assert_select ".analysis-card", text: /Onboarding overwhelming/
   end
 
   test "refresh regenerates the insight synchronously and flashes success" do

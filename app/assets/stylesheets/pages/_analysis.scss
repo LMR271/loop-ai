@@ -19,14 +19,37 @@
   min-width: 16.25rem;
 }
 
-.analysis-chart-card,
-.analysis-summary-card {
+.analysis-card {
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: $radius-md;
-  min-height: 13.75rem;
+  border-radius: $radius-card;
   padding: $space-6;
+}
+
+.analysis-card--tall {
+  min-height: 13.75rem;
 }
 
 .analysis-transcript {
   white-space: pre-wrap;
+}
+
+.analysis-tabs {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.analysis-tabs .nav-link {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  color: var(--color-text-muted);
+  margin-right: $space-5;
+  padding: $space-3 $space-1;
+}
+
+.analysis-tabs .nav-link.active {
+  border-bottom-color: var(--color-text);
+  color: var(--color-text);
+  font-weight: 600;
 }

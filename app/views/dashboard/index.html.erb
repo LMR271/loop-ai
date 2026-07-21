@@ -1,6 +1,10 @@
 <% content_for :title, "Dashboard" %>
 
 <div class="container py-4">
+  <% if flash[:show_org_setup] %>
+    <%= render "org_setup_banner" %>
+  <% end %>
+
   <div class="d-flex justify-content-end mb-4">
     <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#stat-settings-modal"
             aria-label="Customize dashboard stats" title="Customize stats" data-controller="tooltip" data-bs-placement="top">

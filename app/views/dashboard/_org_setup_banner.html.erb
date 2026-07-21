@@ -1,0 +1,24 @@
+<div class="card border-0 bg-light mb-4">
+  <div class="card-body">
+    <h2 class="h5 mb-1">Set up your organization</h2>
+    <p class="text-muted small mb-3">
+      Add your organization name and logo now, or skip and do this later in Settings.
+    </p>
+
+    <%= simple_form_for(current_organization, url: workspace_path(return_to: "onboarding"), method: :patch) do |f| %>
+      <div class="row g-3 align-items-end">
+        <div class="col-md-5">
+          <%= f.input :name, label: "Organization name", required: false, wrapper_html: { class: "mb-0" } %>
+        </div>
+        <div class="col-md-5">
+          <%= f.input :logo, as: :file, label: "Logo", wrapper_html: { class: "mb-0" },
+                      input_html: { accept: "image/png,image/jpeg,image/webp,image/svg+xml" } %>
+        </div>
+        <div class="col-md-2 d-flex gap-2">
+          <%= f.button :submit, "Save", class: "btn btn-primary" %>
+          <%= link_to "Skip", dashboard_path, class: "btn btn-outline-secondary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

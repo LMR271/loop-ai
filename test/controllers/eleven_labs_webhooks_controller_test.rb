@@ -59,6 +59,19 @@ class ElevenLabsWebhooksControllerTest < ActionDispatch::IntegrationTest
     assert_response :ok
   end
 
+  test "ingested feedback carries the ElevenLabs title and summary" do
+    raw = file_fixture("elevenlabs_post_call_transcription.json").read
+    agent_id = JSON.parse(raw).dig("data", "agent_id")
+    @user.loops.create!(name: "Ingest", agent_id: agent_id, status: :active)
+
+    post_webhook(raw)
+    assert_response :ok
+
+    feedback = Feedback.order(:created_at).last
+    assert_equal "Onboarding Feedback", feedback.title
+    assert feedback.summary.to_s.start_with?("The user provided feedback")
+  end
+
   test "rejects an invalid signature and writes nothing" do
     assert_no_difference "Feedback.count" do
       post_webhook(payload, secret: "wsec_wrong")

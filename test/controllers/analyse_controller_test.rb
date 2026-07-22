@@ -124,6 +124,27 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
     assert_select ".analysis-response-card", text: /Generated summary/
   end
 
+  test "the pending-analysis nudge renders inline, not inside the flash toast container" do
+    loop_record = analysable_loop_with_points
+    loop_record.feedbacks.create!(transcript: "no points yet")
+
+    get analyse_path(loop_record.slug)
+
+    assert_select ".alert-warning", text: /haven.t been analyzed yet/
+    assert_select ".flash-toast-container .alert-warning", count: 0
+  end
+
+  test "flash notices render inside a dedicated toast container" do
+    loop_record = @user.loops.create!(name: "L")
+
+    stub_instance_method(LlmClient, :complete, ->(**) { raise "should not be called" }) do
+      post refresh_analyse_path(loop_record.slug)
+    end
+    follow_redirect!
+
+    assert_select ".flash-toast-container .alert", text: /nothing to analyze/i
+  end
+
   private
 
   def analysable_loop_with_points

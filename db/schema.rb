@@ -100,6 +100,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_104934) do
     t.string "name"
     t.bigint "organization_id", null: false
     t.boolean "pending_approval", default: false, null: false
+    t.text "respondent_description"
+    t.string "respondent_title"
     t.string "slug"
     t.integer "status", default: 0
     t.datetime "updated_at", null: false

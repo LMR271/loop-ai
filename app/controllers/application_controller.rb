@@ -46,8 +46,4 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:account_update, keys: %i[name])
   end
-
-  def loop_seen_counts
-    @loop_seen_counts ||= current_user.loop_views.pluck(:loop_id, :last_seen_feedback_count).to_h
-  end
 end

@@ -1,6 +1,61 @@
-<main class="page-content--standard container py-5 text-center">
-  <p class="text-uppercase text-muted fw-semibold small">Loop AI</p>
-  <h1 class="display-5 fw-bold">Turn feedback into better decisions.</h1>
-  <p class="lead text-muted my-4">Create focused feedback loops, understand what customers say, and keep your research organized.</p>
-  <%= link_to "Log in", new_user_session_path, class: "btn btn-primary btn-lg" %>
+<main class="container-fluid px-3 px-lg-5 py-4">
+
+  <div class="text-center mx-auto" style="max-width: 700px;">
+    <h1 class="text-uppercase text-muted fw-bold display-4 mb-2">
+      Loop<%= image_tag "lightbulb.svg",
+        alt: "Loop AI Logo",
+        class: "img-fluid rounded",
+        style: "max-height: 70px; transform: translateY(-6px);" %>AI
+    </h1>
+    <br>
+    <h2 class="display-6 fw-semibold text-dark">Turn Continuous Voice Feedback into Actionable Product Insights.</h2>
+  </div>
+  <br>
+  <hr class="my-4 mx-auto" style="max-width: 100px; border-top: 3px solid #dee2e6; opacity: 1;">
+  <br>
+
+  <br>
+  <div class="row g-4 w-100 mx-0">
+    <!-- Left Column: Description & Features -->
+    <div class="col-lg-6 col-xl-6 pe-lg-4">
+      <h3 class="h4 fw-bold text-dark mb-3">
+        The Intelligent Voice Engine for Customer Research
+      </h3>
+      <br>
+      <p class="text-secondary fs-5 mb-3 lh-base">
+        Stop drowning in lengthy user interviews and static forms.
+        <strong>Loop AI automates your entire qualitative research workflow</strong>
+        with interactive, conversational voice agents powered by ElevenLabs.
+      </p>
+      <ul class="list-unstyled text-secondary fs-5 mb-3 lh-base">
+        <li class="mb-2">
+          <strong>⚡ Effortless Setup:</strong> Define your research goals, set your questions,
+          and deploy a shareable interview link in seconds.
+        </li>
+        <li class="mb-2">
+          <strong>🎙️ Natural Conversations:</strong> Respondents talk naturally with your voice
+          agent while Loop AI records transcripts and tracks sentiment.
+        </li>
+        <li class="mb-2">
+          <strong>💡 Instant Insights:</strong> Automatically extract key themes and feature
+          requests, all back-linked to <strong>exact verbatim quotes</strong>.
+        </li>
+      </ul>
+      <p class="text-secondary fs-5 fw-medium mb-3">
+        Get deep, unbiased customer clarity at scale without spending hundreds of hours on manual
+        booking or note-taking.
+      </p>
+
+      <!-- Call to Action -->
+      <div class="pt-2">
+        <p class="fw-semibold text-dark mb-2">Ready to streamline your research?</p>
+        <%= link_to "Sign up for free", new_user_registration_path, class: "btn btn-primary btn-lg px-4" %>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <%= image_tag "landingpage_image.png", alt: "Analyze Dashboard", class: "img-fluid rounded-4 w-100", style: "height: 500px; object-fit: contain; object-position: center;" %>
+    </div>
+  </div>
+
 </main>

@@ -30,7 +30,7 @@ class DeployControllerTest < ActionDispatch::IntegrationTest
     assert_select ".deploy-active-list", text: /Private draft/, count: 0
     assert_select "form[action='#{activate_loop_path(draft)}']", count: 1
     assert_select "a[href='#{edit_loop_path(draft)}']", count: 1
-    assert_select "input[value='#{respondent_url(draft.slug)}']", count: 1
+    assert_select "input[value='#{respondent_url(draft.slug)}']", count: 0
     assert_select "form[action='#{deactivate_loop_path(@user.loops.find_by!(name: 'Live research'))}']", count: 1
   end
 

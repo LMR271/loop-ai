@@ -101,6 +101,13 @@
   padding: $space-4 $space-5;
 }
 
+// Inside the Share & Distribute modal, the modal-header's own border already
+// separates it from the body, so the inline-expand's border-top is redundant.
+.deploy-loop__details--modal {
+  border-top: 0;
+  padding: 0;
+}
+
 .deploy-detail-card {
   background: var(--color-surface-subtle);
   border: 1px solid var(--color-border);

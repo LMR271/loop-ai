@@ -1,3 +1,5 @@
+<% content_for :title, "Share your feedback - #{@loop.name}" %>
+
 <div class="respondent-card" data-controller="interview" data-interview-slug-value="<%= @loop.slug %>">
   <header class="respondent-card__brand text-center">
     <% if @loop.logo_url.present? %>

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   helper_method :current_organization, :current_user_workspace_admin?,
-                :unanalyzed_feedback_total, :loops_with_new_feedback
+                :unseen_feedback_total, :loops_with_new_feedback
 
   def after_sign_in_path_for(_resource)
     loops_path
@@ -31,11 +31,11 @@ class ApplicationController < ActionController::Base
 
   def loops_with_new_feedback
     loops = current_organization.loops.includes(:insight, :feedbacks)
-    loops.select { |loop| loop.unanalyzed_feedback_count.positive? }
+    loops.select { |loop| loop.unseen_feedback_count.positive? }
   end
 
-  def unanalyzed_feedback_total
-    loops_with_new_feedback.sum(&:unanalyzed_feedback_count)
+  def unseen_feedback_total
+    loops_with_new_feedback.sum(&:unseen_feedback_count)
   end
 
   def configure_permitted_parameters

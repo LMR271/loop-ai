@@ -20,12 +20,14 @@ class RespondentsControllerTest < ActionDispatch::IntegrationTest
     assert_no_match(/Log in/, response.body)
   end
 
-  test "show hides the internal loop name and shows a generic public intro" do
+  test "show shows a generic public intro but names the loop in the tab title" do
     get respondent_url(@loop.slug)
 
     assert_response :success
-    assert_no_match(/Onboarding feedback/, response.body) # internal name must not leak
-    assert_match(/Share your feedback/, response.body)    # generic public intro
+    # The on-page copy stays generic (no internal loop name in the visible body)...
+    assert_select ".respondent-card__title", text: "Share your feedback"
+    # ...but the browser tab title names it, so an owner with several tabs open can tell them apart.
+    assert_select "title", "Share your feedback - Onboarding feedback"
   end
 
   test "show renders the orb start control and a hidden thank-you block" do
@@ -35,6 +37,24 @@ class RespondentsControllerTest < ActionDispatch::IntegrationTest
     assert_match(/class="[^"]*\borb\b/, response.body)
     assert_match(/data-interview-target="thankYou"/, response.body)
     assert_match(/you can close this tab/i, response.body)
+  end
+
+  test "favicon defaults to the Loop AI icon when no organization logo is uploaded" do
+    get respondent_url(@loop.slug)
+
+    assert_response :success
+    assert_select "link[rel=icon][href='/icon.png']", 1
+    assert_select "link[rel=icon][href='/icon.svg']", 1
+  end
+
+  test "favicon uses the organization logo when one is uploaded" do
+    @user.organization.logo.attach(io: StringIO.new("fake image bytes"), filename: "logo.png", content_type: "image/png")
+
+    get respondent_url(@loop.slug)
+
+    assert_response :success
+    assert_select "link[rel=icon][href='/icon.png']", 0
+    assert_select "link[rel=icon]", 1
   end
 
   test "signed_url returns not_found for an active loop without a provisioned agent" do

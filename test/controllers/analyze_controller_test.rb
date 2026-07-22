@@ -27,4 +27,14 @@ class AnalyzeControllerTest < ActionDispatch::IntegrationTest
     assert_select ".analysis-summary-card", text: /Going well/
     assert_select ".theme-card", text: /Onboarding overwhelming/
   end
+
+  test "visiting a loop's page marks its notifications seen, clearing the navbar bell" do
+    loop_record = @user.loops.create!(name: "L")
+    Feedback.create!(loop: loop_record, transcript: "hi")
+    assert_equal 1, loop_record.unseen_feedback_count
+
+    get analyze_path(loop_record.slug)
+
+    assert_equal 0, loop_record.reload.unseen_feedback_count
+  end
 end

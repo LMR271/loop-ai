@@ -11,6 +11,11 @@ class DashboardController < ApplicationController
 
   def update_stat_preferences
     keys = (Array(params[:stat_keys]) & DashboardStats::LABELS.keys).first(DashboardStats::MAX_SELECTED_KEYS)
+
+    if keys.size < DashboardStats::MAX_SELECTED_KEYS
+      return redirect_to dashboard_path, alert: "Select exactly #{DashboardStats::MAX_SELECTED_KEYS} stats to save."
+    end
+
     current_user.update!(dashboard_stat_keys: keys)
     redirect_to dashboard_path, notice: "Dashboard updated."
   end

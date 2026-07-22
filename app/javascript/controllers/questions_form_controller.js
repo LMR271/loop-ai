@@ -1,7 +1,15 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["list", "question", "template", "number", "position", "saveForm", "saveContent", "savePreview", "saveError"]
+  static targets = [
+    "list",
+    "question",
+    "template",
+    "number",
+    "position",
+    "saveContent",
+    "savePreview"
+  ]
 
   add() {
     this.addQuestion()
@@ -49,28 +57,7 @@ export default class extends Controller {
 
     this.saveContentTarget.value = content
     this.savePreviewTarget.textContent = content
-    this.saveErrorTarget.classList.add("d-none")
     this.modal("saveQuestionToLibraryModal").show()
-  }
-
-  async saveToLibrary(event) {
-    event.preventDefault()
-    const form = this.saveFormTarget
-    const response = await fetch(form.action, {
-      method: "POST",
-      headers: { Accept: "application/json", "X-CSRF-Token": this.csrfToken() },
-      body: new FormData(form)
-    })
-
-    if (response.ok) {
-      this.modal("saveQuestionToLibraryModal").hide()
-      form.reset()
-      return
-    }
-
-    const result = await response.json()
-    this.saveErrorTarget.textContent = result.errors?.join(", ") || "Couldn't save this question."
-    this.saveErrorTarget.classList.remove("d-none")
   }
 
   insertFromLibrary(event) {

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { registrations: "users/registrations" }
+  devise_for :users, controllers: { registrations: "users/registrations", confirmations: "users/confirmations" }
   root to: "pages#home"
+
+  get "check-email", to: "check_email#show", as: :check_email
 
   get "i/:slug", to: "respondents#show", as: :respondent # routes of external users so they don't need to authenticate when they click on the link
   get "i/:slug/signed_url", to: "respondents#signed_url", as: :respondent_signed_url
@@ -43,10 +45,10 @@ Rails.application.routes.draw do
   get "deploy", to: "deploy#index", as: :deploy
   post "deploy/:loop_id/invites", to: "deploy#send_invites", as: :deploy_invites
 
-  get "analyse", to: "analyse#index", as: :analyse_index
-  get "analyse/:slug", to: "analyse#show", as: :analyse
-  post "analyse/:slug/refresh", to: "analyse#refresh", as: :refresh_analyse
-  post "analyse/:slug/backfill", to: "analyse#backfill", as: :backfill_analyse
+  get "analyze", to: "analyze#index", as: :analyze_index
+  get "analyze/:slug", to: "analyze#show", as: :analyze
+  post "analyze/:slug/refresh", to: "analyze#refresh", as: :refresh_analyze
+  post "analyze/:slug/backfill", to: "analyze#backfill", as: :backfill_analyze
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

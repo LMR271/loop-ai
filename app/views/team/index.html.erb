@@ -1,7 +1,11 @@
-<% content_for :title, "Team" %>
+<% content_for :title, "Team | Loop AI" %>
 
 <div class="container py-4">
-  <h1 class="mb-4">Team</h1>
+  <div class="mb-4">
+    <%= render "shared/page_header", eyebrow: "Workspace",
+          title: "Team",
+          subtitle: "Invite teammates and manage their access." %>
+  </div>
 
   <% if current_user_workspace_admin? %>
     <%= form_with model: @team_member, url: team_path, class: "d-flex flex-wrap align-items-end gap-3 mb-4" do |form| %>
@@ -63,8 +67,12 @@
               </td>
               <% if current_user_workspace_admin? %>
                 <td>
-                  <%= button_to "Revoke", team_member_path(team_member), method: :delete, class: "btn btn-sm btn-outline-danger",
-                        form: { data: { turbo_confirm: "Revoke access for #{team_member.email}?" } } %>
+                  <%= button_to team_member_path(team_member), method: :delete, class: "btn btn-sm btn-outline-danger",
+                        "aria-label": "Revoke access for #{team_member.email}", title: "Revoke access",
+                        data: { controller: "tooltip", bs_placement: "top" },
+                        form: { data: { turbo_confirm: "Revoke access for #{team_member.email}?" } } do %>
+                    <i class="fa-solid fa-user-slash" aria-hidden="true"></i>
+                  <% end %>
                 </td>
               <% end %>
             </tr>

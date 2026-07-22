@@ -8,17 +8,30 @@ class QuestionLibraryEntriesController < ApplicationController
   end
 
   def create
-    @question_library_entry = current_user.question_library_entries.build(question_library_entry_params)
+    attributes = question_library_entry_params.to_h
+
+    attributes["category"] = params[:new_category].presence if attributes["category"] == "__create_new_category__"
+
+    @question_library_entry = current_user.question_library_entries.build(attributes)
 
     if @question_library_entry.save
       respond_to do |format|
-        format.html { redirect_back fallback_location: question_library_entries_path, notice: "Question saved to your library." }
+        format.turbo_stream
+        format.html do
+          redirect_back fallback_location: question_library_entries_path,
+                        notice: "Question saved to your library."
+        end
         format.json { render json: @question_library_entry, status: :created }
       end
     else
       respond_to do |format|
-        format.html { redirect_back fallback_location: question_library_entries_path, alert: @question_library_entry.errors.full_messages.to_sentence }
-        format.json { render json: { errors: @question_library_entry.errors.full_messages }, status: :unprocessable_entity }
+        format.html do
+          redirect_back fallback_location: question_library_entries_path,
+                        alert: @question_library_entry.errors.full_messages.to_sentence
+        end
+        format.json do
+          render json: { errors: @question_library_entry.errors.full_messages }, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -28,7 +41,11 @@ class QuestionLibraryEntriesController < ApplicationController
   end
 
   def update
-    if @question_library_entry.update(question_library_entry_params)
+    attributes = question_library_entry_params.to_h
+
+    attributes["category"] = params[:new_category].presence if attributes["category"] == "__create_new_category__"
+
+    if @question_library_entry.update(attributes)
       redirect_to question_library_entries_path, notice: "Library question updated."
     else
       @categories = current_user.question_library_categories.where.not(name: @question_library_entry.category).order(:name).pluck(:name)

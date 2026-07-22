@@ -4,7 +4,7 @@
       <h2 class="h5 mb-1">Summary of all feedback</h2>
       <p class="text-muted small mb-0">AI-generated from every interview transcript in this loop. Press Refresh after new responses come in.</p>
     </div>
-    <%= button_to refresh_analyse_path(loop_record.slug),
+    <%= button_to refresh_analyze_path(loop_record.slug),
                   class: "btn btn-primary text-nowrap",
                   data: { turbo_submits_with: "Analyzing…" } do %>
       <i class="fa-solid fa-arrows-rotate me-1"></i>Refresh
@@ -29,7 +29,7 @@
       <span class="small mb-0">
         <%= pluralize(loop_record.pending_extraction_count, "response") %> haven't been analyzed yet.
       </span>
-      <%= button_to "Analyze them", backfill_analyse_path(loop_record.slug),
+      <%= button_to "Analyze them", backfill_analyze_path(loop_record.slug),
                     class: "btn btn-sm btn-outline-dark text-nowrap",
                     data: { turbo_submits_with: "Starting…" } %>
     </div>

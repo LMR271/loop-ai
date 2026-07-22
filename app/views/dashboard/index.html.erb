@@ -1,9 +1,17 @@
 <% content_for :title, "Dashboard" %>
 
 <div class="container py-4">
-  <div class="d-flex justify-content-end mb-4">
-    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#stat-settings-modal" aria-label="Customize dashboard stats">
-      ⚙
+  <% if flash[:show_org_setup] %>
+    <%= render "org_setup_banner" %>
+  <% end %>
+
+  <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
+    <%= render "shared/page_header", title: "Dashboard",
+          subtitle: "An overview of your feedback loops." %>
+
+    <button type="button" class="btn btn-outline-secondary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#stat-settings-modal"
+            aria-label="Customize dashboard stats" title="Customize stats" data-controller="tooltip" data-bs-placement="top">
+      <i class="fa-solid fa-gear" aria-hidden="true"></i>
     </button>
   </div>
 
@@ -55,7 +63,7 @@
                   draggable="true"
                   data-stat-settings-target="item"
                   data-action="dragstart->stat-settings#dragStart dragover->stat-settings#dragOver dragend->stat-settings#dragEnd">
-                <span class="text-muted" aria-hidden="true">⠿</span>
+                <span class="text-muted" aria-hidden="true"><i class="fa-solid fa-grip-vertical"></i></span>
                 <div class="form-check flex-grow-1 mb-0">
                   <input type="checkbox" class="form-check-input" name="stat_keys[]" value="<%= key %>" id="stat-key-<%= key %>"
                          data-stat-settings-target="checkbox" data-action="change->stat-settings#limitSelection"

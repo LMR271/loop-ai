@@ -1,11 +1,11 @@
 <p>Hi,</p>
 
-<p><strong><%= @loop.name %></strong> would love to hear from you.
+<p><strong><%= @organization_name %></strong> wants your feedback.
   <% if @loop.description.present? %>
     <%= @loop.description %>
   <% end %>
 </p>
 
-<p><%= link_to "Share your feedback", @respondent_url %></p>
+<%= render "mailer/button", text: "Share your feedback", url: @respondent_url %>
 
 <p>It's a short voice conversation, not a form — just talk naturally.</p>

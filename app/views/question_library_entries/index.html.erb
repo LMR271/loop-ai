@@ -1,6 +1,6 @@
-<% content_for :title, "Question Library · Loop AI" %>
+<% content_for :title, "Question Library | Loop AI" %>
 
-<main class="container py-5" style="max-width: 760px;" data-controller="library-search">
+<main class="page-content--standard container py-5" data-controller="library-search">
   <div class="mb-4">
     <h1 class="mb-1">Question Library</h1>
     <p class="text-muted mb-0">Save reusable questions and keep them organized for your next loop.</p>
@@ -12,7 +12,9 @@
         <%= form.label :name, "New category", class: "form-label mb-1" %>
         <%= form.text_field :name, class: "form-control", placeholder: "For example: Customer interviews" %>
       </div>
-      <%= form.submit "Add category", class: "btn app-login-button flex-shrink-0" %>
+      <%= form.button type: "submit", class: "btn btn-primary flex-shrink-0" do %>
+        <i class="fa-solid fa-plus" aria-hidden="true"></i> Add category
+      <% end %>
     </div>
   <% end %>
 
@@ -22,14 +24,8 @@
            aria-label="Search your question library" data-library-search-target="input" data-action="input->library-search#filter">
   </div>
 
-  <% if @question_library_entries.any? || @question_library_categories.any? %>
-    <%= render "entry_groups", entries: @question_library_entries, categories: @question_library_categories, manage: true %>
-    <p class="text-muted text-center d-none" data-library-search-target="empty">No library questions match your search.</p>
-  <% else %>
-    <div class="loops-empty-state text-center">
-      <div class="loops-empty-state__icon"><i class="fa-regular fa-lightbulb" aria-hidden="true"></i></div>
-      <h2 class="h4">Your library is empty</h2>
-      <p class="text-muted mb-0">Save a question while creating a loop to reuse it here.</p>
-    </div>
-  <% end %>
+  <%= render "library_entries",
+        entries: @question_library_entries,
+        categories: @question_library_categories,
+        manage: true %>
 </main>

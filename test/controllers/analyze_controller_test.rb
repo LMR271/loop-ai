@@ -1,12 +1,20 @@
 require "test_helper"
 
-class AnalyseControllerTest < ActionDispatch::IntegrationTest
+class AnalyzeControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   include ActiveJob::TestHelper
 
   setup do
     @user = User.create!(email: "founder@example.com", password: "password123")
     sign_in @user
+  end
+
+  test "refresh enqueues the loop analysis" do
+    loop_record = @user.loops.create!(name: "L")
+    assert_enqueued_with(job: AnalyzeLoopJob) do
+      post refresh_analyze_path(loop_record.slug)
+    end
+    assert_redirected_to analyze_path(loop_record.slug)
   end
 
   test "shows the insight panel and themes when an analysis exists" do
@@ -16,7 +24,7 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
                                           analyzed_feedback_count: 1)
     insight.themes.create!(title: "Onboarding overwhelming", mention_count: 3, sentiment: "frustrated")
 
-    get analyse_path(loop_record.slug)
+    get analyze_path(loop_record.slug)
 
     assert_select ".analysis-card", text: /Going well/
     assert_select ".analysis-card", text: /Onboarding overwhelming/
@@ -25,7 +33,7 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
   test "a loop with no feedback ever shows one unified empty state instead of scattered empty boxes" do
     loop_record = @user.loops.create!(name: "L")
 
-    get analyse_path(loop_record.slug)
+    get analyze_path(loop_record.slug)
 
     assert_select "#per-loop-pane" do
       assert_select ".loops-empty-state", text: /No feedback yet/
@@ -34,49 +42,14 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "refresh regenerates the insight synchronously and flashes success" do
-    loop_record = analysable_loop_with_points
-    fake = { "overall_sentiment" => "positive", "summary" => "Trending up", "themes" => [], "feature_requests" => [] }
-
-    stub_instance_method(LlmClient, :complete, ->(**) { fake }) do
-      post refresh_analyse_path(loop_record.slug)
-    end
-
-    assert_redirected_to analyse_path(loop_record.slug)
-    assert_equal "positive", loop_record.reload.insight.overall_sentiment
-  end
-
-  test "refresh flashes an error when the LLM fails" do
-    loop_record = analysable_loop_with_points
-
-    stub_instance_method(LlmClient, :complete, ->(**) { raise LlmClient::Error, "boom" }) do
-      post refresh_analyse_path(loop_record.slug)
-    end
-
-    assert_redirected_to analyse_path(loop_record.slug)
-    assert_match(/couldn.t|failed|try again/i, flash[:alert])
-  end
-
-  test "refresh flashes a notice and skips the LLM call when nothing is analyzed" do
-    loop_record = @user.loops.create!(name: "L")
-
-    stub_instance_method(LlmClient, :complete, ->(**) { raise "should not be called" }) do
-      post refresh_analyse_path(loop_record.slug)
-    end
-
-    assert_redirected_to analyse_path(loop_record.slug)
-    assert_match(/nothing to analyze/i, flash[:alert])
-    assert_nil loop_record.reload.insight
-  end
-
   test "backfill enqueues one Stage 1 job per pending feedback" do
     loop_record = analysable_loop_with_points
     Feedback.create!(loop: loop_record, transcript: "unanalyzed one")
 
     assert_enqueued_jobs 1, only: AnalyzeFeedbackJob do
-      post backfill_analyse_path(loop_record.slug)
+      post backfill_analyze_path(loop_record.slug)
     end
-    assert_redirected_to analyse_path(loop_record.slug)
+    assert_redirected_to analyze_path(loop_record.slug)
   end
 
   test "overview shows a live stat row with response, theme, and feature request counts" do
@@ -86,7 +59,7 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
     loop_record.feedbacks.create!(transcript: "hi one")
     loop_record.feedbacks.create!(transcript: "hi two")
 
-    get analyse_path(loop_record.slug)
+    get analyze_path(loop_record.slug)
 
     values = css_select(".analysis-stat-row dd").map(&:text)
     assert_equal ["2", "1", "0"], values[0..2]
@@ -97,7 +70,7 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
     loop_record = @user.loops.create!(name: "L")
     loop_record.feedbacks.create!(transcript: "hi")
 
-    get analyse_path(loop_record.slug)
+    get analyze_path(loop_record.slug)
 
     assert_select ".analysis-card", text: /Summary of all feedback/
     assert_select ".analysis-card", text: /AI-generated from every interview transcript/
@@ -108,7 +81,7 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
     loop_record.feedbacks.create!(transcript: "hi")
     loop_record.create_insight!(summary: "S", overall_sentiment: "neutral", analyzed_feedback_count: 1)
 
-    get analyse_path(loop_record.slug)
+    get analyze_path(loop_record.slug)
 
     assert_select ".analysis-section-empty", text: /No themes yet/
     assert_select ".analysis-section-empty", text: /No feature requests surfaced yet/
@@ -118,7 +91,7 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
     loop_record = @user.loops.create!(name: "L")
     loop_record.feedbacks.create!(transcript: "raw words", title: "Title", summary: "Generated summary")
 
-    get analyse_path(loop_record.slug)
+    get analyze_path(loop_record.slug)
 
     assert_select ".analysis-response-card", text: /AI summary/
     assert_select ".analysis-response-card", text: /Generated summary/
@@ -128,7 +101,7 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
     loop_record = analysable_loop_with_points
     loop_record.feedbacks.create!(transcript: "no points yet")
 
-    get analyse_path(loop_record.slug)
+    get analyze_path(loop_record.slug)
 
     assert_select ".alert-warning", text: /haven.t been analyzed yet/
     assert_select ".flash-toast-container .alert-warning", count: 0
@@ -137,19 +110,17 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
   test "flash notices render inside a dedicated toast container" do
     loop_record = @user.loops.create!(name: "L")
 
-    stub_instance_method(LlmClient, :complete, ->(**) { raise "should not be called" }) do
-      post refresh_analyse_path(loop_record.slug)
-    end
+    post refresh_analyze_path(loop_record.slug)
     follow_redirect!
 
-    assert_select ".flash-toast-container .alert", text: /nothing to analyze/i
+    assert_select ".flash-toast-container .alert", text: /analysis started/i
   end
 
   test "visiting a loop's analyse page stamps the current user's last-seen feedback count" do
     loop_record = @user.loops.create!(name: "L")
     2.times { Feedback.create!(loop: loop_record, transcript: "hi") }
 
-    get analyse_path(loop_record.slug)
+    get analyze_path(loop_record.slug)
 
     loop_view = @user.loop_views.find_by(loop: loop_record)
     assert_equal 2, loop_view.last_seen_feedback_count
@@ -158,7 +129,7 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
   test "visiting a loop with no feedback yet does not create a loop_view row" do
     loop_record = @user.loops.create!(name: "L")
 
-    get analyse_path(loop_record.slug)
+    get analyze_path(loop_record.slug)
 
     assert_nil @user.loop_views.find_by(loop: loop_record)
   end
@@ -166,11 +137,11 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
   test "visiting a loop again without new feedback does not regress last_seen_feedback_count" do
     loop_record = @user.loops.create!(name: "L")
     Feedback.create!(loop: loop_record, transcript: "hi")
-    get analyse_path(loop_record.slug)
+    get analyze_path(loop_record.slug)
     loop_view = @user.loop_views.find_by(loop: loop_record)
     loop_view.update!(last_seen_feedback_count: 5)
 
-    get analyse_path(loop_record.slug)
+    get analyze_path(loop_record.slug)
 
     assert_equal 5, loop_view.reload.last_seen_feedback_count
   end
@@ -181,7 +152,7 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
                                    invitation_accepted_at: Time.current)
     loop_record = @user.loops.create!(name: "L")
     Feedback.create!(loop: loop_record, transcript: "hi")
-    get analyse_path(loop_record.slug)
+    get analyze_path(loop_record.slug)
 
     sign_out @user
     sign_in teammate

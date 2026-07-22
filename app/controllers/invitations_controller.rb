@@ -13,9 +13,7 @@ class InvitationsController < ApplicationController
 
     if @user.save
       @team_member.update!(user: @user, invitation_accepted_at: Time.current)
-      TeamMailer.welcome(@team_member).deliver_later
-      sign_in(@user)
-      redirect_to dashboard_path, notice: "Welcome to the team!"
+      redirect_to check_email_path(email: @user.email)
     else
       render :show, status: :unprocessable_entity
     end

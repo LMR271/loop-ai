@@ -1,4 +1,4 @@
-class AnalyseController < ApplicationController
+class AnalyzeController < ApplicationController
   RANGES = %w[24h 7d 14d 30d custom].freeze
   CHART_TYPES = %w[bar line].freeze
   DATA_VIEWS = %w[volume day_of_week cumulative].freeze
@@ -20,14 +20,8 @@ class AnalyseController < ApplicationController
 
   def refresh
     loop_record = current_organization.loops.find_by!(slug: params[:slug])
-    analyzer = LoopAnalyzer.new(loop_record)
-    return redirect_to analyse_path(loop_record.slug), alert: "Nothing to analyze yet." if analyzer.analyzed_count.zero?
-
-    LoopInsightWriter.new(loop_record, analyzer.call, analyzer.analyzed_count).call
-    redirect_to analyse_path(loop_record.slug), notice: "Analysis updated."
-  rescue LlmClient::Error => e
-    Rails.logger.warn("[AnalyseController#refresh] #{e.message}")
-    redirect_to analyse_path(loop_record.slug), alert: "We couldn't generate the analysis just now — please try again."
+    AnalyzeLoopJob.perform_later(loop_record)
+    redirect_to analyze_path(loop_record.slug), notice: "Analysis started — this can take a moment."
   end
 
   def backfill
@@ -36,7 +30,7 @@ class AnalyseController < ApplicationController
     pending.each { |feedback| AnalyzeFeedbackJob.perform_later(feedback) }
     notice = "Analyzing #{pending.size} #{'response'.pluralize(pending.size)} in the background — " \
              "Refresh when it's done."
-    redirect_to analyse_path(loop_record.slug), notice: notice
+    redirect_to analyze_path(loop_record.slug), notice: notice
   end
 
   private

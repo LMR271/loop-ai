@@ -1,7 +1,7 @@
 require "test_helper"
 
-class AnalyseHelperTest < ActionView::TestCase
-  include AnalyseHelper
+class AnalyzeHelperTest < ActionView::TestCase
+  include AnalyzeHelper
 
   test "renders a pill badge for every supported sentiment" do
     Feedback::SENTIMENT_VALUES.each do |sentiment|

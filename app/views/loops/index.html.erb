@@ -1,12 +1,10 @@
-<% content_for :title, "Your loops · Loop AI" %>
+<% content_for :title, "Your loops | Loop AI" %>
 
 <section class="loops-dashboard">
   <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-5">
-    <div>
-      <p class="text-uppercase text-muted fw-semibold small mb-1">Feedback loops</p>
-      <h1 class="mb-1"><%= @query.present? ? "Search results" : "Your loops" %></h1>
-      <p class="text-muted mb-0"><%= @query.present? ? "Results for “#{@query}”" : "Review feedback activity and remove loops you no longer need." %></p>
-    </div>
+    <%= render "shared/page_header", eyebrow: "Feedback loops",
+          title: (@query.present? ? "Search results" : "Your loops"),
+          subtitle: (@query.present? ? "Results for “#{@query}”" : "Review feedback activity and remove loops you no longer need.") %>
   </div>
 
   <% if @loops.any? %>
@@ -17,7 +15,7 @@
     </section>
   <% else %>
     <section class="loops-empty-state text-center" aria-labelledby="empty-loops-heading">
-      <div class="loops-empty-state__icon" aria-hidden="true">↻</div>
+      <div class="loops-empty-state__icon" aria-hidden="true"><i class="fa-solid fa-arrows-rotate"></i></div>
       <h2 id="empty-loops-heading"><%= @query.present? ? "No matching loops" : "No loops yet" %></h2>
       <p class="text-muted mb-4"><%= @query.present? ? "Try a different search term." : "Create your first loop to start collecting and understanding customer feedback." %></p>
       <%= link_to(@query.present? ? "Clear search" : "New Loop", @query.present? ? loops_path : new_loop_path, class: "btn btn-primary") %>

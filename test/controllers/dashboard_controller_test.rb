@@ -20,7 +20,7 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
   test "navbar bell drops to zero once the current user has viewed the loop" do
     loop_record = @user.loops.create!(name: "L")
     Feedback.create!(loop: loop_record, transcript: "hi")
-    get analyse_path(loop_record.slug)
+    get analyze_path(loop_record.slug)
 
     get dashboard_path
 
@@ -30,7 +30,7 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
   test "navbar bell only counts feedback that arrived after the user last viewed the loop" do
     loop_record = @user.loops.create!(name: "L")
     Feedback.create!(loop: loop_record, transcript: "first")
-    get analyse_path(loop_record.slug)
+    get analyze_path(loop_record.slug)
     Feedback.create!(loop: loop_record, transcript: "second")
 
     get dashboard_path

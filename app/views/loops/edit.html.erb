@@ -1,4 +1,4 @@
-<% content_for :title, "Edit #{@loop.name} · Loop AI" %>
+<% content_for :title, "Edit #{@loop.name} | Loop AI" %>
 
 <main class="page-content--standard container py-5">
   <div class="d-flex justify-content-between align-items-start mb-4">
@@ -10,15 +10,24 @@
       <% if @loop.pending_approval? %>
         <span class="badge bg-warning fs-6 d-block mb-2">Pending approval</span>
         <% if current_user_workspace_admin? %>
-          <%= button_to "Approve", approve_loop_path(@loop), class: "btn btn-outline-success btn-sm" %>
+          <%= button_to approve_loop_path(@loop), class: "btn btn-outline-success btn-sm",
+                "aria-label": "Approve", title: "Approve", data: { controller: "tooltip", bs_placement: "top" } do %>
+            <i class="fa-solid fa-check" aria-hidden="true"></i>
+          <% end %>
         <% end %>
       <% elsif @loop.active? %>
         <span class="badge bg-success fs-6 d-block mb-2">Active</span>
         <% if current_user_workspace_admin? %>
-          <%= button_to "Deactivate", deactivate_loop_path(@loop), class: "btn btn-outline-secondary btn-sm" %>
+          <%= button_to deactivate_loop_path(@loop), class: "btn btn-outline-secondary btn-sm",
+                "aria-label": "Deactivate", title: "Deactivate", data: { controller: "tooltip", bs_placement: "top" } do %>
+            <i class="fa-solid fa-pause" aria-hidden="true"></i>
+          <% end %>
         <% end %>
       <% elsif current_user_workspace_admin? %>
-        <%= button_to "Activate", activate_loop_path(@loop), class: "btn btn-primary" %>
+        <%= button_to activate_loop_path(@loop), class: "btn btn-primary",
+              "aria-label": "Activate", title: "Activate", data: { controller: "tooltip", bs_placement: "top" } do %>
+          <i class="fa-solid fa-play" aria-hidden="true"></i>
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -33,9 +42,15 @@
                  value="<%= respondent_url(@loop.slug) %>"
                  data-clipboard-target="source">
           <button class="btn btn-outline-secondary respondent-link-controls__button" type="button" data-action="clipboard#copy"
-                  data-clipboard-target="button">Copy</button>
-          <%= link_to "Open", respondent_url(@loop.slug),
-                class: "btn btn-outline-secondary respondent-link-controls__button", target: "_blank", rel: "noopener" %>
+                  data-clipboard-target="button" aria-label="Copy link" title="Copy"
+                  data-controller="tooltip" data-bs-placement="top">
+            <i class="fa-solid fa-copy" aria-hidden="true"></i>
+          </button>
+          <%= link_to respondent_url(@loop.slug),
+                class: "btn btn-outline-secondary respondent-link-controls__button", target: "_blank", rel: "noopener",
+                "aria-label": "Open link", title: "Open", data: { controller: "tooltip", bs_placement: "top" } do %>
+            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+          <% end %>
         </div>
       </div>
     </div>

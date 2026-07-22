@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :redirect_naked_domain_to_www
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -14,6 +15,14 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  # getloop.me and www.getloop.me both resolve to this app (see Heroku domains),
+  # so without this a visitor could sit on either one — canonicalize to www.
+  def redirect_naked_domain_to_www
+    return unless request.host == "getloop.me"
+
+    redirect_to "https://www.getloop.me#{request.fullpath}", allow_other_host: true, status: :moved_permanently
+  end
 
   def current_organization
     current_user&.organization

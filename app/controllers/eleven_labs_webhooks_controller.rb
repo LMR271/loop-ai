@@ -6,6 +6,7 @@
 # except for a request we can't authenticate. Anything we can't use is logged, not
 # rejected.
 class ElevenLabsWebhooksController < ApplicationController
+  skip_before_action :redirect_naked_domain_to_www
   skip_before_action :authenticate_user!
   skip_forgery_protection
   before_action :verify_signature

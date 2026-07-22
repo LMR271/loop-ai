@@ -61,6 +61,29 @@
   display: none;
 }
 
+// The active-loop card stacks its title above a left-actions/right-status row,
+// unlike the draft card's single-row <details> summary.
+.deploy-loop--active .deploy-loop__summary {
+  align-items: stretch;
+  cursor: default;
+  flex-direction: column;
+  gap: $space-3;
+  min-height: auto;
+}
+
+.deploy-loop__actions-row {
+  align-items: center;
+  display: flex;
+  gap: $space-3;
+  justify-content: space-between;
+}
+
+.deploy-loop__actions {
+  align-items: center;
+  display: flex;
+  gap: $space-2;
+}
+
 .deploy-loop__summary-content {
   display: grid;
   gap: $space-1;

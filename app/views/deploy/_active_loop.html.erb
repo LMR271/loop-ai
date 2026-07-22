@@ -1,18 +1,28 @@
 <% widget_url = "#{request.base_url}/widget.js" %>
 
-<div class="deploy-loop border rounded">
+<div class="deploy-loop deploy-loop--active border rounded">
   <div class="deploy-loop__summary">
-    <span class="deploy-loop__summary-content">
-      <span class="deploy-loop__name"><%= loop.name.presence || "Untitled loop" %></span>
-    </span>
-    <span class="deploy-loop__summary-meta">
+    <span class="deploy-loop__name"><%= loop.name.presence || "Untitled loop" %></span>
+
+    <div class="deploy-loop__actions-row">
+      <div class="deploy-loop__actions">
+        <% if current_user_workspace_admin? %>
+          <%= button_to deactivate_loop_path(loop), params: { return_to: "deploy" }, class: "btn btn-outline-secondary btn-sm",
+                "aria-label": "Pause #{loop.name.presence || "this loop"}", title: "Pause",
+                data: { controller: "tooltip", bs_placement: "top" } do %>
+            <i class="fa-solid fa-pause" aria-hidden="true"></i>
+          <% end %>
+        <% end %>
+        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                data-bs-target="#deploy-actions-<%= loop.id %>"
+                aria-label="Share &amp; Distribute <%= loop.name.presence || "this loop" %>" title="Share &amp; Distribute"
+                data-controller="tooltip" data-bs-placement="top">
+          <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
+        </button>
+      </div>
+
       <span class="badge text-bg-success">Live</span>
-      <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
-              data-bs-target="#deploy-actions-<%= loop.id %>">
-        <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
-        Share &amp; Distribute
-      </button>
-    </span>
+    </div>
   </div>
 </div>
 
@@ -50,13 +60,6 @@
                 <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
               <% end %>
             </div>
-            <% if current_user_workspace_admin? %>
-              <%= button_to deactivate_loop_path(loop), params: { return_to: "deploy" }, class: "btn btn-outline-secondary btn-sm",
-                    "aria-label": "Pause #{loop.name.presence || "this loop"}", title: "Pause",
-                    data: { controller: "tooltip", bs_placement: "top" } do %>
-                <i class="fa-solid fa-pause" aria-hidden="true"></i>
-              <% end %>
-            <% end %>
           </article>
 
           <article class="deploy-detail-card card">

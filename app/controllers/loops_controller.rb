@@ -121,7 +121,7 @@ class LoopsController < ApplicationController
     return unless @loop.locked?
 
     redirect_to deploy_path,
-                alert: "This loop has already been deployed and can no longer be edited."
+                alert: "This loop has already been launched and can no longer be edited."
   end
 
   def set_loop

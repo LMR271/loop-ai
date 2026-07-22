@@ -10,6 +10,7 @@ class User < ApplicationRecord
                                inverse_of: :owner
   has_many :team_invitations, class_name: "Team", dependent: :destroy
   has_one :accepted_team_membership, -> { where.not(invitation_accepted_at: nil) }, class_name: "Team"
+  has_many :loop_views, dependent: :destroy
 
   after_create :provision_owned_organization
 

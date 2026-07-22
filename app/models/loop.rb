@@ -14,6 +14,7 @@ class Loop < ApplicationRecord
   has_many :feedbacks, dependent: :destroy
   has_one :insight, dependent: :destroy
   has_many :questions, -> { order(:position, :id) }, dependent: :destroy
+  has_many :loop_views, dependent: :destroy
 
   accepts_nested_attributes_for :questions,
                                 allow_destroy: true,

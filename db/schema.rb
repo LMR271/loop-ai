@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_21_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_22_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -78,6 +78,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_21_100000) do
     t.text "summary"
     t.datetime "updated_at", null: false
     t.index ["loop_id"], name: "index_insights_on_loop_id", unique: true
+  end
+
+  create_table "loop_views", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "last_seen_feedback_count", default: 0, null: false
+    t.bigint "loop_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["loop_id"], name: "index_loop_views_on_loop_id"
+    t.index ["user_id", "loop_id"], name: "index_loop_views_on_user_id_and_loop_id", unique: true
+    t.index ["user_id"], name: "index_loop_views_on_user_id"
   end
 
   create_table "loops", force: :cascade do |t|
@@ -341,6 +352,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_21_100000) do
   add_foreign_key "feature_requests", "insights"
   add_foreign_key "feedbacks", "loops"
   add_foreign_key "insights", "loops"
+  add_foreign_key "loop_views", "loops"
+  add_foreign_key "loop_views", "users"
   add_foreign_key "loops", "organizations"
   add_foreign_key "loops", "users"
   add_foreign_key "organizations", "users", column: "owner_id"

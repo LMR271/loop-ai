@@ -132,6 +132,8 @@ class LoopsController < ApplicationController
     params.require(:loop).permit(
       :name,
       :description,
+      :respondent_title,
+      :respondent_description,
       :image,
       :remove_image,
       questions_attributes: %i[id body position _destroy]

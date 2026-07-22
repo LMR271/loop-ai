@@ -6,35 +6,72 @@
     </div>
   <% end %>
 
-  <div class="mb-4">
-    <%= form.label :name, class: "form-label" %>
-    <%= form.text_field :name, class: "form-control", autofocus: true, required: true %>
-  </div>
-
-  <div class="mb-5">
-    <%= form.label :description, "What do you want feedback on?", class: "form-label" %>
-    <%= form.text_area :description, class: "form-control", rows: 4,
-          placeholder: "Describe the product, decision, or experience you want to understand." %>
-  </div>
-
-  <% if @loop.image.attached? %>
-    <div class="mb-3">
-      <%= image_tag loop.image.variant(resize_to_limit: [300, 300]),
-          class: "img-fluid rounded border mb-3" %>
+  <div class="row g-4 mb-5">
+    <div class="col-md-6">
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, class: "form-control", autofocus: true, required: true %>
     </div>
 
-    <div class="form-check mb-4">
-      <%= form.check_box :remove_image, class: "form-check-input" %>
-      <%= form.label :remove_image, "Remove current image", class: "form-check-label" %>
+    <div class="col-md-6">
+      <% if @loop.image.attached? %>
+        <div class="mb-3">
+          <%= image_tag loop.image.variant(resize_to_limit: [300, 300]),
+              class: "img-fluid rounded border mb-3" %>
+        </div>
+
+        <div class="form-check mb-3">
+          <%= form.check_box :remove_image, class: "form-check-input" %>
+          <%= form.label :remove_image, "Remove current image", class: "form-check-label" %>
+        </div>
+      <% end %>
+
+      <%= form.label :image, "Image (optional)", class: "form-label" %>
+      <%= form.file_field :image,
+          class: "form-control",
+          accept: "image/png,image/jpeg,image/webp" %>
     </div>
-  <% end %>
+  </div>
 
-  <div class="mb-5">
-    <%= form.label :image, "Image (optional)", class: "form-label" %>
+  <div class="row g-4 mb-5">
+    <div class="col-md-6">
+      <div class="card border-0 bg-light h-100">
+        <div class="card-body">
+          <p class="text-muted small mb-3">
+            <i class="fa-solid fa-robot" aria-hidden="true"></i>
+            This field is not shown to respondents — it's context for the AI, so it better understands what outcome you want from their answers.
+          </p>
 
-    <%= form.file_field :image,
-        class: "form-control",
-        accept: "image/png,image/jpeg,image/webp" %>
+          <div class="mb-0">
+            <%= form.label :description, "What do you want feedback on?", class: "form-label" %>
+            <%= form.text_area :description, class: "form-control", rows: 4,
+                  placeholder: "Describe the product, decision, or experience you want to understand." %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card border-0 bg-light h-100">
+        <div class="card-body">
+          <p class="text-muted small mb-3">
+            <i class="fa-solid fa-eye" aria-hidden="true"></i>
+            The two fields below are shown to respondents on the page where they give feedback — write them with that audience in mind.
+          </p>
+
+          <div class="mb-3">
+            <%= form.label :respondent_title, "Title", class: "form-label" %>
+            <%= form.text_field :respondent_title, class: "form-control",
+                  placeholder: "e.g. Help us improve our checkout flow" %>
+          </div>
+
+          <div class="mb-0">
+            <%= form.label :respondent_description, "Description", class: "form-label" %>
+            <%= form.text_area :respondent_description, class: "form-control", rows: 3,
+                  placeholder: "A sentence or two telling respondents what this is about and what to expect." %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <section aria-labelledby="questions-heading">

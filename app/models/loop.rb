@@ -56,6 +56,8 @@ class Loop < ApplicationRecord
 
   def mark_notifications_seen!
     update_column(:notifications_seen_at, Time.current)
+  end
+
   def feedbacks_pending_extraction
     feedbacks.where(extracted_points: {})
   end

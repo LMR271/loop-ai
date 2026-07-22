@@ -37,22 +37,9 @@ class ApplicationController < ActionController::Base
 
   def unseen_feedback_total
     loops_with_new_feedback.sum(&:unseen_feedback_count)
-
-  def new_feedback_count_for(loop_record)
-    seen = loop_seen_counts[loop_record.id].to_i
-    [loop_record.feedbacks.size - seen, 0].max
-  end
-
-  def new_feedback_total
-    loops_with_new_feedback.sum { |loop_record| new_feedback_count_for(loop_record) }
-
   end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:account_update, keys: %i[name])
-  end
-
-  def loop_seen_counts
-    @loop_seen_counts ||= current_user.loop_views.pluck(:loop_id, :last_seen_feedback_count).to_h
   end
 end

@@ -1,61 +1,176 @@
-<main class="container-fluid px-3 px-lg-5 py-4">
-
-  <div class="text-center mx-auto" style="max-width: 700px;">
-    <h1 class="text-uppercase text-muted fw-bold display-4 mb-2">
-      Loop<%= image_tag "lightbulb.svg",
-        alt: "Loop AI Logo",
-        class: "img-fluid rounded",
-        style: "max-height: 70px; transform: translateY(-6px);" %>AI
-    </h1>
-    <br>
-    <h2 class="display-6 fw-semibold text-dark">Turn Continuous Voice Feedback into Actionable Product Insights.</h2>
-  </div>
-  <br>
-  <hr class="my-4 mx-auto" style="max-width: 100px; border-top: 3px solid #dee2e6; opacity: 1;">
-  <br>
-
-  <br>
-  <div class="row g-4 w-100 mx-0">
-    <!-- Left Column: Description & Features -->
-    <div class="col-lg-6 col-xl-6 pe-lg-4">
-      <h3 class="h4 fw-bold text-dark mb-3">
-        The Intelligent Voice Engine for Customer Research
-      </h3>
-      <br>
-      <p class="text-secondary fs-5 mb-3 lh-base">
-        Stop drowning in lengthy user interviews and static forms.
-        <strong>Loop AI automates your entire qualitative research workflow</strong>
-        with interactive, conversational voice agents powered by ElevenLabs.
+<section class="marketing-hero">
+  <div class="marketing-hero__inner marketing-container">
+    <div class="marketing-hero__copy">
+      <p class="marketing-eyebrow">Loop AI</p>
+      <h1 class="marketing-hero__title">Turn feedback into better decisions.</h1>
+      <p class="marketing-hero__lead">
+        Loop AI turns continuous voice feedback into actionable product insights — automating
+        your qualitative research with conversational voice agents, so you can understand
+        customers without hundreds of hours of manual interviews.
       </p>
-      <ul class="list-unstyled text-secondary fs-5 mb-3 lh-base">
-        <li class="mb-2">
-          <strong>⚡ Effortless Setup:</strong> Define your research goals, set your questions,
-          and deploy a shareable interview link in seconds.
-        </li>
-        <li class="mb-2">
-          <strong>🎙️ Natural Conversations:</strong> Respondents talk naturally with your voice
-          agent while Loop AI records transcripts and tracks sentiment.
-        </li>
-        <li class="mb-2">
-          <strong>💡 Instant Insights:</strong> Automatically extract key themes and feature
-          requests, all back-linked to <strong>exact verbatim quotes</strong>.
-        </li>
-      </ul>
-      <p class="text-secondary fs-5 fw-medium mb-3">
-        Get deep, unbiased customer clarity at scale without spending hundreds of hours on manual
-        booking or note-taking.
-      </p>
-
-      <!-- Call to Action -->
-      <div class="pt-2">
-        <p class="fw-semibold text-dark mb-2">Ready to streamline your research?</p>
-        <%= link_to "Sign up for free", new_user_registration_path, class: "btn btn-primary btn-lg px-4" %>
+      <div class="marketing-hero__actions">
+        <%= link_to "Apply for beta access",
+              "https://docs.google.com/forms/d/e/1FAIpQLSfptXP5YEcG-UGrhDJ_35BDx_JW0kpNSNPmMSU_2XUk-XuVhQ/viewform",
+              class: "btn btn-primary btn-lg", target: "_blank", rel: "noopener" %>
+        <a href="#product" class="btn btn-outline-secondary btn-lg">See how it works</a>
       </div>
     </div>
 
-    <div class="col-lg-6">
-      <%= image_tag "landingpage_image.png", alt: "Analyze Dashboard", class: "img-fluid rounded-4 w-100", style: "height: 500px; object-fit: contain; object-position: center;" %>
+    <div class="marketing-hero__media">
+      <%= image_tag "landingpage_image.png", alt: "Loop AI analyze dashboard", class: "img-fluid rounded-4" %>
     </div>
   </div>
+</section>
 
-</main>
+<section id="product" class="marketing-section">
+  <div class="marketing-container">
+    <p class="marketing-eyebrow">Product</p>
+    <h2 class="marketing-section__title">The intelligent voice engine for customer research</h2>
+
+    <div class="marketing-product">
+      <div class="marketing-product__orb" data-controller="marketing-orb" aria-hidden="true">
+        <div class="marketing-orb" data-marketing-orb-target="orb"></div>
+      </div>
+
+      <div class="marketing-feature-grid">
+        <article class="marketing-feature-card">
+          <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+          <h3 class="h5">Effortless setup</h3>
+          <p class="text-muted mb-0">Define your research goals, set your questions, and launch a shareable interview link in seconds.</p>
+        </article>
+
+        <article class="marketing-feature-card">
+          <i class="fa-solid fa-microphone" aria-hidden="true"></i>
+          <h3 class="h5">Natural conversations</h3>
+          <p class="text-muted mb-0">Respondents talk naturally with your voice agent while Loop AI records transcripts and tracks sentiment.</p>
+        </article>
+
+        <article class="marketing-feature-card">
+          <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+          <h3 class="h5">Instant insights</h3>
+          <p class="text-muted mb-0">Automatically extract key themes and feature requests, all back-linked to exact verbatim quotes.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="use-cases" class="marketing-section marketing-section--muted">
+  <div class="marketing-container">
+    <p class="marketing-eyebrow">Use Cases</p>
+    <h2 class="marketing-section__title">Built for any business that talks to customers</h2>
+
+    <div class="marketing-feature-grid">
+      <article class="marketing-feature-card">
+        <i class="fa-solid fa-cube" aria-hidden="true"></i>
+        <h3 class="h5">Product & software teams</h3>
+        <p class="text-muted mb-0">Validate a roadmap idea before you build it, with real customer conversations instead of guesswork.</p>
+      </article>
+
+      <article class="marketing-feature-card">
+        <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+        <h3 class="h5">E-commerce & D2C brands</h3>
+        <p class="text-muted mb-0">Hear why customers bought, hesitated, or didn't come back — straight from them, at checkout or after delivery.</p>
+      </article>
+
+      <article class="marketing-feature-card">
+        <i class="fa-solid fa-headset" aria-hidden="true"></i>
+        <h3 class="h5">Customer experience teams</h3>
+        <p class="text-muted mb-0">Catch dissatisfaction early by hearing how customers really feel, at a scale manual check-ins can't match.</p>
+      </article>
+
+      <article class="marketing-feature-card">
+        <i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i>
+        <h3 class="h5">Researchers</h3>
+        <p class="text-muted mb-0">Run always-on interviews instead of one-off studies, and let Loop AI do the note-taking.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="marketing-section">
+  <div class="marketing-container">
+    <p class="marketing-eyebrow">FAQ</p>
+    <h2 class="marketing-section__title">Questions, answered</h2>
+
+    <div class="accordion marketing-faq" id="marketing-faq-accordion">
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq-1">
+            How does Loop AI collect feedback?
+          </button>
+        </h3>
+        <div id="faq-1" class="accordion-collapse collapse show" data-bs-parent="#marketing-faq-accordion">
+          <div class="accordion-body text-muted">
+            You share a link (or embed a widget) with respondents. They have a short voice
+            conversation with your Loop AI agent, and the transcript, sentiment, and themes are
+            ready for you automatically.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-2">
+            Do respondents need any special hardware?
+          </button>
+        </h3>
+        <div id="faq-2" class="accordion-collapse collapse" data-bs-parent="#marketing-faq-accordion">
+          <div class="accordion-body text-muted">
+            No — any device with a browser and a microphone works, including a phone.
+            There's nothing to download or install.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-3">
+            What happens to the data respondents share?
+          </button>
+        </h3>
+        <div id="faq-3" class="accordion-collapse collapse" data-bs-parent="#marketing-faq-accordion">
+          <div class="accordion-body text-muted">
+            Transcripts and sentiment are only visible to your workspace, and every AI-generated
+            insight links back to the exact quote it came from so you can verify it yourself.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-4">
+            Is there a free trial?
+          </button>
+        </h3>
+        <div id="faq-4" class="accordion-collapse collapse" data-bs-parent="#marketing-faq-accordion">
+          <div class="accordion-body text-muted">
+            We're in a closed beta right now, so access is by application — apply below and
+            we'll reach out once a spot opens up.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="marketing-section marketing-section--muted">
+  <div class="marketing-container">
+    <p class="marketing-eyebrow">Pricing</p>
+    <h2 class="marketing-section__title">Free during beta — by application</h2>
+
+    <div class="marketing-pricing-card">
+      <p class="marketing-eyebrow mb-1">Beta access</p>
+      <p class="marketing-pricing-card__price">Free</p>
+      <ul class="list-unstyled text-muted mb-4">
+        <li>Unlimited loops</li>
+        <li>Voice interviews with AI-generated insights</li>
+        <li>Team invites</li>
+      </ul>
+      <%= link_to "Apply for beta access",
+            "https://docs.google.com/forms/d/e/1FAIpQLSfptXP5YEcG-UGrhDJ_35BDx_JW0kpNSNPmMSU_2XUk-XuVhQ/viewform",
+            class: "btn btn-primary btn-lg w-100", target: "_blank", rel: "noopener" %>
+      <p class="text-muted small mt-3 mb-0">We're onboarding a limited number of workspaces while in beta. Paid plans come later.</p>
+    </div>
+  </div>
+</section>

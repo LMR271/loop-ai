@@ -1,0 +1,37 @@
+- generic [ref=e1]:
+  - alert [ref=e3]:
+    - text: You need to sign in or sign up before continuing.
+    - button "Close" [ref=e4] [cursor=pointer]
+  - generic [ref=e5]:
+    - navigation "Workspace actions" [ref=e6]:
+      - link "Loop AI home" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - img "LoopAI" [ref=e8]
+      - generic [ref=e9]:
+        - link "Log in" [ref=e10] [cursor=pointer]:
+          - /url: /users/sign_in
+        - link "Sign up" [ref=e11] [cursor=pointer]:
+          - /url: /users/sign_up
+    - main [ref=e12]:
+      - generic [ref=e13]:
+        - heading "Log in" [level=1] [ref=e14]
+        - paragraph [ref=e15]: Welcome back. Enter your details to continue.
+        - generic [ref=e16]:
+          - generic [ref=e17]:
+            - generic [ref=e18]: Email
+            - textbox "Email" [active] [ref=e19]
+          - generic [ref=e20]:
+            - generic [ref=e21]: Password
+            - textbox "Password" [ref=e22]
+          - group [ref=e23]:
+            - generic [ref=e24]:
+              - checkbox "Remember me" [ref=e25]
+              - generic [ref=e26]: Remember me
+          - button "Log in" [ref=e27] [cursor=pointer]
+        - generic [ref=e28]:
+          - link "Sign up" [ref=e29] [cursor=pointer]:
+            - /url: /users/sign_up
+          - link "Forgot your password?" [ref=e30] [cursor=pointer]:
+            - /url: /users/password/new
+          - link "Didn't receive confirmation instructions?" [ref=e31] [cursor=pointer]:
+            - /url: /users/confirmation/new

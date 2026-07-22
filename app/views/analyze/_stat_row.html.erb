@@ -1,18 +1,20 @@
-<dl class="analysis-stat-row mb-4">
-  <div>
-    <dt>Responses</dt>
-    <dd><%= loop_record.feedbacks.size %></dd>
+<div class="analysis-stat-tiles mb-4">
+  <div class="analysis-stat-tile">
+    <p class="analysis-stat-tile__label">Responses</p>
+    <p class="analysis-stat-tile__value"><%= loop_record.feedbacks.size %></p>
   </div>
-  <div>
-    <dt>Themes found</dt>
-    <dd><%= loop_record.insight&.themes&.size || 0 %></dd>
+  <div class="analysis-stat-tile">
+    <p class="analysis-stat-tile__label">Themes found</p>
+    <p class="analysis-stat-tile__value"><%= loop_record.insight&.themes&.size || 0 %></p>
   </div>
-  <div>
-    <dt>Feature requests</dt>
-    <dd><%= loop_record.insight&.feature_requests&.size || 0 %></dd>
+  <div class="analysis-stat-tile">
+    <p class="analysis-stat-tile__label">Feature requests</p>
+    <p class="analysis-stat-tile__value"><%= loop_record.insight&.feature_requests&.size || 0 %></p>
   </div>
-  <div>
-    <dt>Overall sentiment</dt>
-    <dd><%= sentiment_badge(loop_record.insight&.overall_sentiment) || content_tag(:span, "—", class: "text-muted fs-6") %></dd>
+  <div class="analysis-stat-tile">
+    <p class="analysis-stat-tile__label">Overall sentiment</p>
+    <p class="analysis-stat-tile__value">
+      <%= sentiment_badge(loop_record.insight&.overall_sentiment) || content_tag(:span, "—", class: "text-muted fs-6") %>
+    </p>
   </div>
-</dl>
+</div>

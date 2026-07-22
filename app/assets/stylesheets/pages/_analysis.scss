@@ -88,6 +88,16 @@
   margin-bottom: 0;
 }
 
+.analysis-select {
+  background-color: var(--color-surface-subtle);
+  border: none;
+  border-radius: $radius-pill;
+}
+
+.analysis-select-btn {
+  border-radius: $radius-pill;
+}
+
 .analysis-section-empty {
   align-items: center;
   color: var(--color-text-muted);

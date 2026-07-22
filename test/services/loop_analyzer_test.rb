@@ -11,7 +11,7 @@ class LoopAnalyzerTest < ActiveSupport::TestCase
 
   test "feeds tagged extracted points to the LLM and returns its result" do
     user = User.create!(email: "founder@example.com", password: "password123")
-    loop_record = Loop.create!(name: "L", user: user)
+    loop_record = Loop.create!(name: "L", user: user, organization: user.owned_organization)
     fb = Feedback.create!(loop: loop_record, transcript: "hi",
                           extracted_points: { "points" => [{ "kind" => "theme", "title" => "Onboarding", "quote" => "too many features" }] })
     stub = CaptureStub.new({ "overall_sentiment" => "neutral", "summary" => "ok", "themes" => [], "feature_requests" => [] })

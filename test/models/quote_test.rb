@@ -3,7 +3,7 @@ require "test_helper"
 class QuoteTest < ActiveSupport::TestCase
   test "quote bridges a theme to the feedback it came from" do
     founder = User.create!(email: "founder@example.com", password: "password123")
-    loop_record = Loop.create!(name: "L", user: founder)
+    loop_record = Loop.create!(name: "L", user: founder, organization: founder.owned_organization)
     insight = loop_record.create_insight!
     feedback = Feedback.create!(loop: loop_record, transcript: "hi")
     theme = insight.themes.create!(title: "Onboarding", mention_count: 1)

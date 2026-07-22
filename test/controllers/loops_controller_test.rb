@@ -99,7 +99,7 @@ class LoopsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "button", text: /Insert from Library/
     assert_select "button", text: /Save to Library/
-    assert_select "form[data-questions-form-target='saveForm']", count: 1
+    assert_select "form[data-save-question-modal-target='form']", count: 1
     assert_select "select[name='question_library_entry[category]'] option[value='']", count: 1
   end
 

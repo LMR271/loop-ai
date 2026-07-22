@@ -34,6 +34,8 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to dashboard_path
     assert_equal "Select exactly 4 stats to save.", flash[:alert]
     assert_equal %w[active_loops draft_loops closed_loops total_loops], @user.reload.dashboard_stat_keys
+  end
+
   test "navbar bell drops to zero once the current user has viewed the loop" do
     loop_record = @user.loops.create!(name: "L")
     Feedback.create!(loop: loop_record, transcript: "hi")

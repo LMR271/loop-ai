@@ -3,7 +3,7 @@ require "test_helper"
 class FeedbackTest < ActiveSupport::TestCase
   test "stores analysis columns" do
     user = User.create!(email: "founder@example.com", password: "password123")
-    loop_record = Loop.create!(name: "L", user: user)
+    loop_record = Loop.create!(name: "L", user: user, organization: user.owned_organization)
     feedback = Feedback.create!(
       loop: loop_record, transcript: "hi",
       title: "First week", summary: "Felt overwhelmed",

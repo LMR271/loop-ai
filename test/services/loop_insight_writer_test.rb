@@ -3,7 +3,7 @@ require "test_helper"
 class LoopInsightWriterTest < ActiveSupport::TestCase
   test "rebuilds the insight graph with themes, requests, and quotes" do
     founder = User.create!(email: "founder@example.com", password: "password123")
-    loop_record = Loop.create!(name: "L", user: founder)
+    loop_record = Loop.create!(name: "L", user: founder, organization: founder.owned_organization)
     feedback = Feedback.create!(loop: loop_record, transcript: "hi")
     result = {
       "overall_sentiment" => "positive", "summary" => "Going well",
@@ -25,7 +25,7 @@ class LoopInsightWriterTest < ActiveSupport::TestCase
 
   test "replaces a prior analysis rather than appending" do
     founder = User.create!(email: "founder2@example.com", password: "password123")
-    loop_record = Loop.create!(name: "L", user: founder)
+    loop_record = Loop.create!(name: "L", user: founder, organization: founder.owned_organization)
     empty = { "overall_sentiment" => "neutral", "summary" => "", "themes" => [], "feature_requests" => [] }
     LoopInsightWriter.new(loop_record, empty.merge("summary" => "first"), 0).call
     LoopInsightWriter.new(loop_record, empty.merge("summary" => "second"), 0).call

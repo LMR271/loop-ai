@@ -8,7 +8,6 @@ class AnalyzeController < ApplicationController
   def index
     @loops = current_organization.loops
     @loop = current_organization.loops.order(created_at: :desc).first
-    @loop&.mark_notifications_seen!
     load_shared_data
     render :show
   end
@@ -16,7 +15,6 @@ class AnalyzeController < ApplicationController
   def show
     @loops = current_organization.loops
     @loop = current_organization.loops.find_by!(slug: params[:slug])
-    @loop.mark_notifications_seen!
     load_shared_data
   end
 

@@ -3,7 +3,7 @@ require "test_helper"
 class LoopMailerTest < ActionMailer::TestCase
   test "invite_respondent emails the given address with the loop's public link" do
     user = User.create!(email: "founder@example.com", password: "password123")
-    loop_record = user.loops.create!(name: "Customer interviews")
+    loop_record = user.loops.create!(name: "Customer interviews", user: user)
 
     mail = LoopMailer.invite_respondent(loop_record, "respondent@example.com")
 

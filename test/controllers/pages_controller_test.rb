@@ -10,13 +10,12 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", text: "Turn feedback into better decisions."
   end
 
-  test "signed-in visitors can view the landing page" do
+  test "signed-in visitors are redirected to the dashboard instead of the landing page" do
     user = User.create!(email: "founder@example.com", password: "password123")
     sign_in user
 
     get root_path
 
-    assert_response :success
-    assert_select "h1", text: "Turn feedback into better decisions."
+    assert_redirected_to dashboard_path
   end
 end

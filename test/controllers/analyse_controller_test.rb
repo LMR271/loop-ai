@@ -145,6 +145,36 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
     assert_select ".flash-toast-container .alert", text: /nothing to analyze/i
   end
 
+  test "visiting a loop's analyse page stamps the current user's last-seen feedback count" do
+    loop_record = @user.loops.create!(name: "L")
+    2.times { Feedback.create!(loop: loop_record, transcript: "hi") }
+
+    get analyse_path(loop_record.slug)
+
+    loop_view = @user.loop_views.find_by(loop: loop_record)
+    assert_equal 2, loop_view.last_seen_feedback_count
+  end
+
+  test "visiting a loop with no feedback yet does not create a loop_view row" do
+    loop_record = @user.loops.create!(name: "L")
+
+    get analyse_path(loop_record.slug)
+
+    assert_nil @user.loop_views.find_by(loop: loop_record)
+  end
+
+  test "visiting a loop again without new feedback does not regress last_seen_feedback_count" do
+    loop_record = @user.loops.create!(name: "L")
+    Feedback.create!(loop: loop_record, transcript: "hi")
+    get analyse_path(loop_record.slug)
+    loop_view = @user.loop_views.find_by(loop: loop_record)
+    loop_view.update!(last_seen_feedback_count: 5)
+
+    get analyse_path(loop_record.slug)
+
+    assert_equal 5, loop_view.reload.last_seen_feedback_count
+  end
+
   private
 
   def analysable_loop_with_points

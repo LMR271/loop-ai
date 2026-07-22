@@ -5,9 +5,9 @@
     <% if @loop.logo_url.present? %>
       <img src="<%= @loop.logo_url %>" alt="Logo" class="respondent-logo">
     <% end %>
-    <h1 class="respondent-card__title">Share your feedback</h1>
+    <h1 class="respondent-card__title"><%= @loop.respondent_title.presence || "Share your feedback" %></h1>
     <p class="respondent-card__lead">
-      You've been invited to a short voice conversation. Tap play when you're ready — it only takes a few minutes.
+      <%= @loop.respondent_description.presence || "You've been invited to a short voice conversation. Tap play when you're ready — it only takes a few minutes." %>
     </p>
   </header>
 

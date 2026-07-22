@@ -27,6 +27,8 @@ class LoopTest < ActiveSupport::TestCase
 
     Feedback.create!(loop: loop_record, transcript: "hi again")
     assert_equal 1, loop_record.unseen_feedback_count
+  end
+
   test "feedbacks_pending_extraction returns only feedbacks without extracted points" do
     founder = User.create!(email: "pend@example.com", password: "password123")
     loop_record = Loop.create!(name: "Pending", user: founder, organization: founder.owned_organization)

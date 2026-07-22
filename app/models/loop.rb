@@ -45,6 +45,17 @@ class Loop < ApplicationRecord
     feedbacks.size - (insight&.analyzed_feedback_count || 0)
   end
 
+  # Drives the navbar bell — distinct from unanalyzed_feedback_count, which tracks
+  # whether the AI insight needs a refresh. This tracks whether anyone in the
+  # workspace has looked at the loop's Analyze page since the feedback came in.
+  def unseen_feedback_count
+    return feedbacks.size if notifications_seen_at.nil?
+
+    feedbacks.where(created_at: notifications_seen_at..).count
+  end
+
+  def mark_notifications_seen!
+    update_column(:notifications_seen_at, Time.current)
   def feedbacks_pending_extraction
     feedbacks.where(extracted_points: {})
   end

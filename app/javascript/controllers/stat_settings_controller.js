@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 const MAX_SELECTED = 4
 
 export default class extends Controller {
-  static targets = ["item", "checkbox"]
+  static targets = ["item", "checkbox", "submit"]
 
   connect() {
     this.limitSelection()
@@ -34,5 +34,7 @@ export default class extends Controller {
     this.checkboxTargets.forEach((box) => {
       box.disabled = !box.checked && checkedCount >= MAX_SELECTED
     })
+
+    this.submitTarget.disabled = checkedCount !== MAX_SELECTED
   }
 }

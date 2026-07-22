@@ -32,6 +32,15 @@ module RespondentsHelper
     keys.filter_map { |key| Organization::FONT_CHOICES.dig(key, :google_family) }.uniq
   end
 
+  # Organization logo when one's uploaded; nil otherwise so the layout can fall
+  # back to Loop AI's own favicon instead of a broken/missing icon link.
+  def respondent_favicon_url(loop_record)
+    organization = loop_record&.organization
+    return nil unless organization&.logo&.attached?
+
+    url_for(organization.logo.variant(resize_to_limit: [64, 64]))
+  end
+
   private
 
   def font_stack(key)

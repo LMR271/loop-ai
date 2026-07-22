@@ -175,6 +175,21 @@ class AnalyseControllerTest < ActionDispatch::IntegrationTest
     assert_equal 5, loop_view.reload.last_seen_feedback_count
   end
 
+  test "one teammate viewing a loop does not clear the notification for another teammate" do
+    teammate = User.create!(email: "teammate@example.com", password: "password123")
+    @user.team_memberships.create!(email: teammate.email, role: :editor, user: teammate,
+                                   invitation_accepted_at: Time.current)
+    loop_record = @user.loops.create!(name: "L")
+    Feedback.create!(loop: loop_record, transcript: "hi")
+    get analyse_path(loop_record.slug)
+
+    sign_out @user
+    sign_in teammate
+    get dashboard_path
+
+    assert_select ".app-alert-button .app-alert-badge", text: "1"
+  end
+
   private
 
   def analysable_loop_with_points

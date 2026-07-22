@@ -1,1 +1,294 @@
-// Specific CSS for your home-page
+// Marketing one-pager (app/views/pages/home.html.erb, layouts/marketing.html.erb).
+.marketing-shell {
+  background: var(--color-background);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+// Shared horizontal rhythm for the navbar, hero, sections, and footer, so
+// their content lines up and never touches the viewport edge on wide screens.
+.marketing-container {
+  margin: 0 auto;
+  max-width: 1120px;
+  padding-left: $space-10;
+  padding-right: $space-10;
+  width: 100%;
+}
+
+.marketing-navbar {
+  align-items: center;
+  background: var(--color-background);
+  border-bottom: 1px solid var(--color-border-subtle);
+  display: flex;
+  gap: $space-6;
+  justify-content: space-between;
+  padding-bottom: $space-4;
+  padding-top: $space-4;
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+.marketing-navbar__brand {
+  align-items: center;
+  color: var(--color-text);
+  display: inline-flex;
+  font-size: $font-size-md;
+  font-weight: 600;
+  gap: $space-2;
+  text-decoration: none;
+}
+
+.marketing-navbar__brand:hover {
+  color: var(--color-text);
+}
+
+.marketing-navbar__logo {
+  display: block;
+  height: 32px;
+  width: 32px;
+}
+
+.marketing-navbar__links {
+  align-items: center;
+  display: flex;
+  gap: $space-6;
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.marketing-navbar__links a {
+  color: var(--color-text-muted);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.marketing-navbar__links a:hover {
+  color: var(--color-text);
+}
+
+.marketing-navbar__actions {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  gap: $space-3;
+}
+
+.marketing-content {
+  flex: 1;
+}
+
+.marketing-footer {
+  border-top: 1px solid var(--color-border-subtle);
+  color: var(--color-text-muted);
+  padding-bottom: $space-6;
+  padding-top: $space-6;
+  text-align: center;
+}
+
+.marketing-eyebrow {
+  color: var(--color-text-muted);
+  font-size: $font-size-xs;
+  font-weight: 700;
+  letter-spacing: .06em;
+  margin-bottom: $space-2;
+  text-transform: uppercase;
+}
+
+.marketing-hero {
+  padding-bottom: $space-16;
+  padding-top: $space-16;
+}
+
+.marketing-hero__inner {
+  align-items: center;
+  display: grid;
+  gap: $space-14;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.marketing-hero__title {
+  font-size: $font-size-4xl;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: $space-4;
+}
+
+.marketing-hero__lead {
+  color: var(--color-text-muted);
+  font-size: $font-size-lg;
+  margin-bottom: $space-6;
+}
+
+.marketing-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+}
+
+.marketing-hero__media img {
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  max-width: 85%;
+  width: 100%;
+}
+
+.marketing-section {
+  padding-bottom: $space-16;
+  padding-top: $space-16;
+}
+
+.marketing-section--muted {
+  background: var(--color-surface-subtle);
+}
+
+.marketing-section__title {
+  font-size: $font-size-3xl;
+  font-weight: 700;
+  margin-bottom: $space-8;
+  max-width: 40rem;
+}
+
+#product .marketing-section__title {
+  max-width: none;
+}
+
+.marketing-feature-grid {
+  display: grid;
+  gap: $space-6;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.marketing-product {
+  align-items: center;
+  display: grid;
+  gap: $space-8;
+  grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+}
+
+.marketing-product .marketing-feature-grid {
+  grid-template-columns: 1fr;
+}
+
+.marketing-product__orb {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 0;
+}
+
+.marketing-product__orb::before {
+  animation: marketing-orb-glow-breathe 3s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(72, 198, 239, .75), rgba(79, 70, 229, .55) 45%, rgba(255, 126, 179, .35) 65%, transparent 75%);
+  border-radius: 50%;
+  content: "";
+  filter: blur(1rem);
+  inset: -1.5rem;
+  position: absolute;
+  z-index: -1;
+}
+
+@keyframes marketing-orb-glow-breathe {
+  0%, 100% { opacity: .8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marketing-product__orb::before {
+    animation: none;
+  }
+}
+
+.marketing-orb {
+  --posX: 0;
+  --posY: 0;
+  --x: calc(var(--posX) * 1px);
+  --y: calc(var(--posY) * 1px);
+
+  background-blend-mode: screen, screen, normal;
+  background-image:
+    radial-gradient(90% 90% at calc(50% + var(--x)) calc(35% + var(--y)), #48c6ef, transparent 65%),
+    radial-gradient(100% 100% at calc(70% - var(--x)) calc(70% - var(--y)), #ff7eb3, transparent 65%),
+    linear-gradient(135deg, #4f46e5, #1b2340);
+  border-radius: 50%;
+  height: 260px;
+  position: relative;
+  -webkit-mask-image: radial-gradient(circle, black 70%, transparent 100%);
+  mask-image: radial-gradient(circle, black 70%, transparent 100%);
+  width: 260px;
+}
+
+.marketing-feature-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: $radius-card;
+  padding: $space-6;
+}
+
+.marketing-feature-card i {
+  color: var(--color-accent);
+  font-size: $font-size-2xl;
+  margin-bottom: $space-3;
+}
+
+.marketing-faq {
+  margin-left: auto;
+  max-width: 40rem;
+}
+
+.marketing-pricing-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: $radius-card;
+  margin: 0 auto;
+  max-width: 24rem;
+  padding: $space-8;
+  text-align: center;
+}
+
+.marketing-pricing-card__price {
+  font-size: $font-size-4xl;
+  font-weight: 700;
+  margin-bottom: $space-4;
+}
+
+@media (max-width: 991px) {
+  .marketing-container {
+    padding-left: $space-6;
+    padding-right: $space-6;
+  }
+
+  .marketing-navbar__links {
+    display: none;
+  }
+
+  .marketing-hero {
+    padding-bottom: $space-10;
+    padding-top: $space-10;
+  }
+
+  .marketing-hero__inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .marketing-hero__actions {
+    justify-content: center;
+  }
+
+  .marketing-section {
+    padding-bottom: $space-10;
+    padding-top: $space-10;
+  }
+
+  .marketing-feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .marketing-product {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Loop AI | Turn feedback into better decisions" %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Loop AI">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <%= render "shared/flashes" %>
+
+    <div class="marketing-shell">
+      <nav class="marketing-navbar marketing-container" aria-label="Marketing">
+        <%= link_to root_path, class: "marketing-navbar__brand", aria: { label: "Loop AI home" } do %>
+          <%= image_tag "lightbulb.svg", alt: "Loop AI", class: "marketing-navbar__logo" %>
+          <span>Loop AI</span>
+        <% end %>
+
+        <ul class="marketing-navbar__links">
+          <li><a href="#product">Product</a></li>
+          <li><a href="#use-cases">Use Cases</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+        </ul>
+
+        <div class="marketing-navbar__actions">
+          <% if user_signed_in? %>
+            <%= link_to "Go to Dashboard", dashboard_path, class: "btn app-new-loop-button" %>
+          <% else %>
+            <%= link_to "Log in", new_user_session_path, class: "btn app-login-button" %>
+          <% end %>
+        </div>
+      </nav>
+
+      <main class="marketing-content">
+        <%= yield %>
+      </main>
+
+      <footer class="marketing-footer marketing-container">
+        <p class="mb-0">&copy; <%= Time.current.year %> Loop AI. All rights reserved.</p>
+      </footer>
+    </div>
+  </body>
+</html>

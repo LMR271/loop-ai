@@ -104,7 +104,7 @@ def build_insight!(loop_record, spec)
   insight = loop_record.create_insight!(
     summary: spec[:summary],
     overall_sentiment: spec[:overall_sentiment],
-    analyzed_feedback_count: loop_record.feedbacks.count,
+    analyzed_feedback_count: loop_record.feedbacks.where.not(extracted_points: {}).count,
     generated_at: Time.current
   )
 

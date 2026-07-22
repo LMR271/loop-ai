@@ -56,7 +56,9 @@ class ElevenLabsWebhooksController < ApplicationController
       conversation_id: payload.conversation_id,
       transcript: payload.transcript,
       sentiment: payload.sentiment,
-      sentiment_rationale: payload.sentiment_rationale
+      sentiment_rationale: payload.sentiment_rationale,
+      title: payload.summary_title,
+      summary: payload.transcript_summary
     }
   end
 end

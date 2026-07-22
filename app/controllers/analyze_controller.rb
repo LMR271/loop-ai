@@ -24,9 +24,20 @@ class AnalyzeController < ApplicationController
     redirect_to analyze_path(loop_record.slug), notice: "Analysis started — this can take a moment."
   end
 
+  def backfill
+    loop_record = current_organization.loops.find_by!(slug: params[:slug])
+    pending = loop_record.feedbacks_pending_extraction.to_a
+    pending.each { |feedback| AnalyzeFeedbackJob.perform_later(feedback) }
+    notice = "Analyzing #{pending.size} #{'response'.pluralize(pending.size)} in the background — " \
+             "Refresh when it's done."
+    redirect_to analyze_path(loop_record.slug), notice: notice
+  end
+
   private
 
   def load_shared_data
+    LoopView.stamp!(user: current_user, loop: @loop) if @loop
+
     @active_tab = params[:tab].presence_in(TABS) || "per_loop"
     @range = params[:range].presence_in(RANGES) || "30d"
     @from, @to = range_bounds(@range)
@@ -57,24 +68,12 @@ class AnalyzeController < ApplicationController
   def load_all_loops_data
     @loop_feedback_counts = loop_feedback_counts
 
-    @status_filter = params[:status_filter].presence_in(status_filters) || "all"
+    @status_filter = params[:status_filter].presence_in(%w[all] + Loop.statuses.keys) || "all"
     @sort = params[:sort].presence_in(SORTS) || "newest"
 
     loops = current_organization.loops.includes(:feedbacks)
     loops = loops.where(status: @status_filter) unless @status_filter == "all"
-    @loops_table = sort_loops(loops)
-  end
-
-  def sort_loops(loops)
-    case @sort
-    when "name" then loops.order(:name)
-    when "feedback_count" then loops.sort_by { |loop_record| -loop_record.feedbacks.size }
-    else loops.order(created_at: :desc)
-    end
-  end
-
-  def status_filters
-    %w[all] + Loop.statuses.keys
+    @loops_table = LoopTableSorter.new(loops, sort: @sort).call
   end
 
   def feedback_counts_by_period(scoped_feedbacks)

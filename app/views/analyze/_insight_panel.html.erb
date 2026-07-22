@@ -1,8 +1,13 @@
-<div class="analysis-summary-card h-100 p-3">
-  <div class="d-flex justify-content-between align-items-start mb-2">
-    <h3 class="h6 text-uppercase text-muted mb-0">Insight</h3>
-    <%= button_to refresh_analyze_path(loop_record.slug), class: "btn btn-sm btn-outline-primary" do %>
-      <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> Refresh analysis
+<div class="analysis-card analysis-card--tall h-100">
+  <div class="d-flex justify-content-between align-items-start mb-2 gap-3">
+    <div>
+      <h2 class="h5 mb-1">Summary of all feedback</h2>
+      <p class="text-muted small mb-0">AI-generated from every interview transcript in this loop. Press Refresh after new responses come in.</p>
+    </div>
+    <%= button_to refresh_analyze_path(loop_record.slug),
+                  class: "btn btn-primary text-nowrap",
+                  data: { turbo_submits_with: "Analyzing…" } do %>
+      <i class="fa-solid fa-arrows-rotate me-1"></i>Refresh
     <% end %>
   </div>
 
@@ -12,10 +17,21 @@
     <p class="text-muted small mb-0">
       <%= pluralize(loop_record.insight.analyzed_feedback_count, "interview") %> analyzed
       <% if loop_record.unanalyzed_feedback_count.positive? %>
-        · <%= pluralize(loop_record.unanalyzed_feedback_count, "new response") %> since
+        · <%= pluralize(loop_record.unanalyzed_feedback_count, "new response") %> since — Refresh to include them
       <% end %>
     </p>
   <% else %>
-    <p class="text-muted mb-0">No analysis yet. Press <strong>Refresh analysis</strong> to generate insights.</p>
+    <p class="text-muted mb-0">No analysis yet. Once you've collected a few interviews, press <strong>Refresh</strong> to see the themes and requests.</p>
+  <% end %>
+
+  <% if loop_record.pending_extraction_count.positive? %>
+    <div class="alert alert-warning d-flex justify-content-between align-items-center gap-2 mt-3 mb-0 py-2">
+      <span class="small mb-0">
+        <%= pluralize(loop_record.pending_extraction_count, "response") %> haven't been analyzed yet.
+      </span>
+      <%= button_to "Analyze them", backfill_analyze_path(loop_record.slug),
+                    class: "btn btn-sm btn-outline-dark text-nowrap",
+                    data: { turbo_submits_with: "Starting…" } %>
+    </div>
   <% end %>
 </div>

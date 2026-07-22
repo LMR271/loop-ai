@@ -14,6 +14,7 @@ class Loop < ApplicationRecord
   has_many :feedbacks, dependent: :destroy
   has_one :insight, dependent: :destroy
   has_many :questions, -> { order(:position, :id) }, dependent: :destroy
+  has_many :loop_views, dependent: :destroy
 
   accepts_nested_attributes_for :questions,
                                 allow_destroy: true,
@@ -42,5 +43,13 @@ class Loop < ApplicationRecord
 
   def unanalyzed_feedback_count
     feedbacks.size - (insight&.analyzed_feedback_count || 0)
+  end
+
+  def feedbacks_pending_extraction
+    feedbacks.where(extracted_points: {})
+  end
+
+  def pending_extraction_count
+    feedbacks_pending_extraction.size
   end
 end

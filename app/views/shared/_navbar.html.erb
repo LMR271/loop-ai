@@ -22,8 +22,8 @@
         <button type="button" class="btn app-alert-button position-relative" data-bs-toggle="dropdown"
                 aria-label="Notifications" aria-expanded="false">
           <i class="fa-regular fa-bell" aria-hidden="true"></i>
-          <% if unanalyzed_feedback_total.positive? %>
-            <span class="app-alert-badge badge rounded-pill text-bg-danger"><%= unanalyzed_feedback_total %></span>
+          <% if new_feedback_total.positive? %>
+            <span class="app-alert-badge badge rounded-pill text-bg-danger"><%= new_feedback_total %></span>
           <% end %>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
@@ -32,7 +32,7 @@
               <li>
                 <%= link_to analyze_path(loop_record.slug), class: "dropdown-item" do %>
                   <strong><%= loop_record.name %></strong> —
-                  <%= pluralize(loop_record.unanalyzed_feedback_count, "new response") %>
+                  <%= pluralize(new_feedback_count_for(loop_record), "new response") %>
                 <% end %>
               </li>
             <% end %>

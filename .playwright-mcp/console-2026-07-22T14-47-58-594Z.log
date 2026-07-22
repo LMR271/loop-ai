@@ -1,0 +1,4 @@
+[   80530ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3050/:0
+[   80531ms] TypeError: Failed to fetch
+    at W (http://localhost:3050/assets/turbo.min-b86d83036ff04169e5bf3ebbc82e0ad528456259e47091b448f41a3cadabdb40.js:5:7238)
+    at z.perform (http://localhost:3050/assets/turbo.min-b86d83036ff04169e5bf3ebbc82e0ad528456259e47091b448f41a3cadabdb40.js:5:9017)

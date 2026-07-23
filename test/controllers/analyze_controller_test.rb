@@ -187,6 +187,47 @@ class AnalyzeControllerTest < ActionDispatch::IntegrationTest
     assert_select ".analysis-quote-tag", text: /Interview #2/
   end
 
+  test "Themes headline reads Patterns" do
+    loop_record = @user.loops.create!(name: "L")
+    loop_record.feedbacks.create!(transcript: "hi")
+    loop_record.create_insight!(summary: "S", overall_sentiment: "neutral", analyzed_feedback_count: 1)
+
+    get analyze_path(loop_record.slug)
+
+    assert_select "h3", text: "Patterns"
+    assert_select "h3", text: "Themes", count: 0
+  end
+
+  test "theme tiles render as collapsible details with a quote's interview tag and sentiment" do
+    loop_record = @user.loops.create!(name: "L")
+    feedback = loop_record.feedbacks.create!(transcript: "hi", sentiment: "positive")
+    insight = loop_record.create_insight!(summary: "S", overall_sentiment: "positive", analyzed_feedback_count: 1)
+    theme = insight.themes.create!(title: "Onboarding overwhelming", mention_count: 1, sentiment: "frustrated")
+    theme.quotes.create!(feedback: feedback, text: "it was a lot")
+
+    get analyze_path(loop_record.slug)
+
+    assert_select ".analysis-tile", 1 do
+      assert_select "summary .analysis-tile__title", text: "Onboarding overwhelming"
+    end
+    assert_select ".analysis-quote-tag" do
+      assert_select "a", text: "Interview #1"
+      assert_select ".badge", text: "Positive"
+    end
+  end
+
+  test "theme tiles are laid out two per row" do
+    loop_record = @user.loops.create!(name: "L")
+    loop_record.feedbacks.create!(transcript: "hi")
+    insight = loop_record.create_insight!(summary: "S", overall_sentiment: "positive", analyzed_feedback_count: 1)
+    insight.themes.create!(title: "T1", mention_count: 1, sentiment: "positive")
+    insight.themes.create!(title: "T2", mention_count: 1, sentiment: "positive")
+
+    get analyze_path(loop_record.slug)
+
+    assert_select ".row-cols-md-2 > .col", 2
+  end
+
   private
 
   def analysable_loop_with_points

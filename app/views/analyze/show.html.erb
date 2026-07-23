@@ -214,11 +214,12 @@
 
           <% if @loop.insight.present? %>
             <section class="mb-4">
-              <h3 class="mb-1">Themes</h3>
+              <h3 class="mb-1">Patterns</h3>
               <p class="text-muted small mb-3">Patterns that came up across multiple interviews — where to focus.</p>
               <% if @loop.insight.themes.any? %>
-                <div class="d-flex flex-column gap-2">
-                  <%= render partial: "theme", collection: @loop.insight.themes, as: :theme %>
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+                  <%= render partial: "theme", collection: @loop.insight.themes, as: :theme,
+                             locals: { loop_record: @loop, interview_numbers: @interview_numbers } %>
                 </div>
               <% else %>
                 <%= render "section_empty", icon: "fa-tag", message: "No themes yet — collect a few interviews, then Refresh." %>

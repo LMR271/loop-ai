@@ -1,8 +1,4 @@
 // Analysis-specific layout helpers replace former inline presentation rules.
-.page-content--standard {
-  max-width: 47.5rem;
-}
-
 .page-content--wide {
   max-width: 60rem;
 }
@@ -41,13 +37,15 @@
 
 .analysis-tabs {
   border-bottom: 1px solid var(--color-border);
+  padding-bottom: $space-2;
 }
 
 .analysis-tabs .nav-link {
   background: none;
   border: none;
-  border-radius: $radius-pill;
+  border-radius: $radius-sm;
   color: var(--color-text-muted);
+  margin-bottom: 0;
   margin-right: $space-2;
   padding: $space-2 $space-4;
   transition: background-color $transition-base $transition-easing, color $transition-base $transition-easing;

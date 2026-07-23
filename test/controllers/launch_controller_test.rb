@@ -1,6 +1,6 @@
 require "test_helper"
 
-class DeployControllerTest < ActionDispatch::IntegrationTest
+class LaunchControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
@@ -15,7 +15,7 @@ class DeployControllerTest < ActionDispatch::IntegrationTest
     other_user = User.create!(email: "other@example.com", password: "password123")
     other_user.loops.create!(name: "Private draft")
 
-    get deploy_path
+    get launch_path
 
     assert_response :success
     assert_select "#draft-loops-heading", text: "Draft Loops"
@@ -35,7 +35,7 @@ class DeployControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "shows the empty state for each loop group independently" do
-    get deploy_path
+    get launch_path
 
     assert_response :success
     assert_select ".deploy-empty-message", text: "There are no draft loops."

@@ -38,7 +38,7 @@ class AnalyzeController < ApplicationController
   def load_shared_data
     LoopView.stamp!(user: current_user, loop: @loop) if @loop
 
-    @active_tab = params[:tab].presence_in(TABS) || "per_loop"
+    @active_tab = params[:tab].presence_in(TABS) || "all_loops"
     @range = params[:range].presence_in(RANGES) || "30d"
     @from, @to = range_bounds(@range)
 

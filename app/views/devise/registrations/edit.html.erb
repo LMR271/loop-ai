@@ -1,6 +1,6 @@
 <% content_for :title, "Settings" %>
 
-<div class="container py-4 settings-container">
+<div class="page-content--wide container py-4">
   <h1 class="mb-4">Settings</h1>
 
   <div class="row g-4">
@@ -106,15 +106,12 @@
         <h2 class="h5 mb-1">Delete account</h2>
         <p class="text-muted small mb-3">This can't be undone.</p>
 
-        <%= form_with url: registration_path(resource_name), method: :delete,
-              data: { controller: "type-to-confirm", "type-to-confirm-phrase-value": "DELETE" } do %>
-          <label class="form-label small" for="delete-account-confirm">Type <strong>DELETE</strong> to confirm</label>
-          <input type="text" id="delete-account-confirm" class="form-control mb-2" autocomplete="off"
-                 data-type-to-confirm-target="input" data-action="input->type-to-confirm#check">
-          <button type="submit" class="btn btn-outline-danger btn-sm" data-type-to-confirm-target="submit" disabled>
-            Delete account
-          </button>
-        <% end %>
+        <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-account-modal">
+          Delete account
+        </button>
+        <%= render "shared/confirm_modal", id: "delete-account-modal", title: "Delete account",
+              body: "This can't be undone.", url: registration_path(resource_name),
+              confirm_label: "Delete account", type_to_confirm: "DELETE" %>
       </section>
 
       <% if current_user.workspace_owner? %>
@@ -124,15 +121,12 @@
             Permanently deletes all your loops and feedback, and removes every teammate. Your own account stays active.
           </p>
 
-          <%= form_with url: workspace_path, method: :delete,
-                data: { controller: "type-to-confirm", "type-to-confirm-phrase-value": "DELETE" } do %>
-            <label class="form-label small" for="delete-workspace-confirm">Type <strong>DELETE</strong> to confirm</label>
-            <input type="text" id="delete-workspace-confirm" class="form-control mb-2" autocomplete="off"
-                   data-type-to-confirm-target="input" data-action="input->type-to-confirm#check">
-            <button type="submit" class="btn btn-outline-danger btn-sm" data-type-to-confirm-target="submit" disabled>
-              Delete workspace
-            </button>
-          <% end %>
+          <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-workspace-modal">
+            Delete workspace
+          </button>
+          <%= render "shared/confirm_modal", id: "delete-workspace-modal", title: "Delete workspace",
+                body: "Permanently deletes all your loops and feedback, and removes every teammate. Your own account stays active.",
+                url: workspace_path, confirm_label: "Delete workspace", type_to_confirm: "DELETE" %>
         </section>
       <% end %>
     </div>

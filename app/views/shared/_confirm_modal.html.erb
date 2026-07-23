@@ -1,0 +1,32 @@
+<%# locals: (id:, title:, body:, url:, method: :delete, confirm_label: "Delete", type_to_confirm: nil) %>
+<div class="modal fade" id="<%= id %>" tabindex="-1" aria-labelledby="<%= id %>-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= form_with url: url, method: method,
+            data: (type_to_confirm.present? ? { controller: "type-to-confirm", "type-to-confirm-phrase-value": type_to_confirm } : {}) do %>
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="<%= id %>-label"><%= title %></h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="<%= "mb-3" if type_to_confirm.present? %>"><%= body %></p>
+          <% if type_to_confirm.present? %>
+            <label class="form-label small" for="<%= id %>-input">Type <strong><%= type_to_confirm %></strong> to confirm</label>
+            <input type="text" id="<%= id %>-input" class="form-control" autocomplete="off"
+                   data-type-to-confirm-target="input" data-action="input->type-to-confirm#check">
+          <% end %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <% if type_to_confirm.present? %>
+            <button type="submit" class="btn btn-outline-danger" data-type-to-confirm-target="submit" disabled>
+              <%= confirm_label %>
+            </button>
+          <% else %>
+            <button type="submit" class="btn btn-outline-danger"><%= confirm_label %></button>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

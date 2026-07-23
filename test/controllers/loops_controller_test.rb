@@ -148,12 +148,12 @@ class LoopsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "agent_test_123", loop.agent_id
   end
 
-  test "deactivating from deploy returns to the deploy dashboard" do
+  test "deactivating from launch returns to the launch dashboard" do
     loop = @user.loops.create!(name: "Live research", status: :active, agent_id: "existing_agent")
 
-    post deactivate_loop_path(loop), params: { return_to: "deploy" }
+    post deactivate_loop_path(loop), params: { return_to: "launch" }
 
-    assert_redirected_to deploy_path
+    assert_redirected_to launch_path
     assert loop.reload.closed?
   end
 

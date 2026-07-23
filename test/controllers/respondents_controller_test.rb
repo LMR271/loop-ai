@@ -57,6 +57,15 @@ class RespondentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "link[rel=icon]", 1
   end
 
+  test "show requires AI-disclosure consent before the start button is enabled" do
+    get respondent_url(@loop.slug)
+
+    assert_response :success
+    assert_select "input[type=checkbox][data-interview-target='consentCheckbox']", 1
+    assert_select "button[data-interview-target='startButton'][disabled]", 1
+    assert_match(/speaking with an AI voice agent, not a human/i, response.body)
+  end
+
   test "signed_url returns not_found for an active loop without a provisioned agent" do
     # Seeded (or otherwise not-yet-provisioned) loops can be active with a nil
     # agent_id. The controller must not hand that nil to ElevenLabs, which 404s

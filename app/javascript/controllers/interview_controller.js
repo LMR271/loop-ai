@@ -7,9 +7,17 @@ import { Conversation } from "@elevenlabs/client"
 // the respondent is never left staring at a dead orb.
 export default class extends Controller {
   static values = { slug: String }
-  static targets = ["status", "startButton", "endButton", "orb", "thankYou"]
+  static targets = ["status", "startButton", "endButton", "orb", "thankYou", "consentCheckbox"]
 
   static STATES = ["is-idle", "is-connecting", "is-listening", "is-speaking", "is-ended"]
+
+  connect() {
+    this.toggleConsent()
+  }
+
+  toggleConsent() {
+    if (this.hasConsentCheckboxTarget) this.startButtonTarget.disabled = !this.consentCheckboxTarget.checked
+  }
 
   async start() {
     this.setOrbState("is-connecting")

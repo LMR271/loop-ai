@@ -26,13 +26,15 @@
       <i class="fa-solid fa-pen" aria-hidden="true"></i>
     <% end %>
     <% if current_user_workspace_admin? %>
-      <%= button_to loop_path(loop_record), method: :delete,
-            class: "btn btn-outline-danger",
-            "aria-label": "Delete #{loop_record.name.presence || "this loop"}", title: "Delete",
-            data: { controller: "tooltip", bs_placement: "top" },
-            form: { data: { turbo_confirm: "Delete #{loop_record.name.presence || "this loop"}? This also removes its feedback and questions." } } do %>
+      <% loop_display_name = loop_record.name.presence || "this loop" %>
+      <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-loop-<%= loop_record.id %>"
+              aria-label="<%= "Delete #{loop_display_name}" %>" title="Delete"
+              data-controller="tooltip" data-bs-placement="top">
         <i class="fa-solid fa-trash" aria-hidden="true"></i>
-      <% end %>
+      </button>
+      <%= render "shared/confirm_modal", id: "delete-loop-#{loop_record.id}", title: "Delete loop",
+            body: "Delete #{loop_display_name}? This also removes its feedback and questions.",
+            url: loop_path(loop_record) %>
     <% end %>
     <% if current_user_workspace_admin? && loop_record.pending_approval? %>
       <%= button_to approve_loop_path(loop_record), method: :post, class: "btn btn-outline-success",

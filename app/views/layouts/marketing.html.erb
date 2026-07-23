@@ -27,25 +27,27 @@
     <%= render "shared/flashes" %>
 
     <div class="marketing-shell">
-      <nav class="marketing-navbar marketing-container" aria-label="Marketing">
-        <%= link_to root_path, class: "marketing-navbar__brand", aria: { label: "Loop AI home" } do %>
-          <%= image_tag "lightbulb.svg", alt: "Loop AI", class: "marketing-navbar__logo" %>
-          <span>Loop AI</span>
-        <% end %>
-
-        <ul class="marketing-navbar__links">
-          <li><a href="#product">Product</a></li>
-          <li><a href="#use-cases">Use Cases</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-        </ul>
-
-        <div class="marketing-navbar__actions">
-          <% if user_signed_in? %>
-            <%= link_to "Go to Dashboard", dashboard_path, class: "btn app-new-loop-button" %>
-          <% else %>
-            <%= link_to "Log in", new_user_session_path, class: "btn app-login-button" %>
+      <nav class="marketing-navbar" aria-label="Marketing">
+        <div class="marketing-navbar__inner marketing-container">
+          <%= link_to root_path, class: "marketing-navbar__brand", aria: { label: "Loop AI home" } do %>
+            <%= image_tag "lightbulb.svg", alt: "Loop AI", class: "marketing-navbar__logo" %>
+            <span>Loop AI</span>
           <% end %>
+
+          <ul class="marketing-navbar__links">
+            <li><a href="#product">Product</a></li>
+            <li><a href="#use-cases">Use Cases</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+          </ul>
+
+          <div class="marketing-navbar__actions">
+            <% if user_signed_in? %>
+              <%= link_to "Go to Dashboard", dashboard_path, class: "btn app-new-loop-button" %>
+            <% else %>
+              <%= link_to "Log in", new_user_session_path, class: "btn app-login-button" %>
+            <% end %>
+          </div>
         </div>
       </nav>
 
@@ -55,6 +57,10 @@
 
       <footer class="marketing-footer marketing-container">
         <p class="mb-0">&copy; <%= Time.current.year %> Loop AI. All rights reserved.</p>
+        <ul class="marketing-footer__links">
+          <li><%= link_to "Terms", terms_path %></li>
+          <li><%= link_to "Privacy", privacy_path %></li>
+        </ul>
       </footer>
     </div>
   </body>

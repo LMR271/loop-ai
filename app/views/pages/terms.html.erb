@@ -1,0 +1,64 @@
+<% content_for :title, "Terms of Service | Loop AI" %>
+
+<section class="marketing-section">
+  <div class="marketing-container marketing-legal">
+    <p class="marketing-eyebrow">Legal</p>
+    <h1 class="marketing-section__title">Terms of Service</h1>
+    <p class="text-muted mb-5">Last updated <%= Date.new(2026, 7, 23).strftime("%B %-d, %Y") %></p>
+
+    <h2 class="h4 mt-5">1. Acceptance of these terms</h2>
+    <p>
+      By creating a Loop AI account, or by taking part in a voice interview through a Loop AI
+      link, you agree to these Terms of Service and to our <%= link_to "Privacy Policy", privacy_path %>.
+      If you don't agree, please don't use the service.
+    </p>
+
+    <h2 class="h4 mt-5">2. What Loop AI does</h2>
+    <p>
+      Loop AI lets a workspace ("you," if you're a customer) create "loops" — short voice
+      conversations conducted by an AI agent — to collect feedback from respondents. We record
+      the conversation, transcribe it, and use AI to summarize sentiment, themes, and feature
+      requests for the workspace that created the loop.
+    </p>
+
+    <h2 class="h4 mt-5">3. Accounts and workspaces</h2>
+    <p>
+      You're responsible for the accuracy of the information you provide and for keeping your
+      login credentials secure. A workspace owner may invite teammates; each teammate's access
+      is scoped to that workspace's own loops and feedback. We're currently in a closed beta —
+      access is by application, and we may pause, limit, or end beta access at our discretion.
+    </p>
+
+    <h2 class="h4 mt-5">4. If you're a respondent</h2>
+    <p>
+      If you've been invited to a Loop AI interview, you're speaking with an AI voice agent, not
+      a human. The conversation is recorded, transcribed, and analyzed as described in our
+      <%= link_to "Privacy Policy", privacy_path %>. Don't take part if you're not comfortable
+      with that, or if you're not the intended recipient of the invitation.
+    </p>
+
+    <h2 class="h4 mt-5">5. Acceptable use</h2>
+    <p>
+      Don't use Loop AI to collect feedback from anyone without a lawful basis for doing so,
+      to impersonate someone else, to collect sensitive personal data you're not entitled to
+      collect, or to interfere with the service's normal operation.
+    </p>
+
+    <h2 class="h4 mt-5">6. Provided "as is," during beta</h2>
+    <p>
+      Loop AI is under active development and provided without warranties of any kind, express
+      or implied — including fitness for a particular purpose or uninterrupted availability. To
+      the extent permitted by law, we aren't liable for indirect or consequential damages arising
+      from your use of the service.
+    </p>
+
+    <h2 class="h4 mt-5">7. Changes to these terms</h2>
+    <p>
+      We may update these terms as the product changes. We'll update the date at the top of this
+      page when we do; continued use after a change means you accept the updated terms.
+    </p>
+
+    <h2 class="h4 mt-5">8. Contact</h2>
+    <p>Questions about these terms? Reach us at <a href="mailto:hi@getloop.me">hi@getloop.me</a>.</p>
+  </div>
+</section>

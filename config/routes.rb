@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: "users/registrations", confirmations: "users/confirmations" }
   root to: "pages#home"
+  get "terms", to: "pages#terms", as: :terms
+  get "privacy", to: "pages#privacy", as: :privacy
 
   get "check-email", to: "check_email#show", as: :check_email
 
@@ -42,8 +44,8 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#index", as: :dashboard
   patch "dashboard/stat_preferences", to: "dashboard#update_stat_preferences", as: :dashboard_stat_preferences
 
-  get "deploy", to: "deploy#index", as: :deploy
-  post "deploy/:loop_id/invites", to: "deploy#send_invites", as: :deploy_invites
+  get "launch", to: "launch#index", as: :launch
+  post "launch/:loop_id/invites", to: "launch#send_invites", as: :launch_invites
 
   get "analyze", to: "analyze#index", as: :analyze_index
   get "analyze/:slug", to: "analyze#show", as: :analyze
@@ -53,6 +55,13 @@ Rails.application.routes.draw do
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
+
+  # Branded error pages, wired up via config.exceptions_app (config/application.rb) in
+  # place of the static public/*.html Rails ships by default. Rails dispatches exceptions
+  # here with PATH_INFO set to "/<status code>" (e.g. "/404"), for any status it rescues —
+  # match any 3-digit code rather than enumerating each one, so nothing falls through to
+  # an unhandled routing error. Kept last so it never shadows a real app route.
+  match "/:code", to: "errors#show", via: :all, constraints: { code: /\d{3}/ }
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

@@ -28,5 +28,9 @@ module LoopAi
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Route 404/422/500 through ErrorsController (branded, marketing-layout pages)
+    # instead of the static public/*.html Rails ships by default.
+    config.exceptions_app = routes
   end
 end

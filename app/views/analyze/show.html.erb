@@ -124,7 +124,7 @@
         <% end %>
       </div>
 
-      <div class="tab-pane fade <%= "show active" if @active_tab == "per_loop" %>" id="per-loop-pane" role="tabpanel">
+      <div class="tab-pane fade <%= "show active" if @active_tab == "per_loop" %>" id="per-loop-pane" role="tabpanel" data-controller="highlight-target" data-action="hashchange@window->highlight-target#highlight">
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h2 class="mb-0">Overview of #<%= @loop.name %></h2>
 
@@ -132,7 +132,7 @@
             <div class="analysis-loop-select">
               <select class="form-select analysis-select" onchange="if (this.value) { window.location.href = this.value }">
                 <% @loops.each do |loop_record| %>
-                  <option value="<%= analyze_path(loop_record.slug, tab: @active_tab, range: @range, from: params[:from], to: params[:to], chart_type: @chart_type, data_view: @data_view) %>" <%= "selected" if @loop && loop_record.id == @loop.id %>>
+                  <option value="<%= analyze_path(loop_record.slug, tab: "per_loop", range: @range, from: params[:from], to: params[:to], chart_type: @chart_type, data_view: @data_view) %>" <%= "selected" if @loop && loop_record.id == @loop.id %>>
                     <%= loop_record.name %>
                   </option>
                 <% end %>
@@ -190,26 +190,23 @@
             </div>
           <% end %>
 
-          <div class="row g-4 mb-4 align-items-start">
-            <div class="col-md-8">
-              <div class="analysis-card analysis-card--tall">
-                <h3 class="h6 text-uppercase text-muted mb-3">
-                  <%= chart_title(@data_view) %> (<%= range_label(@range, @from, @to) %>)
-                </h3>
-                <% if @active_chart_data.values.sum.zero? %>
-                  <div class="analysis-chart-empty d-flex align-items-center justify-content-center text-muted">
-                    No feedback to chart in this range
-                  </div>
-                <% elsif @chart_type == "line" %>
-                  <%= line_chart @active_chart_data, **chart_options %>
-                <% else %>
-                  <%= column_chart @active_chart_data, **bar_options %>
-                <% end %>
+          <div class="analysis-card analysis-card--tall mb-4">
+            <h3 class="h6 text-uppercase text-muted mb-3">
+              <%= chart_title(@data_view) %> (<%= range_label(@range, @from, @to) %>)
+            </h3>
+            <% if @active_chart_data.values.sum.zero? %>
+              <div class="analysis-chart-empty d-flex align-items-center justify-content-center text-muted">
+                No feedback to chart in this range
               </div>
-            </div>
-            <div class="col-md-4">
-              <%= render "insight_panel", loop_record: @loop %>
-            </div>
+            <% elsif @chart_type == "line" %>
+              <%= line_chart @active_chart_data, **chart_options %>
+            <% else %>
+              <%= column_chart @active_chart_data, **bar_options %>
+            <% end %>
+          </div>
+
+          <div class="mb-4">
+            <%= render "insight_panel", loop_record: @loop %>
           </div>
 
           <% if @loop.insight.present? %>

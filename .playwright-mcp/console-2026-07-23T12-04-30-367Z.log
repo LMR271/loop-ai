@@ -1,0 +1,7 @@
+[   39860ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3099/analyze/wAe98BTsDjmP6NxcBXiJ9Hzo?from=2026-06-29&range=custom&tab=per_loop&to=2026-06-29#feedback-215:0
+[   39863ms] TypeError: Failed to fetch
+    at W (http://127.0.0.1:3099/assets/turbo.min-b86d83036ff04169e5bf3ebbc82e0ad528456259e47091b448f41a3cadabdb40.js:5:7238)
+    at z.perform (http://127.0.0.1:3099/assets/turbo.min-b86d83036ff04169e5bf3ebbc82e0ad528456259e47091b448f41a3cadabdb40.js:5:9017)
+[   40366ms] TypeError: Failed to fetch
+    at W (http://127.0.0.1:3099/assets/turbo.min-b86d83036ff04169e5bf3ebbc82e0ad528456259e47091b448f41a3cadabdb40.js:5:7238)
+    at z.perform (http://127.0.0.1:3099/assets/turbo.min-b86d83036ff04169e5bf3ebbc82e0ad528456259e47091b448f41a3cadabdb40.js:5:9017)

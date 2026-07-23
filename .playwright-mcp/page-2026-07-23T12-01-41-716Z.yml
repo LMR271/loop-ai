@@ -1,0 +1,28 @@
+- generic [ref=e2]:
+  - navigation "Workspace actions" [ref=e3]:
+    - link "Loop AI home" [ref=e4] [cursor=pointer]:
+      - /url: /
+      - img "LoopAI" [ref=e5]
+    - link "Log in" [ref=e7] [cursor=pointer]:
+      - /url: /users/sign_in
+  - main [ref=e8]:
+    - generic [ref=e9]:
+      - heading "Log in" [level=1] [ref=e10]
+      - paragraph [ref=e11]: Welcome back. Enter your details to continue.
+      - generic [ref=e12]:
+        - generic [ref=e13]:
+          - generic [ref=e14]: Email
+          - textbox "Email" [active] [ref=e15]
+        - generic [ref=e16]:
+          - generic [ref=e17]: Password
+          - textbox "Password" [ref=e18]
+        - group [ref=e19]:
+          - generic [ref=e20]:
+            - checkbox "Remember me" [ref=e21]
+            - generic [ref=e22]: Remember me
+        - button "Log in" [ref=e23] [cursor=pointer]
+      - generic [ref=e24]:
+        - link "Forgot your password?" [ref=e25] [cursor=pointer]:
+          - /url: /users/password/new
+        - link "Didn't receive confirmation instructions?" [ref=e26] [cursor=pointer]:
+          - /url: /users/confirmation/new

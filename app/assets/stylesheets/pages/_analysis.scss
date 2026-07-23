@@ -93,6 +93,22 @@
   white-space: pre-wrap;
 }
 
+// Applied for a few seconds to whatever a "Interview #N" or extracted-point badge link
+// points at, so the click has a visible destination instead of a silent page jump.
+.analysis-highlight {
+  animation: analysis-highlight-fade 2.4s ease-out;
+}
+
+@keyframes analysis-highlight-fade {
+  0% {
+    box-shadow: 0 0 0 4px var(--color-focus), $shadow-raised;
+  }
+
+  100% {
+    box-shadow: $shadow-card;
+  }
+}
+
 .analysis-tabs {
   border-bottom: 1px solid var(--color-border);
   padding-bottom: $space-2;

@@ -35,6 +35,51 @@
   min-height: 13.75rem;
 }
 
+.analysis-tile {
+  cursor: pointer;
+}
+
+.analysis-tile__summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.analysis-tile__summary::-webkit-details-marker {
+  display: none;
+}
+
+.analysis-tile__title {
+  font-size: $font-size-lg;
+  font-weight: 700;
+}
+
+.analysis-tile__chevron {
+  color: var(--color-text-muted);
+  transition: transform $transition-base $transition-easing;
+}
+
+.analysis-tile[open] .analysis-tile__chevron {
+  transform: rotate(180deg);
+}
+
+.analysis-tile__body {
+  border-top: 1px solid var(--color-border-subtle);
+  padding-top: $space-3;
+}
+
+.analysis-quote-tag {
+  align-items: center;
+  color: var(--color-text-muted);
+  display: flex;
+  font-size: $font-size-sm;
+  gap: $space-2;
+}
+
+.analysis-quote-tag__link {
+  color: inherit;
+  text-decoration: underline;
+}
+
 .analysis-transcript {
   white-space: pre-wrap;
 }

@@ -161,6 +161,32 @@ class AnalyzeControllerTest < ActionDispatch::IntegrationTest
     assert_select ".app-alert-button .app-alert-badge", text: "1"
   end
 
+  test "response cards are anchored by feedback id so interview links can jump to them" do
+    loop_record = @user.loops.create!(name: "L")
+    feedback = loop_record.feedbacks.create!(transcript: "hi")
+
+    get analyze_path(loop_record.slug)
+
+    assert_select "#feedback-#{feedback.id}"
+  end
+
+  test "interview numbers are assigned oldest-first across the loop's full history, ignoring the range filter" do
+    loop_record = @user.loops.create!(name: "L")
+    older = loop_record.feedbacks.create!(transcript: "old one", created_at: 40.days.ago)
+    newer = loop_record.feedbacks.create!(transcript: "new one", created_at: 1.day.ago)
+    insight = loop_record.create_insight!(summary: "S", overall_sentiment: "positive", analyzed_feedback_count: 2)
+    theme = insight.themes.create!(title: "T1", mention_count: 2, sentiment: "positive")
+    theme.quotes.create!(feedback: older, text: "old quote")
+    theme.quotes.create!(feedback: newer, text: "new quote")
+
+    # default range is 30 days, so `older` (40 days ago) would be excluded from "Every response"
+    # if numbering were computed off the range-scoped @feedbacks instead of the full history.
+    get analyze_path(loop_record.slug)
+
+    assert_select ".analysis-quote-tag", text: /Interview #1/
+    assert_select ".analysis-quote-tag", text: /Interview #2/
+  end
+
   private
 
   def analysable_loop_with_points

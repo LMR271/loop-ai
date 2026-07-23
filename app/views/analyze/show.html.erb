@@ -248,7 +248,7 @@
           <% else %>
             <div class="d-flex flex-column gap-3">
               <% @feedbacks.each do |feedback| %>
-                <div class="analysis-card analysis-response-card">
+                <div class="analysis-card analysis-response-card" id="feedback-<%= feedback.id %>">
                   <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
                     <span class="fw-semibold"><%= feedback.respondent_email.presence || "Anonymous respondent" %></span>
                     <div class="d-flex align-items-center gap-2">

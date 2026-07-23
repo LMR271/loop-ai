@@ -228,6 +228,33 @@ class AnalyzeControllerTest < ActionDispatch::IntegrationTest
     assert_select ".row-cols-md-2 > .col", 2
   end
 
+  test "feature request tiles render as collapsible details with a quote's interview tag" do
+    loop_record = @user.loops.create!(name: "L")
+    feedback = loop_record.feedbacks.create!(transcript: "hi", sentiment: "neutral")
+    insight = loop_record.create_insight!(summary: "S", overall_sentiment: "positive", analyzed_feedback_count: 1)
+    feature_request = insight.feature_requests.create!(title: "Dark mode", description: "Users want it")
+    feature_request.quotes.create!(feedback: feedback, text: "please add dark mode")
+
+    get analyze_path(loop_record.slug)
+
+    assert_select ".analysis-tile", 1 do
+      assert_select "summary .analysis-tile__title", text: "Dark mode"
+    end
+    assert_select ".analysis-quote-tag a", text: "Interview #1"
+  end
+
+  test "feature request tiles are laid out two per row" do
+    loop_record = @user.loops.create!(name: "L")
+    loop_record.feedbacks.create!(transcript: "hi")
+    insight = loop_record.create_insight!(summary: "S", overall_sentiment: "positive", analyzed_feedback_count: 1)
+    insight.feature_requests.create!(title: "F1", description: "d")
+    insight.feature_requests.create!(title: "F2", description: "d")
+
+    get analyze_path(loop_record.slug)
+
+    assert_select ".row-cols-md-2 > .col", 2
+  end
+
   private
 
   def analysable_loop_with_points

@@ -1,7 +1,20 @@
-<div class="analysis-card">
-  <div class="fw-semibold mb-1"><%= feature_request.title %></div>
-  <p class="text-muted small mb-2"><%= feature_request.description %></p>
-  <% feature_request.quotes.each do |quote| %>
-    <blockquote class="border-start ps-2 mb-1 small fst-italic text-muted">"<%= quote.text %>"</blockquote>
-  <% end %>
+<div class="col">
+  <details class="analysis-card analysis-tile">
+    <summary class="analysis-tile__summary">
+      <div class="d-flex justify-content-between align-items-start gap-2">
+        <span class="analysis-tile__title"><%= feature_request.title %></span>
+        <i class="fa-solid fa-chevron-down analysis-tile__chevron flex-shrink-0" aria-hidden="true"></i>
+      </div>
+      <p class="text-muted small mb-0 mt-1"><%= feature_request.description %></p>
+    </summary>
+    <div class="analysis-tile__body mt-2">
+      <% feature_request.quotes.each do |quote| %>
+        <blockquote class="border-start ps-2 mb-1 small fst-italic text-muted">"<%= quote.text %>"</blockquote>
+        <div class="analysis-quote-tag mb-2">
+          <%= interview_tag_link(loop_record, quote.feedback, interview_numbers) %>
+          <%= sentiment_badge(quote.feedback.sentiment) %>
+        </div>
+      <% end %>
+    </div>
+  </details>
 </div>

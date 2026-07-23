@@ -33,6 +33,12 @@ class Loop < ApplicationRecord
                     tsearch: { prefix: true }
                   }
 
+  # Eager-loads the whole insight -> theme/feature_request -> quote -> feedback chain the Analyze
+  # tiles read (each quote's own interview tag and sentiment), avoiding a query per quote.
+  scope :with_insight_quotes, lambda {
+    includes(insight: { themes: { quotes: :feedback }, feature_requests: { quotes: :feedback } })
+  }
+
   def locked?
     first_deployed_at.present?
   end

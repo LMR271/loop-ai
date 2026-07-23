@@ -1,4 +1,4 @@
-class AnalyzeController < ApplicationController # rubocop:disable Metrics/ClassLength
+class AnalyzeController < ApplicationController
   RANGES = %w[24h 7d 14d 30d custom].freeze
   CHART_TYPES = %w[bar line].freeze
   DATA_VIEWS = %w[volume day_of_week cumulative].freeze
@@ -7,14 +7,14 @@ class AnalyzeController < ApplicationController # rubocop:disable Metrics/ClassL
 
   def index
     @loops = current_organization.loops
-    @loop = loops_with_insight.order(created_at: :desc).first
+    @loop = current_organization.loops.with_insight_quotes.order(created_at: :desc).first
     load_shared_data
     render :show
   end
 
   def show
     @loops = current_organization.loops
-    @loop = loops_with_insight.find_by!(slug: params[:slug])
+    @loop = current_organization.loops.with_insight_quotes.find_by!(slug: params[:slug])
     load_shared_data
   end
 
@@ -34,12 +34,6 @@ class AnalyzeController < ApplicationController # rubocop:disable Metrics/ClassL
   end
 
   private
-
-  def loops_with_insight
-    current_organization.loops.includes(
-      insight: { themes: { quotes: :feedback }, feature_requests: { quotes: :feedback } }
-    )
-  end
 
   def load_shared_data
     LoopView.stamp!(user: current_user, loop: @loop) if @loop

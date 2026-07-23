@@ -56,4 +56,15 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
 
     assert_select ".app-alert-button .app-alert-badge", text: "1"
   end
+
+  test "account menu includes a dark/light mode toggle showing the mode it will switch to" do
+    get dashboard_path
+
+    assert_select "nav[data-controller='theme']" do
+      assert_select "button[data-action='click->theme#toggle']" do
+        assert_select "[data-theme-target='icon'].fa-moon"
+        assert_select "[data-theme-target='label']", text: "Dark mode"
+      end
+    end
+  end
 end

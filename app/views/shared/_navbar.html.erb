@@ -1,4 +1,4 @@
-<nav class="app-navbar navbar" aria-label="Workspace actions">
+<nav class="app-navbar navbar" aria-label="Workspace actions" data-controller="theme">
   <% unless user_signed_in? %>
     <%= link_to root_path, class: "app-navbar__brand", aria: { label: "Loop AI home" } do %>
       <%= image_tag "lightbulb.svg",
@@ -76,6 +76,13 @@
               <i class="fa-solid fa-gear" aria-hidden="true"></i>
               <span>Settings</span>
             <% end %>
+          </li>
+          <li><hr class="dropdown-divider"></li>
+          <li>
+            <button type="button" class="dropdown-item" data-action="click->theme#toggle">
+              <i class="fa-solid fa-moon" data-theme-target="icon" aria-hidden="true"></i>
+              <span data-theme-target="label">Dark mode</span>
+            </button>
           </li>
           <li><hr class="dropdown-divider"></li>
           <li>

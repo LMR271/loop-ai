@@ -21,12 +21,16 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :question_library_entries, path: "question-library", except: %i[new show] do
+  resources :question_library_entries, path: "question-library", except: %i[new show edit update] do
     member do
       post :use
     end
   end
-  resources :question_library_categories, path: "question-library/categories", only: %i[create edit update destroy]
+  patch "question-library/categories/:category_id/entries", to: "question_library_entries#bulk_update",
+        as: :bulk_update_question_library_entries
+  patch "question-library/uncategorized-entries", to: "question_library_entries#bulk_update",
+        as: :bulk_update_uncategorized_question_library_entries
+  resources :question_library_categories, path: "question-library/categories", only: %i[create destroy]
 
   get "team", to: "team#index", as: :team
   post "team", to: "team#create"

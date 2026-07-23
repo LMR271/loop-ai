@@ -2,74 +2,83 @@
 <% categories.to_a.each { |category| grouped_entries[category.name] ||= [] } if local_assigns[:manage] %>
 <% grouped_entries.sort_by { |category, _| [category.present? ? 1 : 0, category.to_s.downcase] }.each do |category, category_entries| %>
   <% category_record = local_assigns[:categories]&.find { |item| item.name == category } %>
-  <section class="card mb-3 library-category" data-library-search-target="group" data-library-search-category="<%= (category.presence || "No Category").downcase %>">
+  <% category_label = category.presence || "No Category" %>
+  <section class="card mb-3 library-category" data-controller="category-edit"
+            data-library-search-target="group" data-library-search-category="<%= category_label.downcase %>">
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
-        <h2 class="h5 mb-0"><%= category.presence || "No Category" %></h2>
-        <% if local_assigns[:manage] && category_record %>
+        <h2 class="h5 mb-0"><%= category_label %></h2>
+        <% if local_assigns[:manage] %>
           <div class="d-flex gap-2 flex-shrink-0">
-            <%= link_to edit_question_library_category_path(category_record), class: "btn btn-sm btn-outline-secondary",
-                  "aria-label": "Rename #{category_record.name}", title: "Rename",
-                  data: { controller: "tooltip", bs_placement: "top" } do %>
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-action="category-edit#toggle"
+                    aria-label="<%= "Edit questions in #{category_label}" %>" title="Edit"
+                    data-controller="tooltip" data-bs-placement="top">
               <i class="fa-solid fa-pen" aria-hidden="true"></i>
-            <% end %>
-            <% if category_entries.any? %>
-              <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteCategoryModal<%= category_record.id %>"
-                      aria-label="Delete #{category_record.name}" title="Delete" data-controller="tooltip" data-bs-placement="top">
-                <i class="fa-solid fa-trash" aria-hidden="true"></i>
-              </button>
-            <% else %>
+            </button>
+            <% if category_record %>
               <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
                       data-bs-target="#delete-category-<%= category_record.id %>"
                       aria-label="<%= "Delete #{category_record.name}" %>" title="Delete"
                       data-controller="tooltip" data-bs-placement="top">
                 <i class="fa-solid fa-trash" aria-hidden="true"></i>
               </button>
-              <%= render "shared/confirm_modal", id: "delete-category-#{category_record.id}", title: "Delete category",
-                    body: "Delete the category #{category_record.name}?",
-                    url: question_library_category_path(category_record) %>
             <% end %>
           </div>
         <% end %>
       </div>
+
       <% if category_entries.any? %>
-      <div class="list-group list-group-flush">
-        <% category_entries.sort_by { |entry| entry.content.downcase }.each do |entry| %>
-          <div class="list-group-item px-0 d-flex align-items-start justify-content-between gap-3 library-entry" data-library-search-target="entry" data-library-search-content="<%= entry.content.downcase %>">
-            <p class="mb-0"><%= entry.content %></p>
-            <% if local_assigns[:manage] %>
-              <div class="d-flex gap-2 flex-shrink-0">
-                <%= link_to edit_question_library_entry_path(entry), class: "btn btn-sm btn-outline-secondary",
-                      "aria-label": "Edit question", title: "Edit", data: { controller: "tooltip", bs_placement: "top" } do %>
-                  <i class="fa-solid fa-pen" aria-hidden="true"></i>
-                <% end %>
-                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                        data-bs-target="#delete-question-<%= entry.id %>"
-                        aria-label="Delete question" title="Delete" data-controller="tooltip" data-bs-placement="top">
-                  <i class="fa-solid fa-trash" aria-hidden="true"></i>
+        <% if local_assigns[:manage] %>
+          <%= form_with url: (category_record ? bulk_update_question_library_entries_path(category_record) :
+                bulk_update_uncategorized_question_library_entries_path), method: :patch do %>
+            <div class="list-group list-group-flush">
+              <% category_entries.sort_by { |entry| entry.content.downcase }.each do |entry| %>
+                <div class="list-group-item px-0 d-flex align-items-start justify-content-between gap-3 library-entry"
+                     data-library-search-target="entry" data-library-search-content="<%= entry.content.downcase %>">
+                  <p class="mb-0 library-entry__view"><%= entry.content %></p>
+                  <%= text_area_tag "entries[#{entry.id}][content]", entry.content,
+                        class: "form-control library-entry__edit", rows: 2 %>
+                  <button type="button" class="btn btn-sm btn-outline-danger library-entry__remove flex-shrink-0"
+                          data-bs-toggle="modal" data-bs-target="#delete-question-<%= entry.id %>"
+                          aria-label="Delete question" title="Delete" data-controller="tooltip" data-bs-placement="top">
+                    <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                  </button>
+                  <%= render "shared/confirm_modal", id: "delete-question-#{entry.id}", title: "Delete question",
+                        body: "Delete this library question?", url: question_library_entry_path(entry) %>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="library-category__save-row">
+              <%= submit_tag "Save changes", class: "btn btn-primary btn-sm" %>
+              <button type="button" class="btn btn-outline-secondary btn-sm" data-action="category-edit#cancel">Cancel</button>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="list-group list-group-flush">
+            <% category_entries.sort_by { |entry| entry.content.downcase }.each do |entry| %>
+              <div class="list-group-item px-0 d-flex align-items-start justify-content-between gap-3 library-entry"
+                   data-library-search-target="entry" data-library-search-content="<%= entry.content.downcase %>">
+                <p class="mb-0"><%= entry.content %></p>
+                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0"
+                        data-action="questions-form#insertFromLibrary"
+                        data-questions-form-content-param="<%= entry.content %>"
+                        data-questions-form-use-url-param="<%= use_question_library_entry_path(entry) %>"
+                        aria-label="Insert this question" title="Insert" data-controller="tooltip" data-bs-placement="top">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>
                 </button>
-                <%= render "shared/confirm_modal", id: "delete-question-#{entry.id}", title: "Delete question",
-                      body: "Delete this library question?", url: question_library_entry_path(entry) %>
               </div>
-            <% else %>
-              <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0"
-                      data-action="questions-form#insertFromLibrary"
-                      data-questions-form-content-param="<%= entry.content %>"
-                      data-questions-form-use-url-param="<%= use_question_library_entry_path(entry) %>"
-                      aria-label="Insert this question" title="Insert" data-controller="tooltip" data-bs-placement="top">
-                <i class="fa-solid fa-plus" aria-hidden="true"></i>
-              </button>
             <% end %>
           </div>
         <% end %>
-      </div>
       <% elsif local_assigns[:manage] %>
         <p class="text-muted mb-0">No questions in this category yet.</p>
       <% end %>
     </div>
   </section>
-  <% if local_assigns[:manage] && category_record && category_entries.any? %>
-    <%= render "delete_category_modal", category: category_record, entries_count: category_entries.count,
-          other_categories: categories.reject { |item| item == category_record } %>
+  <% if local_assigns[:manage] && category_record %>
+    <% delete_body = category_entries.any? ? "Delete #{category_record.name}? This will also permanently delete its #{pluralize(category_entries.count, "question")}." : "Delete #{category_record.name}?" %>
+    <%= render "shared/confirm_modal", id: "delete-category-#{category_record.id}", title: "Delete category",
+          body: delete_body, url: question_library_category_path(category_record) %>
   <% end %>
 <% end %>

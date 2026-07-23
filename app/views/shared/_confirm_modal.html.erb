@@ -1,9 +1,14 @@
 <%# locals: (id:, title:, body:, url:, method: :delete, confirm_label: "Delete", type_to_confirm: nil) %>
-<div class="modal fade" id="<%= id %>" tabindex="-1" aria-labelledby="<%= id %>-label" aria-hidden="true">
+<div class="modal fade" id="<%= id %>" tabindex="-1" aria-labelledby="<%= id %>-label" aria-hidden="true"
+     data-controller="confirm-modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <%= form_with url: url, method: method,
-            data: (type_to_confirm.present? ? { controller: "type-to-confirm", "type-to-confirm-phrase-value": type_to_confirm } : {}) do %>
+            data: {
+              action: "turbo:submit-end->confirm-modal#hide",
+              controller: type_to_confirm.present? ? "type-to-confirm" : nil,
+              "type-to-confirm-phrase-value": type_to_confirm
+            }.compact do %>
         <div class="modal-header">
           <h2 class="modal-title h5" id="<%= id %>-label"><%= title %></h2>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

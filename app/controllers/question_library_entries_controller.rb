@@ -1,5 +1,5 @@
 class QuestionLibraryEntriesController < ApplicationController
-  before_action :set_question_library_entry, only: %i[edit update destroy use]
+  before_action :set_question_library_entry, only: %i[destroy use]
 
   def index
     @question_library_entries = current_user.question_library_entries.alphabetical
@@ -36,21 +36,16 @@ class QuestionLibraryEntriesController < ApplicationController
     end
   end
 
-  def edit
-    @categories = current_user.question_library_categories.where.not(name: @question_library_entry.category).order(:name).pluck(:name)
-  end
-
-  def update
-    attributes = question_library_entry_params.to_h
-
-    attributes["category"] = params[:new_category].presence if attributes["category"] == "__create_new_category__"
-
-    if @question_library_entry.update(attributes)
-      redirect_to question_library_entries_path, notice: "Library question updated."
-    else
-      @categories = current_user.question_library_categories.where.not(name: @question_library_entry.category).order(:name).pluck(:name)
-      render :edit, status: :unprocessable_entity
+  def bulk_update
+    ActiveRecord::Base.transaction do
+      params.require(:entries).each do |entry_id, attrs|
+        bulk_update_scope.find(entry_id).update!(content: attrs.permit(:content)[:content])
+      end
     end
+
+    redirect_to question_library_entries_path, notice: "Questions updated."
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to question_library_entries_path, alert: e.record.errors.full_messages.to_sentence
   end
 
   def destroy
@@ -67,6 +62,14 @@ class QuestionLibraryEntriesController < ApplicationController
 
   def set_question_library_entry
     @question_library_entry = current_user.question_library_entries.find(params[:id])
+  end
+
+  def bulk_update_scope
+    if params[:category_id].present?
+      current_user.question_library_categories.find(params[:category_id]).entries
+    else
+      current_user.question_library_entries.where(category: nil)
+    end
   end
 
   def question_library_entry_params

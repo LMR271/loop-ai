@@ -14,10 +14,17 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     get root_path
 
     assert_response :success
-    assert_select "nav a[href='#product']", text: "Product"
-    assert_select "nav a[href='#use-cases']", text: "Use Cases"
-    assert_select "nav a[href='#faq']", text: "FAQ"
-    assert_select "nav a[href='#pricing']", text: "Pricing"
+    assert_select "nav a[href='/#product']", text: "Product"
+    assert_select "nav a[href='/#use-cases']", text: "Use Cases"
+    assert_select "nav a[href='/#faq']", text: "FAQ"
+    assert_select "nav a[href='/#pricing']", text: "Pricing"
+  end
+
+  test "nav section links still work from other marketing pages, like terms" do
+    get terms_path
+
+    assert_response :success
+    assert_select "nav a[href='/#product']", text: "Product"
   end
 
   test "landing page has the Product, Use Cases, FAQ, and Pricing sections" do

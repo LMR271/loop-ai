@@ -36,6 +36,8 @@
 .respondent-status { min-height: 1.5rem; font-weight: 600; margin: 0; }
 .respondent-meta { margin: 0; color: var(--org-secondary-text, #55607a); }
 
+.respondent-disclaimer { margin: 1.25rem 0 0; color: var(--org-secondary-text, #55607a); }
+
 /* --- Orb ------------------------------------------------------------- */
 .orb {
   --size: 180px;

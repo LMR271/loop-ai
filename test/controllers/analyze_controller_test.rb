@@ -9,6 +9,16 @@ class AnalyzeControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
   end
 
+  test "the per-loop overview's loop switcher always points back to the per-loop tab" do
+    loop_one = @user.loops.create!(name: "One")
+    loop_two = @user.loops.create!(name: "Two")
+
+    get analyze_path(loop_one.slug)
+
+    option = css_select("select.analysis-select option").find { |node| node.text.strip == "Two" }
+    assert_match(/tab=per_loop/, option["value"])
+  end
+
   test "refresh enqueues the loop analysis" do
     loop_record = @user.loops.create!(name: "L")
     assert_enqueued_with(job: AnalyzeLoopJob) do

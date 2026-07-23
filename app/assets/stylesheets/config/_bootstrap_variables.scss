@@ -18,11 +18,13 @@ $info:       $yellow;
 $danger:     $red;
 $warning:    $orange;
 
-// Buttons & inputs' radius
-$border-radius-sm:            $radius-xs;
-$border-radius:               $radius-bootstrap;
-$border-radius-lg:            $space-1;
-$border-radius-xl:            $radius-sm;
+// Buttons & inputs' radius — $border-radius is what plain Bootstrap buttons,
+// cards, alerts, modals, and dropdowns use by default, so anchoring it to
+// $radius-sm keeps them all consistent with the sidebar nav links.
+$border-radius-sm:            $radius-bootstrap;
+$border-radius:               $radius-sm;
+$border-radius-lg:            $radius-card;
+$border-radius-xl:            $radius-md;
 $border-radius-xxl:           $radius-lg;
 
 // Override other variables below!

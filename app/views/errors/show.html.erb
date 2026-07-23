@@ -1,0 +1,10 @@
+<% content_for :title, "#{@title} | Loop AI" %>
+
+<section class="marketing-section">
+  <div class="marketing-container marketing-error text-center">
+    <p class="marketing-error__code"><%= @code %></p>
+    <h1 class="marketing-section__title mx-auto"><%= @title %></h1>
+    <p class="text-muted mb-5"><%= @message %></p>
+    <%= link_to "Back to Loop AI", root_path, class: "btn btn-primary" %>
+  </div>
+</section>

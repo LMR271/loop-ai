@@ -31,7 +31,7 @@
       </div>
       <div class="deploy-status-card__actions">
         <% if current_user_workspace_admin? %>
-          <%= button_to activate_loop_path(loop), params: { return_to: "deploy" }, class: "btn btn-primary",
+          <%= button_to activate_loop_path(loop), params: { return_to: "launch" }, class: "btn btn-primary",
                 "aria-label": "Launch #{loop.name.presence || "this loop"}", title: "Launch",
                 data: { controller: "tooltip", bs_placement: "top" } do %>
             <i class="fa-solid fa-play" aria-hidden="true"></i>

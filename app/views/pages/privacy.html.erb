@@ -1,0 +1,72 @@
+<% content_for :title, "Privacy Policy | Loop AI" %>
+
+<section class="marketing-section">
+  <div class="marketing-container marketing-legal">
+    <p class="marketing-eyebrow">Legal</p>
+    <h1 class="marketing-section__title">Privacy Policy</h1>
+    <p class="text-muted mb-5">Last updated <%= Date.new(2026, 7, 23).strftime("%B %-d, %Y") %></p>
+
+    <h2 class="h4 mt-5">1. What this covers</h2>
+    <p>
+      This policy explains what Loop AI collects and why — both for workspace accounts (people
+      who create and manage loops) and for respondents (people invited to a voice interview).
+    </p>
+
+    <h2 class="h4 mt-5">2. Information we collect</h2>
+    <p><strong>Workspace accounts:</strong> your name, email address, and password; anything you
+    add for your organization, like a name, logo, or theme colors.</p>
+    <p><strong>Respondents:</strong> the audio and transcript of your conversation with the voice
+    agent, an AI-generated sentiment label and rationale, and — only if the workspace's invite
+    link happens to include it — your email address. We don't otherwise ask respondents to sign
+    in or identify themselves.</p>
+
+    <h2 class="h4 mt-5">3. How we use it</h2>
+    <p>
+      Transcripts are used to extract themes, feature requests, and sentiment for the workspace
+      that ran the loop, so quotes are always traceable back to the exact conversation they came
+      from. Account information is used to run the service itself (authentication, team invites,
+      email notifications). We don't sell personal data.
+    </p>
+
+    <h2 class="h4 mt-5">4. Who else sees it</h2>
+    <p>We share data with the following service providers, only as needed to run Loop AI:</p>
+    <ul>
+      <li><strong>ElevenLabs</strong> — powers the voice conversation itself and produces the
+      transcript and sentiment.</li>
+      <li><strong>OpenAI</strong> — analyzes transcripts to extract themes and feature requests.</li>
+      <li><strong>Amazon Web Services (S3)</strong> — stores uploaded files like organization logos.</li>
+      <li><strong>Postmark</strong> — delivers transactional email (invites, notifications).</li>
+      <li><strong>Heroku</strong> — hosts the application and database.</li>
+    </ul>
+    <p>We don't share respondent data across workspaces — a loop's feedback is only visible to
+    the workspace that created it.</p>
+
+    <h2 class="h4 mt-5">5. How long we keep it</h2>
+    <p>
+      We keep feedback and account data for as long as the workspace exists, so its owner can
+      keep reviewing past interviews. Deleting a workspace or account removes its loops and
+      feedback; deleted data isn't recoverable.
+    </p>
+
+    <h2 class="h4 mt-5">6. Security</h2>
+    <p>
+      Data is scoped to the workspace it belongs to, transferred over HTTPS, and only accessible
+      to signed-in members of that workspace.
+    </p>
+
+    <h2 class="h4 mt-5">7. Your choices</h2>
+    <p>
+      Workspace members can update or delete their account, or delete the whole workspace, from
+      Settings. If you're a respondent and want your conversation removed, contact the workspace
+      that invited you, or reach us directly and we'll help.
+    </p>
+
+    <h2 class="h4 mt-5">8. Changes to this policy</h2>
+    <p>
+      We'll update the date at the top of this page whenever this policy changes.
+    </p>
+
+    <h2 class="h4 mt-5">9. Contact</h2>
+    <p>Questions about this policy? Reach us at <a href="mailto:hi@getloop.me">hi@getloop.me</a>.</p>
+  </div>
+</section>

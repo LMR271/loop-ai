@@ -19,13 +19,15 @@
                 <i class="fa-solid fa-trash" aria-hidden="true"></i>
               </button>
             <% else %>
-              <%= button_to question_library_category_path(category_record), method: :delete,
-                    class: "btn btn-sm btn-outline-danger",
-                    "aria-label": "Delete #{category_record.name}", title: "Delete",
-                    data: { controller: "tooltip", bs_placement: "top" },
-                    form: { data: { turbo_confirm: "Delete the category #{category_record.name}?" } } do %>
+              <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                      data-bs-target="#delete-category-<%= category_record.id %>"
+                      aria-label="<%= "Delete #{category_record.name}" %>" title="Delete"
+                      data-controller="tooltip" data-bs-placement="top">
                 <i class="fa-solid fa-trash" aria-hidden="true"></i>
-              <% end %>
+              </button>
+              <%= render "shared/confirm_modal", id: "delete-category-#{category_record.id}", title: "Delete category",
+                    body: "Delete the category #{category_record.name}?",
+                    url: question_library_category_path(category_record) %>
             <% end %>
           </div>
         <% end %>
@@ -41,13 +43,13 @@
                       "aria-label": "Edit question", title: "Edit", data: { controller: "tooltip", bs_placement: "top" } do %>
                   <i class="fa-solid fa-pen" aria-hidden="true"></i>
                 <% end %>
-                <%= button_to question_library_entry_path(entry), method: :delete,
-                      class: "btn btn-sm btn-outline-danger",
-                      "aria-label": "Delete question", title: "Delete",
-                      data: { controller: "tooltip", bs_placement: "top" },
-                      form: { data: { turbo_confirm: "Delete this library question?" } } do %>
+                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                        data-bs-target="#delete-question-<%= entry.id %>"
+                        aria-label="Delete question" title="Delete" data-controller="tooltip" data-bs-placement="top">
                   <i class="fa-solid fa-trash" aria-hidden="true"></i>
-                <% end %>
+                </button>
+                <%= render "shared/confirm_modal", id: "delete-question-#{entry.id}", title: "Delete question",
+                      body: "Delete this library question?", url: question_library_entry_path(entry) %>
               </div>
             <% else %>
               <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0"

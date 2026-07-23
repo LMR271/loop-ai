@@ -26,7 +26,7 @@
             <span class="app-alert-badge badge rounded-pill text-bg-danger"><%= new_feedback_total %></span>
           <% end %>
         </button>
-        <ul class="dropdown-menu dropdown-menu-end">
+        <ul class="dropdown-menu dropdown-menu-end app-notifications-menu">
           <% if loops_with_new_feedback.any? %>
             <% loops_with_new_feedback.each do |loop_record| %>
               <li>
@@ -37,7 +37,7 @@
               </li>
             <% end %>
           <% else %>
-            <li><span class="dropdown-item-text text-muted">No new responses</span></li>
+            <li class="app-notifications-empty"><span class="dropdown-item-text text-muted">No new responses</span></li>
           <% end %>
         </ul>
       </div>
@@ -56,6 +56,7 @@
           <% else %>
             <i class="fa-regular fa-circle-user" aria-hidden="true"></i>
           <% end %>
+          <span class="app-user-menu__name"><%= current_user.name.presence || current_user.email %></span>
         </button>
         <ul class="dropdown-menu dropdown-menu-end app-user-menu__dropdown" aria-labelledby="userMenu">
           <li>

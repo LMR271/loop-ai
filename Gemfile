@@ -43,6 +43,9 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
+# Persistent Active Storage backend for production (Heroku's local disk is ephemeral)
+gem "aws-sdk-s3", require: false
+
 gem "sprockets-rails"
 gem "bootstrap", "~> 5.3"
 gem "devise"

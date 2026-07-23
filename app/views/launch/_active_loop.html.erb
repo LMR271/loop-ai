@@ -7,14 +7,14 @@
     <div class="deploy-loop__actions-row">
       <div class="deploy-loop__actions">
         <% if current_user_workspace_admin? %>
-          <%= button_to deactivate_loop_path(loop), params: { return_to: "deploy" }, class: "btn btn-outline-secondary btn-sm",
+          <%= button_to deactivate_loop_path(loop), params: { return_to: "launch" }, class: "btn btn-outline-secondary btn-sm",
                 "aria-label": "Pause #{loop.name.presence || "this loop"}", title: "Pause",
                 data: { controller: "tooltip", bs_placement: "top" } do %>
             <i class="fa-solid fa-pause" aria-hidden="true"></i>
           <% end %>
         <% end %>
         <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
-                data-bs-target="#deploy-actions-<%= loop.id %>"
+                data-bs-target="#launch-actions-<%= loop.id %>"
                 aria-label="Share &amp; Distribute <%= loop.name.presence || "this loop" %>" title="Share &amp; Distribute"
                 data-controller="tooltip" data-bs-placement="top">
           <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
@@ -26,12 +26,12 @@
   </div>
 </div>
 
-<div class="modal fade" id="deploy-actions-<%= loop.id %>" tabindex="-1"
-     aria-labelledby="deploy-actions-label-<%= loop.id %>" aria-hidden="true">
+<div class="modal fade" id="launch-actions-<%= loop.id %>" tabindex="-1"
+     aria-labelledby="launch-actions-label-<%= loop.id %>" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title h5" id="deploy-actions-label-<%= loop.id %>">
+        <h2 class="modal-title h5" id="launch-actions-label-<%= loop.id %>">
           <%= loop.name.presence || "Untitled loop" %>
         </h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -68,7 +68,7 @@
               <h3 class="h5 mb-1">Invite respondents by email</h3>
               <p class="text-muted mb-0">One address per line, or separated by commas.</p>
             </div>
-            <%= form_with url: deploy_invites_path(loop_id: loop.id), method: :post do |form| %>
+            <%= form_with url: launch_invites_path(loop_id: loop.id), method: :post do |form| %>
               <textarea name="emails" class="form-control mb-2" rows="3"
                         placeholder="jamie@example.com&#10;alex@example.com" required></textarea>
               <%= form.button type: "submit", class: "btn btn-primary btn-sm",

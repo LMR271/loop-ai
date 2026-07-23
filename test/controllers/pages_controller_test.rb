@@ -64,4 +64,27 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_select "nav a", text: "Log in", count: 0
     assert_select "nav a", text: "Sign up", count: 0
   end
+
+  test "landing page footer links to Terms and Privacy" do
+    get root_path
+
+    assert_response :success
+    assert_select "footer a[href='#{terms_path}']", text: "Terms"
+    assert_select "footer a[href='#{privacy_path}']", text: "Privacy"
+  end
+
+  test "terms page renders without authentication" do
+    get terms_path
+
+    assert_response :success
+    assert_select "h1", text: "Terms of Service"
+    assert_select "a[href='#{privacy_path}']"
+  end
+
+  test "privacy page renders without authentication" do
+    get privacy_path
+
+    assert_response :success
+    assert_select "h1", text: "Privacy Policy"
+  end
 end

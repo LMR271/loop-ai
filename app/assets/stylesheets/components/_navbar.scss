@@ -121,6 +121,27 @@
   font-size: $font-size-base;
 }
 
+.app-notifications-menu {
+  max-width: calc(100vw - #{$space-8});
+  min-height: 8rem;
+  padding: $space-2;
+  width: 24rem;
+}
+
+// Bootstrap's .dropdown-menu is display: none until Bootstrap JS adds .show on
+// open — flex only applies then, so the menu stays collapsed until the bell is clicked.
+.app-notifications-menu.show {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-notifications-empty {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
 .app-new-loop-button {
   display: inline-flex;
   align-items: center;
@@ -153,9 +174,18 @@
   color: var(--color-text-control);
   display: inline-flex;
   font-size: $font-size-xl;
-  justify-content: center;
+  gap: $space-2;
   min-height: 42px;
-  min-width: 42px;
+  padding: 0 $space-3;
+}
+
+.app-user-menu__name {
+  font-size: $font-size-base;
+  font-weight: 600;
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .app-user-menu:hover,
@@ -213,6 +243,14 @@
   }
 
   .app-new-loop-button span {
+    display: none;
+  }
+
+  .app-user-menu {
+    padding: 0 $space-2;
+  }
+
+  .app-user-menu__name {
     display: none;
   }
 }

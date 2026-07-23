@@ -11,12 +11,27 @@
     </p>
   </header>
 
+  <div class="respondent-consent form-check text-start">
+    <input type="checkbox"
+           class="form-check-input"
+           id="respondent-consent"
+           data-interview-target="consentCheckbox"
+           data-action="change->interview#toggleConsent">
+    <label class="form-check-label small text-muted" for="respondent-consent">
+      You'll be speaking with an AI voice agent, not a human. I consent to this conversation being
+      recorded and analyzed by <%= @loop.organization.name.presence || "this organization" %>, as
+      described in the <%= link_to "Terms", terms_path, target: "_blank", rel: "noopener" %> and
+      <%= link_to "Privacy Policy", privacy_path, target: "_blank", rel: "noopener" %>.
+    </label>
+  </div>
+
   <div class="orb is-idle" data-interview-target="orb">
     <button type="button"
             class="orb__play"
             data-action="click->interview#start"
             data-interview-target="startButton"
-            aria-label="Start interview">
+            aria-label="Start interview"
+            disabled>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
     </button>
   </div>

@@ -1,6 +1,6 @@
 <% content_for :title, "Team | Loop AI" %>
 
-<div class="container py-4">
+<div class="page-content--wide container py-4">
   <div class="mb-4">
     <%= render "shared/page_header", eyebrow: "Workspace",
           title: "Team",
@@ -67,12 +67,15 @@
               </td>
               <% if current_user_workspace_admin? %>
                 <td>
-                  <%= button_to team_member_path(team_member), method: :delete, class: "btn btn-sm btn-outline-danger",
-                        "aria-label": "Revoke access for #{team_member.email}", title: "Revoke access",
-                        data: { controller: "tooltip", bs_placement: "top" },
-                        form: { data: { turbo_confirm: "Revoke access for #{team_member.email}?" } } do %>
+                  <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                          data-bs-target="#revoke-access-<%= team_member.id %>"
+                          aria-label="<%= "Revoke access for #{team_member.email}" %>" title="Revoke access"
+                          data-controller="tooltip" data-bs-placement="top">
                     <i class="fa-solid fa-user-slash" aria-hidden="true"></i>
-                  <% end %>
+                  </button>
+                  <%= render "shared/confirm_modal", id: "revoke-access-#{team_member.id}", title: "Revoke access",
+                        body: "Revoke access for #{team_member.email}?", url: team_member_path(team_member),
+                        confirm_label: "Revoke access" %>
                 </td>
               <% end %>
             </tr>

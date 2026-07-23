@@ -42,8 +42,6 @@ class LoopsController < ApplicationController
     @loop.pending_approval = !current_user_workspace_admin?
 
     if @loop.update(loop_params)
-      @loop.image.purge if @loop.remove_image == "1"
-
       redirect_to edit_loop_path(@loop), notice: "Loop updated."
     else
       ensure_question_field
@@ -97,13 +95,13 @@ class LoopsController < ApplicationController
   end
 
   def activation_redirect_path(loop)
-    return deploy_path if params[:return_to] == "deploy"
+    return launch_path if params[:return_to] == "launch"
 
     edit_loop_path(loop)
   end
 
   def deactivation_redirect_path(loop)
-    return deploy_path if params[:return_to] == "deploy"
+    return launch_path if params[:return_to] == "launch"
 
     edit_loop_path(loop)
   end
@@ -120,7 +118,7 @@ class LoopsController < ApplicationController
   def ensure_editable!
     return unless @loop.locked?
 
-    redirect_to deploy_path,
+    redirect_to launch_path,
                 alert: "This loop has already been launched and can no longer be edited."
   end
 
@@ -134,8 +132,6 @@ class LoopsController < ApplicationController
       :description,
       :respondent_title,
       :respondent_description,
-      :image,
-      :remove_image,
       questions_attributes: %i[id body position _destroy]
     )
   end

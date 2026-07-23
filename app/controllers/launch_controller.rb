@@ -1,4 +1,4 @@
-class DeployController < ApplicationController
+class LaunchController < ApplicationController
   before_action :set_loop, only: :send_invites
 
   def index
@@ -12,10 +12,10 @@ class DeployController < ApplicationController
     emails = parsed_emails(params[:emails])
 
     if emails.empty?
-      redirect_to deploy_path, alert: "Enter at least one valid email address."
+      redirect_to launch_path, alert: "Enter at least one valid email address."
     else
       emails.each { |email| LoopMailer.invite_respondent(@loop, email).deliver_later }
-      redirect_to deploy_path, notice: "Sent #{emails.size} #{'invite'.pluralize(emails.size)}."
+      redirect_to launch_path, notice: "Sent #{emails.size} #{'invite'.pluralize(emails.size)}."
     end
   end
 

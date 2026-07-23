@@ -3,9 +3,16 @@
   <div class="d-flex flex-wrap gap-1 mt-2">
     <% points.each do |point| %>
       <% theme = point["kind"] == "theme" %>
-      <span class="badge rounded-pill <%= theme ? "text-bg-info-subtle text-info-emphasis" : "text-bg-primary-subtle text-primary-emphasis" %>">
+      <% badge_classes = "badge rounded-pill #{theme ? "text-bg-info-subtle text-info-emphasis" : "text-bg-primary-subtle text-primary-emphasis"}" %>
+      <% badge_content = capture do %>
         <i class="fa-solid <%= theme ? "fa-tag" : "fa-lightbulb" %> me-1"></i><%= point["title"] %>
-      </span>
+      <% end %>
+      <% topic = canonical_topic_for(feedback, point["quote"]) %>
+      <% if topic %>
+        <%= link_to badge_content, "##{dom_id(topic)}", class: "#{badge_classes} text-decoration-none", data: { turbo: false } %>
+      <% else %>
+        <span class="<%= badge_classes %>"><%= badge_content %></span>
+      <% end %>
     <% end %>
   </div>
 <% end %>

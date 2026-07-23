@@ -187,6 +187,41 @@ class AnalyzeControllerTest < ActionDispatch::IntegrationTest
     assert_select ".analysis-quote-tag", text: /Interview #2/
   end
 
+  test "response card is headed by its interview number, with the respondent shown alongside it" do
+    loop_record = @user.loops.create!(name: "L")
+    feedback = loop_record.feedbacks.create!(transcript: "hi", respondent_email: "amara@indiehacker.io")
+
+    get analyze_path(loop_record.slug)
+
+    assert_select "#feedback-#{feedback.id} .fw-semibold", text: /Interview #1.*amara@indiehacker\.io/m
+  end
+
+  test "an extracted-point badge links to its matching canonical theme when the quotes agree verbatim" do
+    loop_record = @user.loops.create!(name: "L")
+    feedback = loop_record.feedbacks.create!(
+      transcript: "hi", extracted_points: { "points" => [{ "kind" => "theme", "title" => "Fast setup", "quote" => "it was easy" }] }
+    )
+    insight = loop_record.create_insight!(summary: "S", overall_sentiment: "positive", analyzed_feedback_count: 1)
+    theme = insight.themes.create!(title: "Onboarding is smooth", mention_count: 1, sentiment: "positive")
+    theme.quotes.create!(feedback: feedback, text: "it was easy")
+
+    get analyze_path(loop_record.slug)
+
+    assert_select "#feedback-#{feedback.id} a.badge[href='#theme_#{theme.id}']", text: /Fast setup/
+  end
+
+  test "an extracted-point badge with no matching canonical quote renders unlinked" do
+    loop_record = @user.loops.create!(name: "L")
+    loop_record.feedbacks.create!(
+      transcript: "hi", extracted_points: { "points" => [{ "kind" => "request", "title" => "Add Slack", "quote" => "wish it had slack" }] }
+    )
+
+    get analyze_path(loop_record.slug)
+
+    assert_select "span.badge", text: /Add Slack/
+    assert_select "a.badge", text: /Add Slack/, count: 0
+  end
+
   test "Themes headline reads Patterns" do
     loop_record = @user.loops.create!(name: "L")
     loop_record.feedbacks.create!(transcript: "hi")

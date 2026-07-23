@@ -51,7 +51,7 @@ class AnalyzeController < ApplicationController
     @data_view = params[:data_view].presence_in(DATA_VIEWS) || "volume"
 
     scoped_feedbacks = @loop ? @loop.feedbacks.where(created_at: @from..@to) : Feedback.none
-    @feedbacks = scoped_feedbacks.order(created_at: :desc)
+    @feedbacks = scoped_feedbacks.order(created_at: :desc).includes(quotes: :quotable)
     @feedback_counts_by_day = feedback_counts_by_period(scoped_feedbacks)
     @day_of_week_counts = scoped_feedbacks.group_by_day_of_week(:created_at, format: "%A").count
     @active_chart_data = active_chart_data

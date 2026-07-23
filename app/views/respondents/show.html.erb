@@ -18,9 +18,9 @@
            data-interview-target="consentCheckbox"
            data-action="change->interview#toggleConsent">
     <label class="form-check-label small text-muted" for="respondent-consent">
-      You'll be speaking with an AI voice agent, not a human. I consent to this conversation being
-      recorded and analyzed by <%= @loop.organization.name.presence || "this organization" %>, as
-      described in the <%= link_to "Terms", terms_path, target: "_blank", rel: "noopener" %> and
+      I consent to this conversation being recorded and analyzed by
+      <%= @loop.organization.name.presence || "this organization" %>, as described in the
+      <%= link_to "Terms", terms_path, target: "_blank", rel: "noopener" %> and
       <%= link_to "Privacy Policy", privacy_path, target: "_blank", rel: "noopener" %>.
     </label>
   </div>
@@ -55,3 +55,7 @@
     <small><%= pluralize(@loop.questions.count, "question") %></small>
   </p>
 </div>
+
+<p class="respondent-disclaimer text-muted small text-center">
+  You'll be speaking with an AI voice agent, not a human.
+</p>

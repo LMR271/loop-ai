@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script>
+      document.documentElement.setAttribute("data-bs-theme", "light");
+      document.addEventListener("turbo:load", function () {
+        document.documentElement.setAttribute("data-bs-theme", "light");
+      });
+    </script>
     <% page_title = content_for(:title) || "Loop AI | Turn feedback into better decisions" %>
     <title><%= page_title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -37,10 +43,10 @@
           <% end %>
 
           <ul class="marketing-navbar__links">
-            <li><a href="#product">Product</a></li>
-            <li><a href="#use-cases">Use Cases</a></li>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="<%= root_path %>#product">Product</a></li>
+            <li><a href="<%= root_path %>#use-cases">Use Cases</a></li>
+            <li><a href="<%= root_path %>#faq">FAQ</a></li>
+            <li><a href="<%= root_path %>#pricing">Pricing</a></li>
           </ul>
 
           <div class="marketing-navbar__actions">

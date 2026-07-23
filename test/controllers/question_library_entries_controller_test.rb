@@ -53,13 +53,54 @@ class QuestionLibraryEntriesControllerTest < ActionDispatch::IntegrationTest
     assert_select "h2", text: "Research", count: 1
   end
 
-  test "does not allow access to another user's library question" do
+  test "does not allow deleting another user's library question" do
     other_user = User.create!(email: "other-library-owner@example.com", password: "password123")
     entry = other_user.question_library_entries.create!(category: "Research", content: "Private question")
 
-    get edit_question_library_entry_path(entry)
+    delete question_library_entry_path(entry)
 
     assert_response :not_found
+  end
+
+  test "bulk updates every question in a category together" do
+    category = @user.question_library_categories.create!(name: "Research")
+    first = @user.question_library_entries.create!(category: "Research", content: "Old first question")
+    second = @user.question_library_entries.create!(category: "Research", content: "Old second question")
+
+    patch bulk_update_question_library_entries_path(category), params: {
+      entries: {
+        first.id => { content: "New first question" },
+        second.id => { content: "New second question" }
+      }
+    }
+
+    assert_redirected_to question_library_entries_path
+    assert_equal "New first question", first.reload.content
+    assert_equal "New second question", second.reload.content
+  end
+
+  test "bulk updates uncategorized questions together" do
+    entry = @user.question_library_entries.create!(content: "Old question")
+
+    patch bulk_update_uncategorized_question_library_entries_path, params: {
+      entries: { entry.id => { content: "New question" } }
+    }
+
+    assert_redirected_to question_library_entries_path
+    assert_equal "New question", entry.reload.content
+  end
+
+  test "bulk update cannot reach another user's questions through a category id" do
+    other_user = User.create!(email: "other-library-owner@example.com", password: "password123")
+    category = other_user.question_library_categories.create!(name: "Private")
+    entry = other_user.question_library_entries.create!(category: "Private", content: "Private question")
+
+    patch bulk_update_question_library_entries_path(category), params: {
+      entries: { entry.id => { content: "Hacked" } }
+    }
+
+    assert_response :not_found
+    assert_equal "Private question", entry.reload.content
   end
 
   test "increments uses only for the signed-in user's library question" do

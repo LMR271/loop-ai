@@ -1,5 +1,5 @@
 class QuestionLibraryCategoriesController < ApplicationController
-  before_action :set_category, only: %i[edit update destroy]
+  before_action :set_category, only: %i[destroy]
 
   def create
     @category = current_user.question_library_categories.build(category_params)
@@ -11,35 +11,8 @@ class QuestionLibraryCategoriesController < ApplicationController
     end
   end
 
-  def edit
-  end
-
-  def update
-    previous_name = @category.name
-
-    QuestionLibraryCategory.transaction do
-      @category.update!(category_params)
-      current_user.question_library_entries.where(category: previous_name).update_all(category: @category.name)
-    end
-
-    redirect_to question_library_entries_path, notice: "Category renamed."
-  rescue ActiveRecord::RecordInvalid
-    render :edit, status: :unprocessable_entity
-  end
-
   def destroy
-    entries = @category.entries
-
-    if entries.exists?
-      destination = destination_category
-      unless params[:destination] == "no_category" || destination
-        redirect_to question_library_entries_path, alert: "Choose where to move this category's questions."
-        return
-      end
-
-      entries.update_all(category: destination&.name)
-    end
-
+    current_user.question_library_entries.where(category: @category.name).destroy_all
     @category.destroy!
     redirect_to question_library_entries_path, notice: "Category deleted."
   end
@@ -52,11 +25,5 @@ class QuestionLibraryCategoriesController < ApplicationController
 
   def category_params
     params.require(:question_library_category).permit(:name)
-  end
-
-  def destination_category
-    return unless params[:destination] == "move"
-
-    current_user.question_library_categories.where.not(id: @category.id).find_by(id: params[:move_to])
   end
 end

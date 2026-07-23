@@ -190,9 +190,19 @@
 
 .respondent-link-controls__url {
   flex: 1 1 auto;
-  height: 2.5rem;
   min-width: 0;
   width: auto;
+}
+
+// The single-line public-link input keeps a fixed row height; multi-line
+// embed/widget/newsletter textareas are auto-sized to their content instead
+// (see clipboard_controller.js), so this must not apply to them.
+input.respondent-link-controls__url {
+  height: 2.5rem;
+}
+
+textarea.respondent-link-controls__url {
+  resize: vertical;
 }
 
 .respondent-link-controls__button {

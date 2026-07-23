@@ -39,6 +39,14 @@
   cursor: pointer;
 }
 
+// Lives just inside the tile body (hidden while collapsed) rather than on the <details> itself,
+// so following a link to it forces the browser to auto-open the tile — an anchor on the always-
+// visible <details>/<summary> wouldn't need opening and the quotes would stay hidden.
+.analysis-tile__anchor {
+  display: block;
+  scroll-margin-top: $space-16;
+}
+
 .analysis-tile__summary {
   cursor: pointer;
   list-style: none;
@@ -78,6 +86,11 @@
 .analysis-quote-tag__link {
   color: inherit;
   text-decoration: underline;
+}
+
+.analysis-quote-group:not(:last-child) {
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding-bottom: $space-2;
 }
 
 .analysis-transcript {

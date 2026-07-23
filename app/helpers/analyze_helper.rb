@@ -27,8 +27,28 @@ module AnalyzeHelper
     day = feedback.created_at.to_date
 
     link_to "Interview ##{number}",
-            analyze_path(loop_record.slug, range: "custom", from: day, to: day, anchor: "feedback-#{feedback.id}"),
+            analyze_path(loop_record.slug, tab: "per_loop", range: "custom", from: day, to: day,
+                                           anchor: "feedback-#{feedback.id}"),
             class: "analysis-quote-tag__link"
+  end
+
+  # Every theme/feature-request quote traces back to one interview; a quote can repeat for the
+  # same interview (it made multiple points), so this collapses those into one group per
+  # interview instead of repeating the interview tag once per quote.
+  def group_quotes_by_interview(quotes, interview_numbers)
+    quotes.group_by(&:feedback)
+          .sort_by { |feedback, _| interview_numbers.fetch(feedback.id) }
+          .map { |feedback, feedback_quotes| { feedback: feedback, quotes: feedback_quotes } }
+  end
+
+  # Stage 1 (per-interview extraction) and Stage 2 (clustered Insight) describe the same
+  # points independently; the only thing tying a raw extracted point back to the canonical
+  # theme/feature-request it was clustered into is the LLM's promise to copy each Stage 2
+  # citation's quote VERBATIM from the Stage 1 points (see LoopAnalyzer::SYSTEM) — so an exact
+  # text match is the intended (if not database-enforced) correlation. Relies on the feedback
+  # being loaded with `includes(quotes: :quotable)` to avoid an N+1 across the response list.
+  def canonical_topic_for(feedback, quote_text)
+    feedback.quotes.find { |quote| quote.text == quote_text }&.quotable
   end
 
   LOOP_STATUS_BADGES = {

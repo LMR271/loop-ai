@@ -20,8 +20,12 @@ $warning:    $orange;
 
 // Buttons & inputs' radius — $border-radius is what plain Bootstrap buttons,
 // cards, alerts, modals, and dropdowns use by default, so anchoring it to
-// $radius-sm keeps them all consistent with the sidebar nav links.
-$border-radius-sm:            $radius-bootstrap;
+// $radius-sm keeps them all consistent with the sidebar nav links. Bootstrap's
+// -sm variants (.btn-sm, small alerts/dropdowns, etc.) pull from
+// $border-radius-sm specifically, not $border-radius — keep it equal to
+// $border-radius rather than the tiny $radius-bootstrap token, or every small
+// button (the icon buttons on the Launch page, for one) mismatches everything else.
+$border-radius-sm:            $radius-sm;
 $border-radius:               $radius-sm;
 $border-radius-lg:            $radius-card;
 $border-radius-xl:            $radius-md;

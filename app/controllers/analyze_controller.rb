@@ -7,14 +7,14 @@ class AnalyzeController < ApplicationController
 
   def index
     @loops = current_organization.loops
-    @loop = current_organization.loops.order(created_at: :desc).first
+    @loop = current_organization.loops.with_insight_quotes.order(created_at: :desc).first
     load_shared_data
     render :show
   end
 
   def show
     @loops = current_organization.loops
-    @loop = current_organization.loops.find_by!(slug: params[:slug])
+    @loop = current_organization.loops.with_insight_quotes.find_by!(slug: params[:slug])
     load_shared_data
   end
 
@@ -55,6 +55,13 @@ class AnalyzeController < ApplicationController
     @feedback_counts_by_day = feedback_counts_by_period(scoped_feedbacks)
     @day_of_week_counts = scoped_feedbacks.group_by_day_of_week(:created_at, format: "%A").count
     @active_chart_data = active_chart_data
+    @interview_numbers = interview_numbers_for(@loop)
+  end
+
+  def interview_numbers_for(loop_record)
+    return {} unless loop_record
+
+    loop_record.feedbacks.order(:created_at).ids.each_with_index.to_h { |id, index| [id, index + 1] }
   end
 
   def active_chart_data

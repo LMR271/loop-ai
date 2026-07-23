@@ -214,11 +214,12 @@
 
           <% if @loop.insight.present? %>
             <section class="mb-4">
-              <h3 class="mb-1">Themes</h3>
+              <h3 class="mb-1">Patterns</h3>
               <p class="text-muted small mb-3">Patterns that came up across multiple interviews — where to focus.</p>
               <% if @loop.insight.themes.any? %>
-                <div class="d-flex flex-column gap-2">
-                  <%= render partial: "theme", collection: @loop.insight.themes, as: :theme %>
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+                  <%= render partial: "theme", collection: @loop.insight.themes, as: :theme,
+                             locals: { loop_record: @loop, interview_numbers: @interview_numbers } %>
                 </div>
               <% else %>
                 <%= render "section_empty", icon: "fa-tag", message: "No themes yet — collect a few interviews, then Refresh." %>
@@ -229,8 +230,9 @@
               <h3 class="mb-1">Feature requests</h3>
               <p class="text-muted small mb-3">Specific things respondents asked you to build.</p>
               <% if @loop.insight.feature_requests.any? %>
-                <div class="d-flex flex-column gap-2">
-                  <%= render partial: "feature_request", collection: @loop.insight.feature_requests, as: :feature_request %>
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+                  <%= render partial: "feature_request", collection: @loop.insight.feature_requests, as: :feature_request,
+                             locals: { loop_record: @loop, interview_numbers: @interview_numbers } %>
                 </div>
               <% else %>
                 <%= render "section_empty", icon: "fa-lightbulb", message: "No feature requests surfaced yet." %>
@@ -248,7 +250,7 @@
           <% else %>
             <div class="d-flex flex-column gap-3">
               <% @feedbacks.each do |feedback| %>
-                <div class="analysis-card analysis-response-card">
+                <div class="analysis-card analysis-response-card" id="feedback-<%= feedback.id %>">
                   <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
                     <span class="fw-semibold"><%= feedback.respondent_email.presence || "Anonymous respondent" %></span>
                     <div class="d-flex align-items-center gap-2">

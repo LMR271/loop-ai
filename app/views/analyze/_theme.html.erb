@@ -1,15 +1,26 @@
-<div class="analysis-card">
-  <div class="d-flex justify-content-between align-items-start gap-2 mb-1">
-    <span class="fw-semibold"><%= theme.title %></span>
-    <div class="d-flex align-items-center gap-2">
-      <%= sentiment_badge(theme.sentiment) %>
-      <span class="badge text-bg-light"><%= pluralize(theme.mention_count, "interview") %></span>
+<div class="col">
+  <details class="analysis-card analysis-tile">
+    <summary class="analysis-tile__summary">
+      <div class="d-flex justify-content-between align-items-start gap-2">
+        <span class="analysis-tile__title"><%= theme.title %></span>
+        <div class="d-flex align-items-center gap-2 flex-shrink-0">
+          <%= sentiment_badge(theme.sentiment) %>
+          <span class="badge text-bg-light"><%= pluralize(theme.mention_count, "interview") %></span>
+          <i class="fa-solid fa-chevron-down analysis-tile__chevron" aria-hidden="true"></i>
+        </div>
+      </div>
+      <p class="text-muted small mb-0 mt-1"><%= theme.description %></p>
+    </summary>
+    <div class="analysis-tile__body mt-2">
+      <% theme.quotes.each do |quote| %>
+        <blockquote class="border-start ps-2 mb-1 small fst-italic text-muted">
+          "<%= quote.text %>"
+        </blockquote>
+        <div class="analysis-quote-tag mb-2">
+          <%= interview_tag_link(loop_record, quote.feedback, interview_numbers) %>
+          <%= sentiment_badge(quote.feedback.sentiment) %>
+        </div>
+      <% end %>
     </div>
-  </div>
-  <p class="text-muted small mb-2"><%= theme.description %></p>
-  <% theme.quotes.each do |quote| %>
-    <blockquote class="border-start ps-2 mb-1 small fst-italic text-muted">
-      "<%= quote.text %>"
-    </blockquote>
-  <% end %>
+  </details>
 </div>

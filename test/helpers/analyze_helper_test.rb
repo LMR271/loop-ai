@@ -23,4 +23,19 @@ class AnalyzeHelperTest < ActionView::TestCase
     assert_nil sentiment_badge("")
     assert_nil sentiment_badge("elated")
   end
+
+  test "interview_tag_link labels the interview by its position and links to its anchored, range-widened URL" do
+    user = User.create!(email: "founder@example.com", password: "password123")
+    loop_record = user.loops.create!(name: "L")
+    feedback = loop_record.feedbacks.create!(transcript: "hi", created_at: Time.zone.parse("2026-07-01 10:00"))
+    interview_numbers = { feedback.id => 3 }
+
+    html = interview_tag_link(loop_record, feedback, interview_numbers)
+
+    assert_match(/Interview #3/, html)
+    assert_match("range=custom", html)
+    assert_match("from=2026-07-01", html)
+    assert_match("to=2026-07-01", html)
+    assert_match("#feedback-#{feedback.id}", html)
+  end
 end

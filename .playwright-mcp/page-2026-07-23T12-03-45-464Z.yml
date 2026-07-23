@@ -1,0 +1,223 @@
+- generic [ref=f2e2]:
+  - generic [ref=f2e3]:
+    - link "Loop AI home" [ref=f2e4] [cursor=pointer]:
+      - /url: /
+      - img "LoopAI" [ref=f2e5]
+    - complementary [ref=f2e6]:
+      - navigation "Primary navigation" [ref=f2e7]:
+        - link "Dashboard" [ref=f2e8] [cursor=pointer]:
+          - /url: /dashboard
+          - generic [ref=f2e9]: 
+        - link "Create" [ref=f2e11] [cursor=pointer]:
+          - /url: /loops/new
+          - generic [ref=f2e12]: +
+        - link "Launch" [ref=f2e14] [cursor=pointer]:
+          - /url: /launch
+          - generic [ref=f2e15]: 
+        - link "Analyze" [ref=f2e17] [cursor=pointer]:
+          - /url: /analyze
+          - generic [ref=f2e18]: 
+  - generic [ref=f2e20]:
+    - navigation "Workspace actions" [ref=f2e21]:
+      - generic [ref=f2e22]:
+        - generic [ref=f2e23]:
+          - generic [ref=f2e24]: 
+          - searchbox "Search loops" [ref=f2e25]
+        - button "Notifications" [ref=f2e27] [cursor=pointer]:
+          - generic [ref=f2e28]: 
+        - link "New Loop" [ref=f2e29] [cursor=pointer]:
+          - /url: /loops/new
+          - generic [ref=f2e30]: +
+        - generic [ref=f2e32]:
+          - button "Open account menu" [ref=f2e33] [cursor=pointer]:
+            - generic [ref=f2e34]: 
+            - generic [ref=f2e35]: Founder
+          - text:    
+    - main [ref=f2e36]:
+      - generic [ref=f2e37]:
+        - heading "Analyze" [level=1] [ref=f2e38]
+        - tablist [ref=f2e39]:
+          - tab "All loops" [ref=f2e40] [cursor=pointer]
+          - tab "Per-loop overview" [selected] [ref=f2e41] [cursor=pointer]
+        - tabpanel [ref=f2e43]:
+          - generic [ref=f2e44]:
+            - 'heading "Overview of #Onboarding Pulse" [level=2] [ref=f2e45]'
+            - combobox [ref=f2e47]:
+              - option "Onboarding Pulse" [selected]
+              - option "Pricing Page Feedback"
+              - option "Churned Users Check-in"
+              - option "Feature Request Roundup"
+              - option "Support Experience Review"
+              - option "Gym Members Who Cancelled in June"
+          - generic [ref=f2e48]:
+            - generic [ref=f2e49]:
+              - paragraph [ref=f2e50]: Responses
+              - paragraph [ref=f2e51]: "33"
+            - generic [ref=f2e52]:
+              - paragraph [ref=f2e53]: Themes found
+              - paragraph [ref=f2e54]: "7"
+            - generic [ref=f2e55]:
+              - paragraph [ref=f2e56]: Feature requests
+              - paragraph [ref=f2e57]: "4"
+            - generic [ref=f2e58]:
+              - paragraph [ref=f2e59]: Overall sentiment
+              - paragraph [ref=f2e60]:
+                - generic [ref=f2e61]: Positive
+          - generic [ref=f2e62]:
+            - generic [ref=f2e63]:
+              - generic [ref=f2e64]: Data
+              - combobox "Data" [ref=f2e65]:
+                - option "Feedback volume" [selected]
+                - option "Responses by day of week"
+                - option "Cumulative feedback"
+            - generic [ref=f2e66]:
+              - generic [ref=f2e67]: Chart type
+              - combobox "Chart type" [ref=f2e68]:
+                - option "Bar" [selected]
+                - option "Line"
+            - generic [ref=f2e69]:
+              - generic [ref=f2e70]: Date range
+              - combobox "Date range" [ref=f2e71]:
+                - option "Last 24 hours"
+                - option "Last 7 days"
+                - option "Last 14 days"
+                - option "Last 30 days"
+                - option "Custom range" [selected]
+            - generic [ref=f2e72]:
+              - generic [ref=f2e73]: From
+              - textbox "From" [ref=f2e74]: 2026-06-27
+            - generic [ref=f2e75]:
+              - generic [ref=f2e76]: To
+              - textbox "To" [ref=f2e77]: 2026-06-27
+            - button "Apply" [ref=f2e79] [cursor=pointer]
+          - heading "Feedback volume (Jun 27, 2026 – Jun 27, 2026)" [level=3] [ref=f2e81]
+          - generic [ref=f2e85]:
+            - generic [ref=f2e86]:
+              - generic [ref=f2e87]:
+                - heading "Summary of all feedback" [level=2] [ref=f2e88]
+                - paragraph [ref=f2e89]: AI-generated from every interview transcript in this loop. Press Refresh after new responses come in.
+              - button " Refresh" [ref=f2e91] [cursor=pointer]:
+                - generic [ref=f2e92]: 
+                - text: Refresh
+            - generic [ref=f2e93]: Positive
+            - paragraph [ref=f2e95]: "Across interviews people were positively surprised: setup is generally quick, intuitive, and forgiving (can be paused/resumed), and teams adopted the product to get faster, more personal feedback than static forms. Users particularly like the AI-driven conversational follow-ups and see higher engagement than traditional surveys. Primary frictions are discoverability (finding share links and where to edit questions), minor trust/clarity issues with the share-link slug, and uncertainty during setup about how many questions to add. Many users asked for clearer guidance and more obvious navigation for editing and sharing."
+            - paragraph [ref=f2e96]: 33 interviews analyzed
+          - generic [ref=f2e97]:
+            - heading "Patterns" [level=3] [ref=f2e98]
+            - paragraph [ref=f2e99]: Patterns that came up across multiple interviews — where to focus.
+            - generic [ref=f2e100]:
+              - group [ref=f2e102] [cursor=pointer]:
+                - generic "Quick and intuitive onboarding Positive 17 interviews Most users said creating their first loop was fast, intuitive, and easy to resume if interrupted." [ref=f2e103]:
+                  - generic [ref=f2e104]:
+                    - generic [ref=f2e105]: Quick and intuitive onboarding
+                    - generic [ref=f2e106]:
+                      - generic [ref=f2e107]: Positive
+                      - generic [ref=f2e108]: 17 interviews
+                      - generic [ref=f2e109]: 
+                  - paragraph [ref=f2e110]: Most users said creating their first loop was fast, intuitive, and easy to resume if interrupted.
+              - group [ref=f2e112] [cursor=pointer]:
+                - generic "AI / conversational follow-ups are valued Positive 9 interviews Users appreciate that an AI can ask dynamic follow-ups rather than a static form — they see this as more personal and better for engagement." [ref=f2e113]:
+                  - generic [ref=f2e114]:
+                    - generic [ref=f2e115]: AI / conversational follow-ups are valued
+                    - generic [ref=f2e116]:
+                      - generic [ref=f2e117]: Positive
+                      - generic [ref=f2e118]: 9 interviews
+                      - generic [ref=f2e119]: 
+                  - paragraph [ref=f2e120]: Users appreciate that an AI can ask dynamic follow-ups rather than a static form — they see this as more personal and better for engagement.
+              - group [ref=f2e122] [cursor=pointer]:
+                - generic "Share link discoverability and trust issues Neutral 13 interviews Multiple users had trouble locating the share link, found it took a minute to find, or worried the slug looked random/untrusted." [ref=f2e123]:
+                  - generic [ref=f2e124]:
+                    - generic [ref=f2e125]: Share link discoverability and trust issues
+                    - generic [ref=f2e126]:
+                      - generic [ref=f2e127]: Neutral
+                      - generic [ref=f2e128]: 13 interviews
+                      - generic [ref=f2e129]: 
+                  - paragraph [ref=f2e130]: Multiple users had trouble locating the share link, found it took a minute to find, or worried the slug looked random/untrusted.
+              - group [ref=f2e132] [cursor=pointer]:
+                - generic "Editing questions is hard to find Frustrated 6 interviews Several users had to look twice to find where to edit questions after creating a loop; the edit action is not obvious enough." [ref=f2e133]:
+                  - generic [ref=f2e134]:
+                    - generic [ref=f2e135]: Editing questions is hard to find
+                    - generic [ref=f2e136]:
+                      - generic [ref=f2e137]: Frustrated
+                      - generic [ref=f2e138]: 6 interviews
+                      - generic [ref=f2e139]: 
+                  - paragraph [ref=f2e140]: Several users had to look twice to find where to edit questions after creating a loop; the edit action is not obvious enough.
+              - group [ref=f2e142] [cursor=pointer]:
+                - generic "Uncertainty about how many questions to add Neutral 6 interviews Users are unsure how many seed questions to add during setup and ask for guidance or examples." [ref=f2e143]:
+                  - generic [ref=f2e144]:
+                    - generic [ref=f2e145]: Uncertainty about how many questions to add
+                    - generic [ref=f2e146]:
+                      - generic [ref=f2e147]: Neutral
+                      - generic [ref=f2e148]: 6 interviews
+                      - generic [ref=f2e149]: 
+                  - paragraph [ref=f2e150]: Users are unsure how many seed questions to add during setup and ask for guidance or examples.
+              - group [ref=f2e152] [cursor=pointer]:
+                - generic "Teams adopt for efficiency and faster insights Positive 8 interviews Small teams and those suffering from low response rates or feedback fatigue choose the product to save time and get faster, more usable feedback than manual interviews or static forms." [ref=f2e153]:
+                  - generic [ref=f2e154]:
+                    - generic [ref=f2e155]: Teams adopt for efficiency and faster insights
+                    - generic [ref=f2e156]:
+                      - generic [ref=f2e157]: Positive
+                      - generic [ref=f2e158]: 8 interviews
+                      - generic [ref=f2e159]: 
+                  - paragraph [ref=f2e160]: Small teams and those suffering from low response rates or feedback fatigue choose the product to save time and get faster, more usable feedback than manual interviews or static forms.
+              - group [ref=f2e162] [cursor=pointer]:
+                - generic "Initial worry about user engagement with a bot (usually resolved) Neutral 9 interviews Many interviewees were initially concerned users wouldn't chat with a bot, but in practice engagement wasn't an issue for most." [ref=f2e163]:
+                  - generic [ref=f2e164]:
+                    - generic [ref=f2e165]: Initial worry about user engagement with a bot (usually resolved)
+                    - generic [ref=f2e166]:
+                      - generic [ref=f2e167]: Neutral
+                      - generic [ref=f2e168]: 9 interviews
+                      - generic [ref=f2e169]: 
+                  - paragraph [ref=f2e170]: Many interviewees were initially concerned users wouldn't chat with a bot, but in practice engagement wasn't an issue for most.
+          - generic [ref=f2e171]:
+            - heading "Feature requests" [level=3] [ref=f2e172]
+            - paragraph [ref=f2e173]: Specific things respondents asked you to build.
+            - generic [ref=f2e174]:
+              - group [ref=f2e176] [cursor=pointer]:
+                - generic "Make share link easier to find / clearer Users asked the share link be more discoverable and for the slug to be less random/untrustworthy (more descriptive or human-readable)." [ref=f2e177]:
+                  - generic [ref=f2e178]:
+                    - generic [ref=f2e179]: Make share link easier to find / clearer
+                    - generic [ref=f2e180]: 
+                  - paragraph [ref=f2e181]: Users asked the share link be more discoverable and for the slug to be less random/untrustworthy (more descriptive or human-readable).
+              - group [ref=f2e183] [cursor=pointer]:
+                - generic "Make editing questions more discoverable Multiple users requested a clearer, more obvious location or navigation to add/edit questions after loop creation." [ref=f2e184]:
+                  - generic [ref=f2e185]:
+                    - generic [ref=f2e186]: Make editing questions more discoverable
+                    - generic [ref=f2e187]: 
+                  - paragraph [ref=f2e188]: Multiple users requested a clearer, more obvious location or navigation to add/edit questions after loop creation.
+              - group [ref=f2e190] [cursor=pointer]:
+                - generic "Guidance on how many questions / example questions Users want clearer recommendations and starter example questions during onboarding so they know how many seed questions to create." [ref=f2e191]:
+                  - generic [ref=f2e192]:
+                    - generic [ref=f2e193]: Guidance on how many questions / example questions
+                    - generic [ref=f2e194]: 
+                  - paragraph [ref=f2e195]: Users want clearer recommendations and starter example questions during onboarding so they know how many seed questions to create.
+              - group [ref=f2e197] [cursor=pointer]:
+                - generic "Ensure easy resume / autosave during onboarding A few users suggested highlighting or guaranteeing session resume/autosave since interruptions are common." [ref=f2e198]:
+                  - generic [ref=f2e199]:
+                    - generic [ref=f2e200]: Ensure easy resume / autosave during onboarding
+                    - generic [ref=f2e201]: 
+                  - paragraph [ref=f2e202]: A few users suggested highlighting or guaranteeing session resume/autosave since interruptions are common.
+          - heading "Every response" [level=3] [ref=f2e203]
+          - paragraph [ref=f2e204]: Each interview in full. The summary above the transcript is AI-generated — the transcript itself is the respondent's own words.
+          - generic [ref=f2e206]:
+            - generic [ref=f2e207]:
+              - generic [ref=f2e208]: "Interview #1 quinn80@demo.loopai.dev"
+              - generic [ref=f2e209]:
+                - generic [ref=f2e210]: Excited
+                - generic [ref=f2e211]: Jun 27, 2026 at 08:00 PM
+            - paragraph [ref=f2e212]: "Agent: What made you sign up for LoopAI? Respondent: A friend recommended it after complaining about feedback fatigue with our users. Agent: Was there anything confusing during setup? Respondent: Nothing major, just took a minute to find the share link. Agent: What almost made you give up before finishing onboarding? Respondent: Honestly nothing, it was quicker than I expected."
+            - generic [ref=f2e213]:
+              - generic [ref=f2e214]:
+                - generic [ref=f2e215]: 
+                - text: Referral recommendation
+              - generic [ref=f2e216]:
+                - generic [ref=f2e217]: 
+                - text: Feedback fatigue problem
+              - link " Make share link easier to find" [ref=f2e218] [cursor=pointer]:
+                - /url: "#feature_request_51"
+                - generic [ref=f2e219]: 
+                - text: Make share link easier to find
+              - link " Onboarding was quick and not discouraging" [ref=f2e220] [cursor=pointer]:
+                - /url: "#theme_70"
+                - generic [ref=f2e221]: 
+                - text: Onboarding was quick and not discouraging

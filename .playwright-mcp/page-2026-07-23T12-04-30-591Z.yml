@@ -1,0 +1,918 @@
+- generic [ref=f3e2]:
+  - generic [ref=f3e3]:
+    - link "Loop AI home" [ref=f3e4] [cursor=pointer]:
+      - /url: /
+      - img "LoopAI" [ref=f3e5]
+    - complementary [ref=f3e6]:
+      - navigation "Primary navigation" [ref=f3e7]:
+        - link "Dashboard" [ref=f3e8] [cursor=pointer]:
+          - /url: /dashboard
+          - generic [ref=f3e9]: 
+        - link "Create" [ref=f3e11] [cursor=pointer]:
+          - /url: /loops/new
+          - generic [ref=f3e12]: +
+        - link "Launch" [ref=f3e14] [cursor=pointer]:
+          - /url: /launch
+          - generic [ref=f3e15]: 
+        - link "Analyze" [ref=f3e17] [cursor=pointer]:
+          - /url: /analyze
+          - generic [ref=f3e18]: 
+  - generic [ref=f3e20]:
+    - navigation "Workspace actions" [ref=f3e21]:
+      - generic [ref=f3e22]:
+        - generic [ref=f3e23]:
+          - generic [ref=f3e24]: 
+          - searchbox "Search loops" [ref=f3e25]
+        - button "Notifications" [ref=f3e27] [cursor=pointer]:
+          - generic [ref=f3e28]: 
+        - link "New Loop" [ref=f3e29] [cursor=pointer]:
+          - /url: /loops/new
+          - generic [ref=f3e30]: +
+        - generic [ref=f3e32]:
+          - button "Open account menu" [ref=f3e33] [cursor=pointer]:
+            - generic [ref=f3e34]: 
+            - generic [ref=f3e35]: Founder
+          - text:    
+    - main [ref=f3e36]:
+      - generic [ref=f3e37]:
+        - heading "Analyze" [level=1] [ref=f3e38]
+        - tablist [ref=f3e39]:
+          - tab "All loops" [ref=f3e40] [cursor=pointer]
+          - tab "Per-loop overview" [selected] [ref=f3e41] [cursor=pointer]
+        - tabpanel [ref=f3e43]:
+          - generic [ref=f3e44]:
+            - 'heading "Overview of #Onboarding Pulse" [level=2] [ref=f3e45]'
+            - combobox [ref=f3e47]:
+              - option "Onboarding Pulse" [selected]
+              - option "Pricing Page Feedback"
+              - option "Churned Users Check-in"
+              - option "Feature Request Roundup"
+              - option "Support Experience Review"
+              - option "Gym Members Who Cancelled in June"
+          - generic [ref=f3e48]:
+            - generic [ref=f3e49]:
+              - paragraph [ref=f3e50]: Responses
+              - paragraph [ref=f3e51]: "33"
+            - generic [ref=f3e52]:
+              - paragraph [ref=f3e53]: Themes found
+              - paragraph [ref=f3e54]: "7"
+            - generic [ref=f3e55]:
+              - paragraph [ref=f3e56]: Feature requests
+              - paragraph [ref=f3e57]: "4"
+            - generic [ref=f3e58]:
+              - paragraph [ref=f3e59]: Overall sentiment
+              - paragraph [ref=f3e60]:
+                - generic [ref=f3e61]: Positive
+          - generic [ref=f3e62]:
+            - generic [ref=f3e63]:
+              - generic [ref=f3e64]: Data
+              - combobox "Data" [ref=f3e65]:
+                - option "Feedback volume" [selected]
+                - option "Responses by day of week"
+                - option "Cumulative feedback"
+            - generic [ref=f3e66]:
+              - generic [ref=f3e67]: Chart type
+              - combobox "Chart type" [ref=f3e68]:
+                - option "Bar" [selected]
+                - option "Line"
+            - generic [ref=f3e69]:
+              - generic [ref=f3e70]: Date range
+              - combobox "Date range" [ref=f3e71]:
+                - option "Last 24 hours"
+                - option "Last 7 days"
+                - option "Last 14 days"
+                - option "Last 30 days" [selected]
+                - option "Custom range"
+          - heading "Feedback volume (last 30 days)" [level=3] [ref=f3e73]
+          - generic [ref=f3e77]:
+            - generic [ref=f3e78]:
+              - generic [ref=f3e79]:
+                - heading "Summary of all feedback" [level=2] [ref=f3e80]
+                - paragraph [ref=f3e81]: AI-generated from every interview transcript in this loop. Press Refresh after new responses come in.
+              - button " Refresh" [ref=f3e83] [cursor=pointer]:
+                - generic [ref=f3e84]: 
+                - text: Refresh
+            - generic [ref=f3e85]: Positive
+            - paragraph [ref=f3e87]: "Across interviews people were positively surprised: setup is generally quick, intuitive, and forgiving (can be paused/resumed), and teams adopted the product to get faster, more personal feedback than static forms. Users particularly like the AI-driven conversational follow-ups and see higher engagement than traditional surveys. Primary frictions are discoverability (finding share links and where to edit questions), minor trust/clarity issues with the share-link slug, and uncertainty during setup about how many questions to add. Many users asked for clearer guidance and more obvious navigation for editing and sharing."
+            - paragraph [ref=f3e88]: 33 interviews analyzed
+          - generic [ref=f3e89]:
+            - heading "Patterns" [level=3] [ref=f3e90]
+            - paragraph [ref=f3e91]: Patterns that came up across multiple interviews — where to focus.
+            - generic [ref=f3e92]:
+              - group [ref=f3e94] [cursor=pointer]:
+                - generic "Quick and intuitive onboarding Positive 17 interviews Most users said creating their first loop was fast, intuitive, and easy to resume if interrupted." [ref=f3e95]:
+                  - generic [ref=f3e96]:
+                    - generic [ref=f3e97]: Quick and intuitive onboarding
+                    - generic [ref=f3e98]:
+                      - generic [ref=f3e99]: Positive
+                      - generic [ref=f3e100]: 17 interviews
+                      - generic [ref=f3e101]: 
+                  - paragraph [ref=f3e102]: Most users said creating their first loop was fast, intuitive, and easy to resume if interrupted.
+              - group [ref=f3e104] [cursor=pointer]:
+                - generic "AI / conversational follow-ups are valued Positive 9 interviews Users appreciate that an AI can ask dynamic follow-ups rather than a static form — they see this as more personal and better for engagement." [ref=f3e105]:
+                  - generic [ref=f3e106]:
+                    - generic [ref=f3e107]: AI / conversational follow-ups are valued
+                    - generic [ref=f3e108]:
+                      - generic [ref=f3e109]: Positive
+                      - generic [ref=f3e110]: 9 interviews
+                      - generic [ref=f3e111]: 
+                  - paragraph [ref=f3e112]: Users appreciate that an AI can ask dynamic follow-ups rather than a static form — they see this as more personal and better for engagement.
+              - group [ref=f3e114] [cursor=pointer]:
+                - generic "Share link discoverability and trust issues Neutral 13 interviews Multiple users had trouble locating the share link, found it took a minute to find, or worried the slug looked random/untrusted." [ref=f3e115]:
+                  - generic [ref=f3e116]:
+                    - generic [ref=f3e117]: Share link discoverability and trust issues
+                    - generic [ref=f3e118]:
+                      - generic [ref=f3e119]: Neutral
+                      - generic [ref=f3e120]: 13 interviews
+                      - generic [ref=f3e121]: 
+                  - paragraph [ref=f3e122]: Multiple users had trouble locating the share link, found it took a minute to find, or worried the slug looked random/untrusted.
+              - group [ref=f3e124] [cursor=pointer]:
+                - generic "Editing questions is hard to find Frustrated 6 interviews Several users had to look twice to find where to edit questions after creating a loop; the edit action is not obvious enough." [ref=f3e125]:
+                  - generic [ref=f3e126]:
+                    - generic [ref=f3e127]: Editing questions is hard to find
+                    - generic [ref=f3e128]:
+                      - generic [ref=f3e129]: Frustrated
+                      - generic [ref=f3e130]: 6 interviews
+                      - generic [ref=f3e131]: 
+                  - paragraph [ref=f3e132]: Several users had to look twice to find where to edit questions after creating a loop; the edit action is not obvious enough.
+              - group [ref=f3e134] [cursor=pointer]:
+                - generic "Uncertainty about how many questions to add Neutral 6 interviews Users are unsure how many seed questions to add during setup and ask for guidance or examples." [ref=f3e135]:
+                  - generic [ref=f3e136]:
+                    - generic [ref=f3e137]: Uncertainty about how many questions to add
+                    - generic [ref=f3e138]:
+                      - generic [ref=f3e139]: Neutral
+                      - generic [ref=f3e140]: 6 interviews
+                      - generic [ref=f3e141]: 
+                  - paragraph [ref=f3e142]: Users are unsure how many seed questions to add during setup and ask for guidance or examples.
+              - group [ref=f3e144] [cursor=pointer]:
+                - generic "Teams adopt for efficiency and faster insights Positive 8 interviews Small teams and those suffering from low response rates or feedback fatigue choose the product to save time and get faster, more usable feedback than manual interviews or static forms." [ref=f3e145]:
+                  - generic [ref=f3e146]:
+                    - generic [ref=f3e147]: Teams adopt for efficiency and faster insights
+                    - generic [ref=f3e148]:
+                      - generic [ref=f3e149]: Positive
+                      - generic [ref=f3e150]: 8 interviews
+                      - generic [ref=f3e151]: 
+                  - paragraph [ref=f3e152]: Small teams and those suffering from low response rates or feedback fatigue choose the product to save time and get faster, more usable feedback than manual interviews or static forms.
+              - group [ref=f3e154] [cursor=pointer]:
+                - generic "Initial worry about user engagement with a bot (usually resolved) Neutral 9 interviews Many interviewees were initially concerned users wouldn't chat with a bot, but in practice engagement wasn't an issue for most." [ref=f3e155]:
+                  - generic [ref=f3e156]:
+                    - generic [ref=f3e157]: Initial worry about user engagement with a bot (usually resolved)
+                    - generic [ref=f3e158]:
+                      - generic [ref=f3e159]: Neutral
+                      - generic [ref=f3e160]: 9 interviews
+                      - generic [ref=f3e161]: 
+                  - paragraph [ref=f3e162]: Many interviewees were initially concerned users wouldn't chat with a bot, but in practice engagement wasn't an issue for most.
+          - generic [ref=f3e163]:
+            - heading "Feature requests" [level=3] [ref=f3e164]
+            - paragraph [ref=f3e165]: Specific things respondents asked you to build.
+            - generic [ref=f3e166]:
+              - group [ref=f3e168] [cursor=pointer]:
+                - generic "Make share link easier to find / clearer Users asked the share link be more discoverable and for the slug to be less random/untrustworthy (more descriptive or human-readable)." [ref=f3e169]:
+                  - generic [ref=f3e170]:
+                    - generic [ref=f3e171]: Make share link easier to find / clearer
+                    - generic [ref=f3e172]: 
+                  - paragraph [ref=f3e173]: Users asked the share link be more discoverable and for the slug to be less random/untrustworthy (more descriptive or human-readable).
+              - group [ref=f3e175] [cursor=pointer]:
+                - generic "Make editing questions more discoverable Multiple users requested a clearer, more obvious location or navigation to add/edit questions after loop creation." [ref=f3e176]:
+                  - generic [ref=f3e177]:
+                    - generic [ref=f3e178]: Make editing questions more discoverable
+                    - generic [ref=f3e179]: 
+                  - paragraph [ref=f3e180]: Multiple users requested a clearer, more obvious location or navigation to add/edit questions after loop creation.
+              - group [ref=f3e182] [cursor=pointer]:
+                - generic "Guidance on how many questions / example questions Users want clearer recommendations and starter example questions during onboarding so they know how many seed questions to create." [ref=f3e183]:
+                  - generic [ref=f3e184]:
+                    - generic [ref=f3e185]: Guidance on how many questions / example questions
+                    - generic [ref=f3e186]: 
+                  - paragraph [ref=f3e187]: Users want clearer recommendations and starter example questions during onboarding so they know how many seed questions to create.
+              - group [ref=f3e189] [cursor=pointer]:
+                - generic "Ensure easy resume / autosave during onboarding A few users suggested highlighting or guaranteeing session resume/autosave since interruptions are common." [ref=f3e190]:
+                  - generic [ref=f3e191]:
+                    - generic [ref=f3e192]: Ensure easy resume / autosave during onboarding
+                    - generic [ref=f3e193]: 
+                  - paragraph [ref=f3e194]: A few users suggested highlighting or guaranteeing session resume/autosave since interruptions are common.
+          - heading "Every response" [level=3] [ref=f3e195]
+          - paragraph [ref=f3e196]: Each interview in full. The summary above the transcript is AI-generated — the transcript itself is the respondent's own words.
+          - generic [ref=f3e197]:
+            - generic [ref=f3e198]:
+              - generic [ref=f3e199]:
+                - generic [ref=f3e200]: "Interview #33 devon@buildwithdevon.com"
+                - generic [ref=f3e201]:
+                  - generic [ref=f3e202]: Positive
+                  - generic [ref=f3e203]: Jul 21, 2026 at 07:28 PM
+              - paragraph [ref=f3e204]: AI summary
+              - paragraph [ref=f3e205]: Wanted conversation over surveys
+              - paragraph [ref=f3e206]: This user chose LoopAI to escape five-point-scale surveys, but didn't realise custom questions were editable until exploring the dashboard.
+              - group [ref=f3e207]:
+                - generic "View full transcript" [ref=f3e208] [cursor=pointer]
+              - link " Editing questions is hard to find" [ref=f3e210] [cursor=pointer]:
+                - /url: "#theme_73"
+                - generic [ref=f3e211]: 
+                - text: Editing questions is hard to find
+              - paragraph [ref=f3e212]:
+                - generic [ref=f3e213]: 
+                - text: Happy with the conversational premise; the only friction was discoverability of question editing.
+            - generic [ref=f3e214]:
+              - generic [ref=f3e215]:
+                - generic [ref=f3e216]: "Interview #32 Anonymous respondent"
+                - generic [ref=f3e217]:
+                  - generic [ref=f3e218]: Positive
+                  - generic [ref=f3e219]: Jul 21, 2026 at 07:28 PM
+              - paragraph [ref=f3e220]: AI summary
+              - paragraph [ref=f3e221]: Smooth but slightly wary of the link
+              - paragraph [ref=f3e222]: A curious respondent had a smooth setup overall, though the random-looking slug in the share URL made them briefly unsure the link was legitimate.
+              - group [ref=f3e223]:
+                - generic "View full transcript" [ref=f3e224] [cursor=pointer]
+              - link " Share link looks untrusted" [ref=f3e226] [cursor=pointer]:
+                - /url: "#theme_72"
+                - generic [ref=f3e227]: 
+                - text: Share link looks untrusted
+              - paragraph [ref=f3e228]:
+                - generic [ref=f3e229]: 
+                - text: Calls it a smooth experience overall but flags mild hesitation about the URL — positive with a small caveat.
+            - generic [ref=f3e230]:
+              - generic [ref=f3e231]:
+                - generic [ref=f3e232]: "Interview #31 amara@indiehacker.io"
+                - generic [ref=f3e233]:
+                  - generic [ref=f3e234]: Excited
+                  - generic [ref=f3e235]: Jul 21, 2026 at 07:28 PM
+              - paragraph [ref=f3e236]: AI summary
+              - paragraph [ref=f3e237]: Switched from low-response form tools
+              - paragraph [ref=f3e238]: A SaaS founder signed up because survey forms weren't getting filled out, and found the conversational format both fast to set up and more engaging for their users.
+              - group [ref=f3e239]:
+                - generic "View full transcript" [ref=f3e240] [cursor=pointer]
+              - generic [ref=f3e241]:
+                - link " Fast setup" [ref=f3e242] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e243]: 
+                  - text: Fast setup
+                - link " Higher engagement than forms" [ref=f3e244] [cursor=pointer]:
+                  - /url: "#theme_71"
+                  - generic [ref=f3e245]: 
+                  - text: Higher engagement than forms
+              - paragraph [ref=f3e246]:
+                - generic [ref=f3e247]: 
+                - text: Describes onboarding as a 5-minute success and reports users preferring the chat over forms — enthusiastic, not merely satisfied.
+            - generic [ref=f3e248]:
+              - generic [ref=f3e249]:
+                - generic [ref=f3e250]: "Interview #30 rowan553@demo.loopai.dev"
+                - generic [ref=f3e251]:
+                  - generic [ref=f3e252]: Frustrated
+                  - generic [ref=f3e253]: Jul 21, 2026 at 06:34 PM
+              - paragraph [ref=f3e254]: "Agent: What made you sign up for LoopAI? Respondent: I liked the idea of an AI actually asking follow-up questions instead of a static form. Agent: Was there anything confusing during setup? Respondent: A little - I wasn't sure how many questions to add at first. Agent: What almost made you give up before finishing onboarding? Respondent: Honestly nothing, it was quicker than I expected."
+              - generic [ref=f3e255]:
+                - link " Appreciation for dynamic follow-up questions" [ref=f3e256] [cursor=pointer]:
+                  - /url: "#theme_71"
+                  - generic [ref=f3e257]: 
+                  - text: Appreciation for dynamic follow-up questions
+                - link " Uncertainty during setup about number of questions" [ref=f3e258] [cursor=pointer]:
+                  - /url: "#theme_74"
+                  - generic [ref=f3e259]: 
+                  - text: Uncertainty during setup about number of questions
+                - link " Need guidance on how many questions to add during onboarding" [ref=f3e260] [cursor=pointer]:
+                  - /url: "#theme_74"
+                  - generic [ref=f3e261]: 
+                  - text: Need guidance on how many questions to add during onboarding
+                - link " Onboarding felt quicker than expected/no major drop-off" [ref=f3e262] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e263]: 
+                  - text: Onboarding felt quicker than expected/no major drop-off
+            - generic [ref=f3e264]:
+              - generic [ref=f3e265]:
+                - generic [ref=f3e266]: "Interview #29 casey510@demo.loopai.dev"
+                - generic [ref=f3e267]:
+                  - generic [ref=f3e268]: Excited
+                  - generic [ref=f3e269]: Jul 21, 2026 at 04:35 PM
+              - paragraph [ref=f3e270]: "Agent: What made you sign up for LoopAI? Respondent: I saw a demo online and wanted to see if it worked as well as it looked. Agent: Was there anything confusing during setup? Respondent: A little - I wasn't sure how many questions to add at first. Agent: What almost made you give up before finishing onboarding? Respondent: I got pulled into a meeting halfway through creating my loop, but coming back was easy."
+              - generic [ref=f3e271]:
+                - generic [ref=f3e272]:
+                  - generic [ref=f3e273]: 
+                  - text: Motivation to try product
+                - link " Confusion during setup" [ref=f3e274] [cursor=pointer]:
+                  - /url: "#theme_74"
+                  - generic [ref=f3e275]: 
+                  - text: Confusion during setup
+                - link " Guidance on number of questions to add" [ref=f3e276] [cursor=pointer]:
+                  - /url: "#theme_74"
+                  - generic [ref=f3e277]: 
+                  - text: Guidance on number of questions to add
+                - generic [ref=f3e278]:
+                  - generic [ref=f3e279]: 
+                  - text: Easy to resume after interruption
+            - generic [ref=f3e280]:
+              - generic [ref=f3e281]:
+                - generic [ref=f3e282]: "Interview #28 Anonymous respondent"
+                - generic [ref=f3e283]:
+                  - generic [ref=f3e284]: Neutral
+                  - generic [ref=f3e285]: Jul 21, 2026 at 01:27 PM
+              - paragraph [ref=f3e286]: "Agent: What made you sign up for LoopAI? Respondent: A friend recommended it after complaining about feedback fatigue with our users. Agent: Was there anything confusing during setup? Respondent: It was smooth, maybe just wished there were more example questions to start from. Agent: What almost made you give up before finishing onboarding? Respondent: I got pulled into a meeting halfway through creating my loop, but coming back was easy."
+              - generic [ref=f3e287]:
+                - generic [ref=f3e288]:
+                  - generic [ref=f3e289]: 
+                  - text: "Motivation: addressing feedback fatigue"
+                - link " More example questions during setup" [ref=f3e290] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e291]: 
+                  - text: More example questions during setup
+                - link " Smooth onboarding experience" [ref=f3e292] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e293]: 
+                  - text: Smooth onboarding experience
+                - link " Easy to resume after interruption" [ref=f3e294] [cursor=pointer]:
+                  - /url: "#feature_request_54"
+                  - generic [ref=f3e295]: 
+                  - text: Easy to resume after interruption
+            - generic [ref=f3e296]:
+              - generic [ref=f3e297]:
+                - generic [ref=f3e298]: "Interview #27 Anonymous respondent"
+                - generic [ref=f3e299]:
+                  - generic [ref=f3e300]: Neutral
+                  - generic [ref=f3e301]: Jul 20, 2026 at 06:56 PM
+              - paragraph [ref=f3e302]: "Agent: What made you sign up for LoopAI? Respondent: I saw a demo online and wanted to see if it worked as well as it looked. Agent: Was there anything confusing during setup? Respondent: Not really, it was pretty intuitive. Agent: What almost made you give up before finishing onboarding? Respondent: I got pulled into a meeting halfway through creating my loop, but coming back was easy."
+              - generic [ref=f3e303]:
+                - generic [ref=f3e304]:
+                  - generic [ref=f3e305]: 
+                  - text: Motivated by online demo
+                - link " Onboarding was intuitive" [ref=f3e306] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e307]: 
+                  - text: Onboarding was intuitive
+                - link " Easy to resume after interruption" [ref=f3e308] [cursor=pointer]:
+                  - /url: "#feature_request_54"
+                  - generic [ref=f3e309]: 
+                  - text: Easy to resume after interruption
+            - generic [ref=f3e310]:
+              - generic [ref=f3e311]:
+                - generic [ref=f3e312]: "Interview #26 casey547@demo.loopai.dev"
+                - generic [ref=f3e313]:
+                  - generic [ref=f3e314]: Frustrated
+                  - generic [ref=f3e315]: Jul 20, 2026 at 06:42 PM
+              - paragraph [ref=f3e316]: "Agent: What made you sign up for LoopAI? Respondent: Honestly I was just curious how an AI-led interview compares to a normal survey. Agent: Was there anything confusing during setup? Respondent: Not really, it was pretty intuitive. Agent: What almost made you give up before finishing onboarding? Respondent: Honestly nothing, it was quicker than I expected."
+              - generic [ref=f3e317]:
+                - generic [ref=f3e318]:
+                  - generic [ref=f3e319]: 
+                  - text: Curiosity about AI-led interviews
+                - link " Setup was intuitive" [ref=f3e320] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e321]: 
+                  - text: Setup was intuitive
+                - link " Onboarding was quick" [ref=f3e322] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e323]: 
+                  - text: Onboarding was quick
+                - link " No significant friction during onboarding" [ref=f3e324] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e325]: 
+                  - text: No significant friction during onboarding
+            - generic [ref=f3e326]:
+              - generic [ref=f3e327]:
+                - generic [ref=f3e328]: "Interview #25 quinn871@demo.loopai.dev"
+                - generic [ref=f3e329]:
+                  - generic [ref=f3e330]: Frustrated
+                  - generic [ref=f3e331]: Jul 20, 2026 at 03:35 PM
+              - paragraph [ref=f3e332]: "Agent: What made you sign up for LoopAI? Respondent: We're a small team and didn't have time to manually interview every user, so this seemed efficient. Agent: Was there anything confusing during setup? Respondent: The slug in the share link looked random, so I double checked it wasn't broken. Agent: What almost made you give up before finishing onboarding? Respondent: I got pulled into a meeting halfway through creating my loop, but coming back was easy."
+              - generic [ref=f3e333]:
+                - generic [ref=f3e334]:
+                  - generic [ref=f3e335]: 
+                  - text: Signed up for efficiency due to small team
+                - link " Share link slug looked random/confusing" [ref=f3e336] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e337]: 
+                  - text: Share link slug looked random/confusing
+                - link " Clarify or improve share link slug" [ref=f3e338] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e339]: 
+                  - text: Clarify or improve share link slug
+                - link " Onboarding can be paused and resumed easily" [ref=f3e340] [cursor=pointer]:
+                  - /url: "#feature_request_54"
+                  - generic [ref=f3e341]: 
+                  - text: Onboarding can be paused and resumed easily
+            - generic [ref=f3e342]:
+              - generic [ref=f3e343]:
+                - generic [ref=f3e344]: "Interview #24 morgan493@demo.loopai.dev"
+                - generic [ref=f3e345]:
+                  - generic [ref=f3e346]: Neutral
+                  - generic [ref=f3e347]: Jul 19, 2026 at 08:04 PM
+              - paragraph [ref=f3e348]: "Agent: What made you sign up for LoopAI? Respondent: I was tired of low response rates on Typeform surveys, so I wanted something more conversational. Agent: Was there anything confusing during setup? Respondent: The slug in the share link looked random, so I double checked it wasn't broken. Agent: What almost made you give up before finishing onboarding? Respondent: I was worried my users wouldn't bother chatting with a bot, but that wasn't an issue."
+              - generic [ref=f3e349]:
+                - link " Wanted a conversational alternative to Typeform" [ref=f3e350] [cursor=pointer]:
+                  - /url: "#theme_75"
+                  - generic [ref=f3e351]: 
+                  - text: Wanted a conversational alternative to Typeform
+                - link " Share link slug looked random / should be clearer" [ref=f3e352] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e353]: 
+                  - text: Share link slug looked random / should be clearer
+                - link " Concern users wouldn't chat with a bot" [ref=f3e354] [cursor=pointer]:
+                  - /url: "#theme_76"
+                  - generic [ref=f3e355]: 
+                  - text: Concern users wouldn't chat with a bot
+            - generic [ref=f3e356]:
+              - generic [ref=f3e357]:
+                - generic [ref=f3e358]: "Interview #23 Anonymous respondent"
+                - generic [ref=f3e359]:
+                  - generic [ref=f3e360]: Excited
+                  - generic [ref=f3e361]: Jul 19, 2026 at 03:36 PM
+              - paragraph [ref=f3e362]: "Agent: What made you sign up for LoopAI? Respondent: I liked the idea of an AI actually asking follow-up questions instead of a static form. Agent: Was there anything confusing during setup? Respondent: I had to look twice to find where to edit my questions after creating the loop. Agent: What almost made you give up before finishing onboarding? Respondent: I was worried my users wouldn't bother chatting with a bot, but that wasn't an issue."
+              - generic [ref=f3e363]:
+                - link " Appreciation for AI follow-up questions" [ref=f3e364] [cursor=pointer]:
+                  - /url: "#theme_71"
+                  - generic [ref=f3e365]: 
+                  - text: Appreciation for AI follow-up questions
+                - link " Confusion locating question edit option after creating loop" [ref=f3e366] [cursor=pointer]:
+                  - /url: "#theme_73"
+                  - generic [ref=f3e367]: 
+                  - text: Confusion locating question edit option after creating loop
+                - link " Make editing questions easier to find" [ref=f3e368] [cursor=pointer]:
+                  - /url: "#theme_73"
+                  - generic [ref=f3e369]: 
+                  - text: Make editing questions easier to find
+                - link " Concern about user engagement with bot" [ref=f3e370] [cursor=pointer]:
+                  - /url: "#theme_76"
+                  - generic [ref=f3e371]: 
+                  - text: Concern about user engagement with bot
+            - generic [ref=f3e372]:
+              - generic [ref=f3e373]:
+                - generic [ref=f3e374]: "Interview #22 quinn260@demo.loopai.dev"
+                - generic [ref=f3e375]:
+                  - generic [ref=f3e376]: Neutral
+                  - generic [ref=f3e377]: Jul 19, 2026 at 11:54 AM
+              - paragraph [ref=f3e378]: "Agent: What made you sign up for LoopAI? Respondent: I was tired of low response rates on Typeform surveys, so I wanted something more conversational. Agent: Was there anything confusing during setup? Respondent: I had to look twice to find where to edit my questions after creating the loop. Agent: What almost made you give up before finishing onboarding? Respondent: I almost skipped it thinking it'd be complicated, but it wasn't."
+              - generic [ref=f3e379]:
+                - link " Wanted a more conversational survey tool due to low response rates" [ref=f3e380] [cursor=pointer]:
+                  - /url: "#theme_75"
+                  - generic [ref=f3e381]: 
+                  - text: Wanted a more conversational survey tool due to low response rates
+                - link " Difficulty locating where to edit questions after creating a loop" [ref=f3e382] [cursor=pointer]:
+                  - /url: "#theme_73"
+                  - generic [ref=f3e383]: 
+                  - text: Difficulty locating where to edit questions after creating a loop
+                - generic [ref=f3e384]:
+                  - generic [ref=f3e385]: 
+                  - text: Perceived onboarding complexity almost caused dropout
+                - link " Make the 'edit questions' option more discoverable" [ref=f3e386] [cursor=pointer]:
+                  - /url: "#theme_73"
+                  - generic [ref=f3e387]: 
+                  - text: Make the 'edit questions' option more discoverable
+                - generic [ref=f3e388]:
+                  - generic [ref=f3e389]: 
+                  - text: Reduce perceived complexity / reassure users during onboarding
+            - generic [ref=f3e390]:
+              - generic [ref=f3e391]:
+                - generic [ref=f3e392]: "Interview #21 sam777@demo.loopai.dev"
+                - generic [ref=f3e393]:
+                  - generic [ref=f3e394]: Excited
+                  - generic [ref=f3e395]: Jul 17, 2026 at 09:16 AM
+              - paragraph [ref=f3e396]: "Agent: What made you sign up for LoopAI? Respondent: I liked the idea of an AI actually asking follow-up questions instead of a static form. Agent: Was there anything confusing during setup? Respondent: A little - I wasn't sure how many questions to add at first. Agent: What almost made you give up before finishing onboarding? Respondent: I was worried my users wouldn't bother chatting with a bot, but that wasn't an issue."
+              - generic [ref=f3e397]:
+                - link " Preference for conversational AI over static forms" [ref=f3e398] [cursor=pointer]:
+                  - /url: "#theme_71"
+                  - generic [ref=f3e399]: 
+                  - text: Preference for conversational AI over static forms
+                - link " Need clearer guidance on how many questions to add during setup" [ref=f3e400] [cursor=pointer]:
+                  - /url: "#theme_74"
+                  - generic [ref=f3e401]: 
+                  - text: Need clearer guidance on how many questions to add during setup
+                - link " Concern about user engagement with a chat bot" [ref=f3e402] [cursor=pointer]:
+                  - /url: "#theme_76"
+                  - generic [ref=f3e403]: 
+                  - text: Concern about user engagement with a chat bot
+            - generic [ref=f3e404]:
+              - generic [ref=f3e405]:
+                - generic [ref=f3e406]: "Interview #20 taylor882@demo.loopai.dev"
+                - generic [ref=f3e407]:
+                  - generic [ref=f3e408]: Neutral
+                  - generic [ref=f3e409]: Jul 16, 2026 at 07:05 PM
+              - paragraph [ref=f3e410]: "Agent: What made you sign up for LoopAI? Respondent: I liked the idea of an AI actually asking follow-up questions instead of a static form. Agent: Was there anything confusing during setup? Respondent: Not really, it was pretty intuitive. Agent: What almost made you give up before finishing onboarding? Respondent: I was worried my users wouldn't bother chatting with a bot, but that wasn't an issue."
+              - generic [ref=f3e411]:
+                - link " Preference for conversational follow-up questions over static forms" [ref=f3e412] [cursor=pointer]:
+                  - /url: "#theme_71"
+                  - generic [ref=f3e413]: 
+                  - text: Preference for conversational follow-up questions over static forms
+                - link " Onboarding was intuitive" [ref=f3e414] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e415]: 
+                  - text: Onboarding was intuitive
+                - link " Concern about user engagement with a chat bot" [ref=f3e416] [cursor=pointer]:
+                  - /url: "#theme_76"
+                  - generic [ref=f3e417]: 
+                  - text: Concern about user engagement with a chat bot
+            - generic [ref=f3e418]:
+              - generic [ref=f3e419]:
+                - generic [ref=f3e420]: "Interview #19 jamie522@demo.loopai.dev"
+                - generic [ref=f3e421]:
+                  - generic [ref=f3e422]: Positive
+                  - generic [ref=f3e423]: Jul 15, 2026 at 11:21 AM
+              - paragraph [ref=f3e424]: "Agent: What made you sign up for LoopAI? Respondent: I liked the idea of an AI actually asking follow-up questions instead of a static form. Agent: Was there anything confusing during setup? Respondent: I had to look twice to find where to edit my questions after creating the loop. Agent: What almost made you give up before finishing onboarding? Respondent: I almost skipped it thinking it'd be complicated, but it wasn't."
+              - generic [ref=f3e425]:
+                - link " Value of AI-driven follow-up questions" [ref=f3e426] [cursor=pointer]:
+                  - /url: "#theme_71"
+                  - generic [ref=f3e427]: 
+                  - text: Value of AI-driven follow-up questions
+                - link " Confusion locating edit option" [ref=f3e428] [cursor=pointer]:
+                  - /url: "#theme_73"
+                  - generic [ref=f3e429]: 
+                  - text: Confusion locating edit option
+                - link " Make edit-questions location more obvious" [ref=f3e430] [cursor=pointer]:
+                  - /url: "#theme_73"
+                  - generic [ref=f3e431]: 
+                  - text: Make edit-questions location more obvious
+                - link " Perceived onboarding difficulty vs reality" [ref=f3e432] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e433]: 
+                  - text: Perceived onboarding difficulty vs reality
+            - generic [ref=f3e434]:
+              - generic [ref=f3e435]:
+                - generic [ref=f3e436]: "Interview #18 skyler551@demo.loopai.dev"
+                - generic [ref=f3e437]:
+                  - generic [ref=f3e438]: Positive
+                  - generic [ref=f3e439]: Jul 15, 2026 at 10:57 AM
+              - paragraph [ref=f3e440]: "Agent: What made you sign up for LoopAI? Respondent: We're a small team and didn't have time to manually interview every user, so this seemed efficient. Agent: Was there anything confusing during setup? Respondent: The slug in the share link looked random, so I double checked it wasn't broken. Agent: What almost made you give up before finishing onboarding? Respondent: I got pulled into a meeting halfway through creating my loop, but coming back was easy."
+              - generic [ref=f3e441]:
+                - link " Signed up for efficiency due to small team" [ref=f3e442] [cursor=pointer]:
+                  - /url: "#theme_75"
+                  - generic [ref=f3e443]: 
+                  - text: Signed up for efficiency due to small team
+                - link " Confusion about share link slug" [ref=f3e444] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e445]: 
+                  - text: Confusion about share link slug
+                - link " Make share links less ambiguous or more descriptive" [ref=f3e446] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e447]: 
+                  - text: Make share links less ambiguous or more descriptive
+                - link " Onboarding resume was easy after interruption" [ref=f3e448] [cursor=pointer]:
+                  - /url: "#feature_request_54"
+                  - generic [ref=f3e449]: 
+                  - text: Onboarding resume was easy after interruption
+            - generic [ref=f3e450]:
+              - generic [ref=f3e451]:
+                - generic [ref=f3e452]: "Interview #17 emerson100@demo.loopai.dev"
+                - generic [ref=f3e453]:
+                  - generic [ref=f3e454]: Excited
+                  - generic [ref=f3e455]: Jul 14, 2026 at 06:22 PM
+              - paragraph [ref=f3e456]: "Agent: What made you sign up for LoopAI? Respondent: Our old survey tool felt impersonal, so I wanted to try a chat-based approach. Agent: Was there anything confusing during setup? Respondent: Nothing major, just took a minute to find the share link. Agent: What almost made you give up before finishing onboarding? Respondent: Nothing really, it only took a few minutes."
+              - generic [ref=f3e457]:
+                - generic [ref=f3e458]:
+                  - generic [ref=f3e459]: 
+                  - text: Preference for chat-based approach (more personal)
+                - link " Minor confusion locating the share link" [ref=f3e460] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e461]: 
+                  - text: Minor confusion locating the share link
+                - link " Make the share link easier to find" [ref=f3e462] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e463]: 
+                  - text: Make the share link easier to find
+                - link " Onboarding was quick and didn't cause abandonment" [ref=f3e464] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e465]: 
+                  - text: Onboarding was quick and didn't cause abandonment
+            - generic [ref=f3e466]:
+              - generic [ref=f3e467]:
+                - generic [ref=f3e468]: "Interview #16 quinn658@demo.loopai.dev"
+                - generic [ref=f3e469]:
+                  - generic [ref=f3e470]: Positive
+                  - generic [ref=f3e471]: Jul 13, 2026 at 06:47 PM
+              - paragraph [ref=f3e472]: "Agent: What made you sign up for LoopAI? Respondent: We're a small team and didn't have time to manually interview every user, so this seemed efficient. Agent: Was there anything confusing during setup? Respondent: The slug in the share link looked random, so I double checked it wasn't broken. Agent: What almost made you give up before finishing onboarding? Respondent: I got pulled into a meeting halfway through creating my loop, but coming back was easy."
+              - generic [ref=f3e473]:
+                - generic [ref=f3e474]:
+                  - generic [ref=f3e475]: 
+                  - text: Wanted efficiency due to small team
+                - link " Confusion about share link slug" [ref=f3e476] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e477]: 
+                  - text: Confusion about share link slug
+                - link " Interrupted during onboarding but could resume" [ref=f3e478] [cursor=pointer]:
+                  - /url: "#feature_request_54"
+                  - generic [ref=f3e479]: 
+                  - text: Interrupted during onboarding but could resume
+                - link " Make share link slug clearer/human-readable" [ref=f3e480] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e481]: 
+                  - text: Make share link slug clearer/human-readable
+                - link " Ensure easy resume/autosave during onboarding" [ref=f3e482] [cursor=pointer]:
+                  - /url: "#feature_request_54"
+                  - generic [ref=f3e483]: 
+                  - text: Ensure easy resume/autosave during onboarding
+            - generic [ref=f3e484]:
+              - generic [ref=f3e485]:
+                - generic [ref=f3e486]: "Interview #15 sam497@demo.loopai.dev"
+                - generic [ref=f3e487]:
+                  - generic [ref=f3e488]: Frustrated
+                  - generic [ref=f3e489]: Jul 13, 2026 at 02:21 PM
+              - paragraph [ref=f3e490]: "Agent: What made you sign up for LoopAI? Respondent: A friend recommended it after complaining about feedback fatigue with our users. Agent: Was there anything confusing during setup? Respondent: The slug in the share link looked random, so I double checked it wasn't broken. Agent: What almost made you give up before finishing onboarding? Respondent: I was worried my users wouldn't bother chatting with a bot, but that wasn't an issue."
+              - generic [ref=f3e491]:
+                - generic [ref=f3e492]:
+                  - generic [ref=f3e493]: 
+                  - text: Referral / recommendation
+                - generic [ref=f3e494]:
+                  - generic [ref=f3e495]: 
+                  - text: Feedback fatigue with users
+                - link " Clarify share link (slug looked random)" [ref=f3e496] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e497]: 
+                  - text: Clarify share link (slug looked random)
+                - link " Concern users wouldn't interact with bot" [ref=f3e498] [cursor=pointer]:
+                  - /url: "#theme_76"
+                  - generic [ref=f3e499]: 
+                  - text: Concern users wouldn't interact with bot
+            - generic [ref=f3e500]:
+              - generic [ref=f3e501]:
+                - generic [ref=f3e502]: "Interview #14 taylor47@demo.loopai.dev"
+                - generic [ref=f3e503]:
+                  - generic [ref=f3e504]: Positive
+                  - generic [ref=f3e505]: Jul 12, 2026 at 08:58 PM
+              - paragraph [ref=f3e506]: "Agent: What made you sign up for LoopAI? Respondent: Our old survey tool felt impersonal, so I wanted to try a chat-based approach. Agent: Was there anything confusing during setup? Respondent: A little - I wasn't sure how many questions to add at first. Agent: What almost made you give up before finishing onboarding? Respondent: I got pulled into a meeting halfway through creating my loop, but coming back was easy."
+              - generic [ref=f3e507]:
+                - generic [ref=f3e508]:
+                  - generic [ref=f3e509]: 
+                  - text: Preference for chat-based, more personal survey experience
+                - link " Confusion about how many questions to add during setup" [ref=f3e510] [cursor=pointer]:
+                  - /url: "#theme_74"
+                  - generic [ref=f3e511]: 
+                  - text: Confusion about how many questions to add during setup
+                - link " Provide guidance or recommendations on number of questions" [ref=f3e512] [cursor=pointer]:
+                  - /url: "#theme_74"
+                  - generic [ref=f3e513]: 
+                  - text: Provide guidance or recommendations on number of questions
+                - link " Onboarding/session resume was easy after interruption" [ref=f3e514] [cursor=pointer]:
+                  - /url: "#feature_request_54"
+                  - generic [ref=f3e515]: 
+                  - text: Onboarding/session resume was easy after interruption
+            - generic [ref=f3e516]:
+              - generic [ref=f3e517]:
+                - generic [ref=f3e518]: "Interview #13 Anonymous respondent"
+                - generic [ref=f3e519]:
+                  - generic [ref=f3e520]: Neutral
+                  - generic [ref=f3e521]: Jul 12, 2026 at 10:44 AM
+              - paragraph [ref=f3e522]: "Agent: What made you sign up for LoopAI? Respondent: Our old survey tool felt impersonal, so I wanted to try a chat-based approach. Agent: Was there anything confusing during setup? Respondent: I had to look twice to find where to edit my questions after creating the loop. Agent: What almost made you give up before finishing onboarding? Respondent: Honestly nothing, it was quicker than I expected."
+              - generic [ref=f3e523]:
+                - generic [ref=f3e524]:
+                  - generic [ref=f3e525]: 
+                  - text: Preference for chat-based approach because old tool felt impersonal
+                - link " Make it easier to find where to edit questions after creating a loop" [ref=f3e526] [cursor=pointer]:
+                  - /url: "#theme_73"
+                  - generic [ref=f3e527]: 
+                  - text: Make it easier to find where to edit questions after creating a loop
+                - generic [ref=f3e528]:
+                  - generic [ref=f3e529]: 
+                  - text: Onboarding was quick and not a blocker
+            - generic [ref=f3e530]:
+              - generic [ref=f3e531]:
+                - generic [ref=f3e532]: "Interview #12 Anonymous respondent"
+                - generic [ref=f3e533]:
+                  - generic [ref=f3e534]: Neutral
+                  - generic [ref=f3e535]: Jul 11, 2026 at 09:14 PM
+              - paragraph [ref=f3e536]: "Agent: What made you sign up for LoopAI? Respondent: We're a small team and didn't have time to manually interview every user, so this seemed efficient. Agent: Was there anything confusing during setup? Respondent: Not really, it was pretty intuitive. Agent: What almost made you give up before finishing onboarding? Respondent: Nothing really, it only took a few minutes."
+              - generic [ref=f3e537]:
+                - link " Signed up for efficiency due to small team" [ref=f3e538] [cursor=pointer]:
+                  - /url: "#theme_75"
+                  - generic [ref=f3e539]: 
+                  - text: Signed up for efficiency due to small team
+                - link " Setup was intuitive" [ref=f3e540] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e541]: 
+                  - text: Setup was intuitive
+                - link " Onboarding quick and not discouraging" [ref=f3e542] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e543]: 
+                  - text: Onboarding quick and not discouraging
+            - generic [ref=f3e544]:
+              - generic [ref=f3e545]:
+                - generic [ref=f3e546]: "Interview #11 sam173@demo.loopai.dev"
+                - generic [ref=f3e547]:
+                  - generic [ref=f3e548]: Frustrated
+                  - generic [ref=f3e549]: Jul 10, 2026 at 10:36 AM
+              - paragraph [ref=f3e550]: "Agent: What made you sign up for LoopAI? Respondent: We needed a faster way to understand why trial users were dropping off. Agent: Was there anything confusing during setup? Respondent: I had to look twice to find where to edit my questions after creating the loop. Agent: What almost made you give up before finishing onboarding? Respondent: Honestly nothing, it was quicker than I expected."
+              - generic [ref=f3e551]:
+                - link " Need faster insight into trial user drop-offs" [ref=f3e552] [cursor=pointer]:
+                  - /url: "#theme_75"
+                  - generic [ref=f3e553]: 
+                  - text: Need faster insight into trial user drop-offs
+                - link " Difficulty finding where to edit questions after creating a loop" [ref=f3e554] [cursor=pointer]:
+                  - /url: "#theme_73"
+                  - generic [ref=f3e555]: 
+                  - text: Difficulty finding where to edit questions after creating a loop
+                - link " Make editing questions easier to find (improve visibility/navigation)" [ref=f3e556] [cursor=pointer]:
+                  - /url: "#theme_73"
+                  - generic [ref=f3e557]: 
+                  - text: Make editing questions easier to find (improve visibility/navigation)
+                - link " Onboarding was quick and not a barrier" [ref=f3e558] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e559]: 
+                  - text: Onboarding was quick and not a barrier
+            - generic [ref=f3e560]:
+              - generic [ref=f3e561]:
+                - generic [ref=f3e562]: "Interview #10 reese874@demo.loopai.dev"
+                - generic [ref=f3e563]:
+                  - generic [ref=f3e564]: Positive
+                  - generic [ref=f3e565]: Jul 09, 2026 at 09:07 AM
+              - paragraph [ref=f3e566]: "Agent: What made you sign up for LoopAI? Respondent: Our old survey tool felt impersonal, so I wanted to try a chat-based approach. Agent: Was there anything confusing during setup? Respondent: Not really, it was pretty intuitive. Agent: What almost made you give up before finishing onboarding? Respondent: Honestly nothing, it was quicker than I expected."
+              - generic [ref=f3e567]:
+                - link " Preference for chat-based, more personal surveys" [ref=f3e568] [cursor=pointer]:
+                  - /url: "#theme_71"
+                  - generic [ref=f3e569]: 
+                  - text: Preference for chat-based, more personal surveys
+                - link " Onboarding was intuitive" [ref=f3e570] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e571]: 
+                  - text: Onboarding was intuitive
+                - link " Onboarding was quick and didn’t cause drop-off" [ref=f3e572] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e573]: 
+                  - text: Onboarding was quick and didn’t cause drop-off
+            - generic [ref=f3e574]:
+              - generic [ref=f3e575]:
+                - generic [ref=f3e576]: "Interview #9 quinn789@demo.loopai.dev"
+                - generic [ref=f3e577]:
+                  - generic [ref=f3e578]: Excited
+                  - generic [ref=f3e579]: Jul 08, 2026 at 09:25 AM
+              - paragraph [ref=f3e580]: "Agent: What made you sign up for LoopAI? Respondent: I saw a demo online and wanted to see if it worked as well as it looked. Agent: Was there anything confusing during setup? Respondent: Nothing major, just took a minute to find the share link. Agent: What almost made you give up before finishing onboarding? Respondent: I was worried my users wouldn't bother chatting with a bot, but that wasn't an issue."
+              - generic [ref=f3e581]:
+                - generic [ref=f3e582]:
+                  - generic [ref=f3e583]: 
+                  - text: Signed up because demo looked impressive
+                - link " Setup mostly clear" [ref=f3e584] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e585]: 
+                  - text: Setup mostly clear
+                - link " Make the share link easier to find" [ref=f3e586] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e587]: 
+                  - text: Make the share link easier to find
+                - link " Worried users wouldn't engage with the bot" [ref=f3e588] [cursor=pointer]:
+                  - /url: "#theme_76"
+                  - generic [ref=f3e589]: 
+                  - text: Worried users wouldn't engage with the bot
+            - generic [ref=f3e590]:
+              - generic [ref=f3e591]:
+                - generic [ref=f3e592]: "Interview #8 harper143@demo.loopai.dev"
+                - generic [ref=f3e593]:
+                  - generic [ref=f3e594]: Excited
+                  - generic [ref=f3e595]: Jul 07, 2026 at 11:14 AM
+              - paragraph [ref=f3e596]: "Agent: What made you sign up for LoopAI? Respondent: Honestly I was just curious how an AI-led interview compares to a normal survey. Agent: Was there anything confusing during setup? Respondent: Nothing major, just took a minute to find the share link. Agent: What almost made you give up before finishing onboarding? Respondent: I was worried my users wouldn't bother chatting with a bot, but that wasn't an issue."
+              - generic [ref=f3e597]:
+                - generic [ref=f3e598]:
+                  - generic [ref=f3e599]: 
+                  - text: Curiosity about AI-led interview vs normal survey
+                - link " Minor usability issue locating the share link" [ref=f3e600] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e601]: 
+                  - text: Minor usability issue locating the share link
+                - link " Make the share link easier to find" [ref=f3e602] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e603]: 
+                  - text: Make the share link easier to find
+                - link " Concern users might not engage with a bot" [ref=f3e604] [cursor=pointer]:
+                  - /url: "#theme_76"
+                  - generic [ref=f3e605]: 
+                  - text: Concern users might not engage with a bot
+            - generic [ref=f3e606]:
+              - generic [ref=f3e607]:
+                - generic [ref=f3e608]: "Interview #7 Anonymous respondent"
+                - generic [ref=f3e609]:
+                  - generic [ref=f3e610]: Neutral
+                  - generic [ref=f3e611]: Jul 05, 2026 at 09:06 PM
+              - paragraph [ref=f3e612]: "Agent: What made you sign up for LoopAI? Respondent: I saw a demo online and wanted to see if it worked as well as it looked. Agent: Was there anything confusing during setup? Respondent: Not really, it was pretty intuitive. Agent: What almost made you give up before finishing onboarding? Respondent: I was worried my users wouldn't bother chatting with a bot, but that wasn't an issue."
+              - generic [ref=f3e613]:
+                - generic [ref=f3e614]:
+                  - generic [ref=f3e615]: 
+                  - text: Motivated by demo
+                - generic [ref=f3e616]:
+                  - generic [ref=f3e617]: 
+                  - text: Onboarding was intuitive
+                - link " Initial concern about user engagement" [ref=f3e618] [cursor=pointer]:
+                  - /url: "#theme_76"
+                  - generic [ref=f3e619]: 
+                  - text: Initial concern about user engagement
+            - generic [ref=f3e620]:
+              - generic [ref=f3e621]:
+                - generic [ref=f3e622]: "Interview #6 sam199@demo.loopai.dev"
+                - generic [ref=f3e623]:
+                  - generic [ref=f3e624]: Excited
+                  - generic [ref=f3e625]: Jul 05, 2026 at 06:11 PM
+              - paragraph [ref=f3e626]: "Agent: What made you sign up for LoopAI? Respondent: I saw a demo online and wanted to see if it worked as well as it looked. Agent: Was there anything confusing during setup? Respondent: A little - I wasn't sure how many questions to add at first. Agent: What almost made you give up before finishing onboarding? Respondent: I almost skipped it thinking it'd be complicated, but it wasn't."
+              - generic [ref=f3e627]:
+                - generic [ref=f3e628]:
+                  - generic [ref=f3e629]: 
+                  - text: Signed up after seeing a demo
+                - link " Confusion about how many questions to add during setup" [ref=f3e630] [cursor=pointer]:
+                  - /url: "#theme_74"
+                  - generic [ref=f3e631]: 
+                  - text: Confusion about how many questions to add during setup
+                - link " Need clearer guidance during onboarding about number of questions to add" [ref=f3e632] [cursor=pointer]:
+                  - /url: "#theme_74"
+                  - generic [ref=f3e633]: 
+                  - text: Need clearer guidance during onboarding about number of questions to add
+                - generic [ref=f3e634]:
+                  - generic [ref=f3e635]: 
+                  - text: Nearly abandoned onboarding thinking it would be complicated
+            - generic [ref=f3e636]:
+              - generic [ref=f3e637]:
+                - generic [ref=f3e638]: "Interview #5 dakota755@demo.loopai.dev"
+                - generic [ref=f3e639]:
+                  - generic [ref=f3e640]: Excited
+                  - generic [ref=f3e641]: Jul 05, 2026 at 09:58 AM
+              - paragraph [ref=f3e642]: "Agent: What made you sign up for LoopAI? Respondent: We're a small team and didn't have time to manually interview every user, so this seemed efficient. Agent: Was there anything confusing during setup? Respondent: Nothing major, just took a minute to find the share link. Agent: What almost made you give up before finishing onboarding? Respondent: I got pulled into a meeting halfway through creating my loop, but coming back was easy."
+              - generic [ref=f3e643]:
+                - link " Signed up for efficiency due to small team" [ref=f3e644] [cursor=pointer]:
+                  - /url: "#theme_75"
+                  - generic [ref=f3e645]: 
+                  - text: Signed up for efficiency due to small team
+                - link " Minor confusion finding share link during setup" [ref=f3e646] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e647]: 
+                  - text: Minor confusion finding share link during setup
+                - link " Make share link easier to find" [ref=f3e648] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e649]: 
+                  - text: Make share link easier to find
+                - link " Onboarding can be paused and resumed easily" [ref=f3e650] [cursor=pointer]:
+                  - /url: "#feature_request_54"
+                  - generic [ref=f3e651]: 
+                  - text: Onboarding can be paused and resumed easily
+            - generic [ref=f3e652]:
+              - generic [ref=f3e653]:
+                - generic [ref=f3e654]: "Interview #4 Anonymous respondent"
+                - generic [ref=f3e655]:
+                  - generic [ref=f3e656]: Excited
+                  - generic [ref=f3e657]: Jul 01, 2026 at 09:37 AM
+              - paragraph [ref=f3e658]: "Agent: What made you sign up for LoopAI? Respondent: I was tired of low response rates on Typeform surveys, so I wanted something more conversational. Agent: Was there anything confusing during setup? Respondent: The slug in the share link looked random, so I double checked it wasn't broken. Agent: What almost made you give up before finishing onboarding? Respondent: I got pulled into a meeting halfway through creating my loop, but coming back was easy."
+              - generic [ref=f3e659]:
+                - generic [ref=f3e660]:
+                  - generic [ref=f3e661]: 
+                  - text: Wanted a more conversational alternative to Typeform
+                - link " Share link slug appeared random and caused doubt" [ref=f3e662] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e663]: 
+                  - text: Share link slug appeared random and caused doubt
+                - link " Make share link slug clearer or customizable" [ref=f3e664] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e665]: 
+                  - text: Make share link slug clearer or customizable
+                - link " Easy to resume onboarding after interruption" [ref=f3e666] [cursor=pointer]:
+                  - /url: "#feature_request_54"
+                  - generic [ref=f3e667]: 
+                  - text: Easy to resume onboarding after interruption
+            - generic [ref=f3e668]:
+              - generic [ref=f3e669]:
+                - generic [ref=f3e670]: "Interview #3 morgan391@demo.loopai.dev"
+                - generic [ref=f3e671]:
+                  - generic [ref=f3e672]: Frustrated
+                  - generic [ref=f3e673]: Jun 29, 2026 at 10:09 AM
+              - paragraph [ref=f3e674]: "Agent: What made you sign up for LoopAI? Respondent: We needed a faster way to understand why trial users were dropping off. Agent: Was there anything confusing during setup? Respondent: The slug in the share link looked random, so I double checked it wasn't broken. Agent: What almost made you give up before finishing onboarding? Respondent: I was worried my users wouldn't bother chatting with a bot, but that wasn't an issue."
+              - generic [ref=f3e675]:
+                - link " Understand why trial users were dropping off" [ref=f3e676] [cursor=pointer]:
+                  - /url: "#theme_75"
+                  - generic [ref=f3e677]: 
+                  - text: Understand why trial users were dropping off
+                - link " Make share link slug clearer/readable" [ref=f3e678] [cursor=pointer]:
+                  - /url: "#theme_72"
+                  - generic [ref=f3e679]: 
+                  - text: Make share link slug clearer/readable
+                - link " Worry users wouldn't interact with the bot" [ref=f3e680] [cursor=pointer]:
+                  - /url: "#theme_76"
+                  - generic [ref=f3e681]: 
+                  - text: Worry users wouldn't interact with the bot
+            - generic [ref=f3e682]:
+              - generic [ref=f3e683]:
+                - generic [ref=f3e684]: "Interview #2 reese864@demo.loopai.dev"
+                - generic [ref=f3e685]:
+                  - generic [ref=f3e686]: Positive
+                  - generic [ref=f3e687]: Jun 28, 2026 at 06:25 PM
+              - paragraph [ref=f3e688]: "Agent: What made you sign up for LoopAI? Respondent: We're a small team and didn't have time to manually interview every user, so this seemed efficient. Agent: Was there anything confusing during setup? Respondent: Not really, it was pretty intuitive. Agent: What almost made you give up before finishing onboarding? Respondent: Nothing really, it only took a few minutes."
+              - generic [ref=f3e689]:
+                - link " Needed efficiency / save time vs manual interviews" [ref=f3e690] [cursor=pointer]:
+                  - /url: "#theme_75"
+                  - generic [ref=f3e691]: 
+                  - text: Needed efficiency / save time vs manual interviews
+                - link " Setup was intuitive" [ref=f3e692] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e693]: 
+                  - text: Setup was intuitive
+                - link " Onboarding was quick and low-friction" [ref=f3e694] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e695]: 
+                  - text: Onboarding was quick and low-friction
+            - generic [ref=f3e696]:
+              - generic [ref=f3e697]:
+                - generic [ref=f3e698]: "Interview #1 quinn80@demo.loopai.dev"
+                - generic [ref=f3e699]:
+                  - generic [ref=f3e700]: Excited
+                  - generic [ref=f3e701]: Jun 27, 2026 at 08:00 PM
+              - paragraph [ref=f3e702]: "Agent: What made you sign up for LoopAI? Respondent: A friend recommended it after complaining about feedback fatigue with our users. Agent: Was there anything confusing during setup? Respondent: Nothing major, just took a minute to find the share link. Agent: What almost made you give up before finishing onboarding? Respondent: Honestly nothing, it was quicker than I expected."
+              - generic [ref=f3e703]:
+                - generic [ref=f3e704]:
+                  - generic [ref=f3e705]: 
+                  - text: Referral recommendation
+                - generic [ref=f3e706]:
+                  - generic [ref=f3e707]: 
+                  - text: Feedback fatigue problem
+                - link " Make share link easier to find" [ref=f3e708] [cursor=pointer]:
+                  - /url: "#feature_request_51"
+                  - generic [ref=f3e709]: 
+                  - text: Make share link easier to find
+                - link " Onboarding was quick and not discouraging" [ref=f3e710] [cursor=pointer]:
+                  - /url: "#theme_70"
+                  - generic [ref=f3e711]: 
+                  - text: Onboarding was quick and not discouraging

@@ -121,3 +121,40 @@ $color-on-primary: #ffffff;
   --color-accent: #{$color-accent};
   --color-on-primary: #{$color-on-primary};
 }
+
+// Dark theme, keyed off Bootstrap 5.3's own [data-bs-theme] attribute.
+[data-bs-theme="dark"] {
+  --color-background: #14161b;
+  --color-background-muted: #1a1d23;
+  --color-surface: #1c1f26;
+  --color-surface-subtle: #21242b;
+  --color-surface-hover: #282c34;
+
+  --color-text: #e4e4e3;
+  --color-text-strong: #f7f7f6;
+  --color-text-muted: #9b9b98;
+  --color-text-control: #e4e4e3;
+
+  --color-border: #33373f;
+  --color-border-subtle: #2a2e35;
+  --color-border-strong: #454951;
+  --color-border-dashed: #454951;
+  --color-border-input: #565a62;
+
+  --color-primary: #45494f;
+  --color-primary-ink: #45494f;
+  --color-primary-hover: #4d525a;
+  --color-primary-active: #383c42;
+
+  --color-focus: rgba(228, 228, 227, .3);
+  --color-disabled: #33373f;
+  --color-disabled-text: #6b6e74;
+
+  --color-success: #1edd88;
+  --color-warning: #e67e22;
+  --color-danger: #ff5c5f;
+  --color-info: #ffc65a;
+
+  --color-accent-subtle: #24283a;
+  --color-accent: #7b74f0;
+}

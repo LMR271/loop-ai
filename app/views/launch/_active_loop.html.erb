@@ -46,7 +46,7 @@
               <p class="text-muted mb-0">Copy the link to send respondents to this interview.</p>
             </div>
             <div class="respondent-link-controls deploy-share-card__controls">
-              <input id="active-respondent-link-<%= loop.id %>" type="text" class="form-control bg-white respondent-link-controls__url" readonly
+              <input id="active-respondent-link-<%= loop.id %>" type="text" class="form-control respondent-link-controls__url" readonly
                      value="<%= respondent_url(loop.slug) %>" aria-label="Public link for <%= loop.name %>"
                      data-clipboard-target="source">
               <button class="btn btn-outline-secondary respondent-link-controls__button" type="button" data-action="clipboard#copy"
@@ -85,7 +85,7 @@
               <p class="text-muted mb-0">Paste this where you want the interview to appear on the page.</p>
             </div>
             <div class="respondent-link-controls">
-              <textarea class="form-control bg-white respondent-link-controls__url" readonly rows="2"
+              <textarea class="form-control respondent-link-controls__url" readonly rows="2"
                         data-clipboard-target="source"><script src="<%= widget_url %>" data-loop-slug="<%= loop.slug %>" data-mode="inline"></script></textarea>
               <button class="btn btn-outline-secondary respondent-link-controls__button" type="button" data-action="clipboard#copy"
                       data-clipboard-target="button" aria-label="Copy link" title="Copy"
@@ -102,7 +102,7 @@
               <p class="text-muted mb-0">Adds a floating button (bottom-right) to any page.</p>
             </div>
             <div class="respondent-link-controls">
-              <textarea class="form-control bg-white respondent-link-controls__url" readonly rows="2"
+              <textarea class="form-control respondent-link-controls__url" readonly rows="2"
                         data-clipboard-target="source"><script src="<%= widget_url %>" data-loop-slug="<%= loop.slug %>"></script></textarea>
               <button class="btn btn-outline-secondary respondent-link-controls__button" type="button" data-action="clipboard#copy"
                       data-clipboard-target="button" aria-label="Copy link" title="Copy"
@@ -119,7 +119,7 @@
               <p class="text-muted mb-0">Paste this HTML into a newsletter template.</p>
             </div>
             <div class="respondent-link-controls">
-              <textarea class="form-control bg-white respondent-link-controls__url" readonly rows="3"
+              <textarea class="form-control respondent-link-controls__url" readonly rows="3"
                         data-clipboard-target="source"><a href="<%= respondent_url(loop.slug) %>" style="display:inline-block;padding:12px 24px;background:#0D6EFD;color:#fff;text-decoration:none;border-radius:6px;font-family:sans-serif;">Give Feedback</a></textarea>
               <button class="btn btn-outline-secondary respondent-link-controls__button" type="button" data-action="clipboard#copy"
                       data-clipboard-target="button" aria-label="Copy link" title="Copy"

@@ -33,12 +33,12 @@
   </div>
 
   <% if @loop.active? %>
-    <div class="card border-0 bg-light mb-4" data-controller="clipboard">
+    <div class="card border-0 card-muted mb-4" data-controller="clipboard">
       <div class="card-body">
         <label for="respondent-link" class="form-label fw-semibold mb-1">Respondent link</label>
         <p class="text-muted small mb-2">Share this link so people can talk to your agent.</p>
         <div class="respondent-link-controls">
-          <input id="respondent-link" type="text" class="form-control bg-white respondent-link-controls__url" readonly
+          <input id="respondent-link" type="text" class="form-control respondent-link-controls__url" readonly
                  value="<%= respondent_url(@loop.slug) %>"
                  data-clipboard-target="source">
           <button class="btn btn-outline-secondary respondent-link-controls__button" type="button" data-action="clipboard#copy"

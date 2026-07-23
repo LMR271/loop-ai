@@ -1,0 +1,56 @@
+- generic [ref=f2e2]:
+  - generic [ref=f2e3]:
+    - link "Loop AI home" [ref=f2e4] [cursor=pointer]:
+      - /url: /dashboard
+      - img "LoopAI" [ref=f2e5]
+    - complementary [ref=f2e6]:
+      - navigation "Primary navigation" [ref=f2e7]:
+        - link "Dashboard" [ref=f2e8] [cursor=pointer]:
+          - /url: /dashboard
+          - generic [ref=f2e9]: 
+        - link "Create" [ref=f2e11] [cursor=pointer]:
+          - /url: /loops/new
+          - generic [ref=f2e12]: +
+        - link "Launch" [ref=f2e14] [cursor=pointer]:
+          - /url: /deploy
+          - generic [ref=f2e15]: 
+        - link "Analyze" [ref=f2e17] [cursor=pointer]:
+          - /url: /analyze
+          - generic [ref=f2e18]: 
+  - generic [ref=f2e20]:
+    - navigation "Workspace actions" [ref=f2e21]:
+      - generic [ref=f2e22]:
+        - generic [ref=f2e23]:
+          - generic [ref=f2e24]: 
+          - searchbox "Search loops" [ref=f2e25]
+        - button "Notifications" [ref=f2e27] [cursor=pointer]:
+          - generic [ref=f2e28]: 
+        - link "New Loop" [ref=f2e29] [cursor=pointer]:
+          - /url: /loops/new
+          - generic [ref=f2e30]: +
+        - generic [ref=f2e32]:
+          - button "Open account menu" [ref=f2e33] [cursor=pointer]:
+            - generic [ref=f2e34]: 
+          - text:    
+    - main [ref=f2e35]:
+      - generic [ref=f2e36]:
+        - heading "Analyze" [level=1] [ref=f2e37]
+        - tablist [ref=f2e38]:
+          - tab "All loops" [ref=f2e39] [cursor=pointer]
+          - tab "Per-loop overview" [selected] [ref=f2e40] [cursor=pointer]
+        - tabpanel [ref=f2e42]:
+          - generic [ref=f2e43]:
+            - 'heading "Overview of #Gym Members Who Cancelled in June" [level=2] [ref=f2e44]'
+            - combobox [ref=f2e46]:
+              - option "Onboarding Pulse"
+              - option "Pricing Page Feedback"
+              - option "Churned Users Check-in"
+              - option "Feature Request Roundup"
+              - option "Support Experience Review"
+              - option "Gym Members Who Cancelled in June" [selected]
+          - region [ref=f2e47]:
+            - generic [ref=f2e48]: 
+            - heading "No feedback yet" [level=2] [ref=f2e50]
+            - paragraph [ref=f2e51]: Share your loop's link to start collecting responses.
+            - link "Go to Deploy" [ref=f2e52] [cursor=pointer]:
+              - /url: /deploy

@@ -1,0 +1,141 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e3]:
+    - text: You are already signed in.
+    - button "Close" [ref=e4] [cursor=pointer]
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - link "Loop AI home" [ref=e7] [cursor=pointer]:
+        - /url: /dashboard
+        - img "LoopAI" [ref=e8]
+      - complementary [ref=e9]:
+        - navigation "Primary navigation" [ref=e10]:
+          - link "Dashboard" [ref=e11] [cursor=pointer]:
+            - /url: /dashboard
+            - generic [ref=e12]: 
+          - link "Create" [ref=e14] [cursor=pointer]:
+            - /url: /loops/new
+            - generic [ref=e15]: +
+          - link "Launch" [ref=e17] [cursor=pointer]:
+            - /url: /deploy
+            - generic [ref=e18]: 
+          - link "Analyze" [ref=e20] [cursor=pointer]:
+            - /url: /analyze
+            - generic [ref=e21]: 
+    - generic [ref=e23]:
+      - navigation "Workspace actions" [ref=e24]:
+        - generic [ref=e25]:
+          - generic [ref=e26]:
+            - generic [ref=e27]: 
+            - searchbox "Search loops" [ref=e28]
+          - button "Notifications" [ref=e30] [cursor=pointer]:
+            - generic [ref=e31]: 
+          - link "New Loop" [ref=e32] [cursor=pointer]:
+            - /url: /loops/new
+            - generic [ref=e33]: +
+          - generic [ref=e35]:
+            - button "Open account menu" [ref=e36] [cursor=pointer]:
+              - generic [ref=e37]: 
+            - text:    
+      - main [ref=e38]:
+        - generic [ref=e39]:
+          - generic [ref=e41]:
+            - paragraph [ref=e42]: Feedback loops
+            - heading "Your loops" [level=1] [ref=e43]
+            - paragraph [ref=e44]: Review feedback activity and remove loops you no longer need.
+          - region "Your loops" [ref=e45]:
+            - article [ref=e46]:
+              - generic [ref=e47]:
+                - generic [ref=e48]:
+                  - heading "Gym Members Who Cancelled in June" [level=2] [ref=e49]
+                  - generic [ref=e50]: active
+                - paragraph [ref=e51]: 23 members cancelled their membership in June, and we want to understand why before we lose more in July. We're calling a sample of them directly to hear the real reason, not just whatever they picked from the cancellation dropdown.
+                - paragraph [ref=e52]: 0 responses · Created 1 day ago
+              - generic [ref=e53]:
+                - link "Analyze Gym Members Who Cancelled in June" [ref=e54] [cursor=pointer]:
+                  - /url: /analyze/aSRJadH43RxiPX92iWJ7SLeb
+                  - generic [ref=e55]: 
+                - link "Edit Gym Members Who Cancelled in June" [ref=e56] [cursor=pointer]:
+                  - /url: /loops/26/edit
+                  - generic [ref=e57]: 
+                - button "Delete Gym Members Who Cancelled in June" [ref=e59] [cursor=pointer]:
+                  - generic [ref=e60]: 
+            - article [ref=e61]:
+              - generic [ref=e62]:
+                - generic [ref=e63]:
+                  - heading "Support Experience Review" [level=2] [ref=e64]
+                  - generic [ref=e65]: closed
+                - paragraph [ref=e66]: Checking in after a support ticket to see how it went.
+                - paragraph [ref=e67]: 17 responses · Created 1 day ago
+              - generic [ref=e68]:
+                - link "Analyze Support Experience Review" [ref=e69] [cursor=pointer]:
+                  - /url: /analyze/yEkusW9Sk5sCgUKvKsEQratf
+                  - generic [ref=e70]: 
+                - link "Edit Support Experience Review" [ref=e71] [cursor=pointer]:
+                  - /url: /loops/25/edit
+                  - generic [ref=e72]: 
+                - button "Delete Support Experience Review" [ref=e74] [cursor=pointer]:
+                  - generic [ref=e75]: 
+            - article [ref=e76]:
+              - generic [ref=e77]:
+                - generic [ref=e78]:
+                  - heading "Feature Request Roundup" [level=2] [ref=e79]
+                  - generic [ref=e80]: closed
+                - paragraph [ref=e81]: Understanding what to build next based on real user requests.
+                - paragraph [ref=e82]: 21 responses · Created 1 day ago
+              - generic [ref=e83]:
+                - link "Analyze Feature Request Roundup" [ref=e84] [cursor=pointer]:
+                  - /url: /analyze/7cNYCNrr4MVeC3tX8Zraa8Kc
+                  - generic [ref=e85]: 
+                - link "Edit Feature Request Roundup" [ref=e86] [cursor=pointer]:
+                  - /url: /loops/24/edit
+                  - generic [ref=e87]: 
+                - button "Delete Feature Request Roundup" [ref=e89] [cursor=pointer]:
+                  - generic [ref=e90]: 
+            - article [ref=e91]:
+              - generic [ref=e92]:
+                - generic [ref=e93]:
+                  - heading "Churned Users Check-in" [level=2] [ref=e94]
+                  - generic [ref=e95]: draft
+                - paragraph [ref=e96]: Learning why customers cancel their subscription.
+                - paragraph [ref=e97]: 0 responses · Created 1 day ago
+              - generic [ref=e98]:
+                - link "Analyze Churned Users Check-in" [ref=e99] [cursor=pointer]:
+                  - /url: /analyze/6qCN2GUwvSUmVs2PcSxvjCf2
+                  - generic [ref=e100]: 
+                - link "Edit Churned Users Check-in" [ref=e101] [cursor=pointer]:
+                  - /url: /loops/23/edit
+                  - generic [ref=e102]: 
+                - button "Delete Churned Users Check-in" [ref=e104] [cursor=pointer]:
+                  - generic [ref=e105]: 
+            - article [ref=e106]:
+              - generic [ref=e107]:
+                - generic [ref=e108]:
+                  - heading "Pricing Page Feedback" [level=2] [ref=e109]
+                  - generic [ref=e110]: closed
+                - paragraph [ref=e111]: Understanding hesitation around the new pricing tiers.
+                - paragraph [ref=e112]: 22 responses · Created 1 day ago
+              - generic [ref=e113]:
+                - link "Analyze Pricing Page Feedback" [ref=e114] [cursor=pointer]:
+                  - /url: /analyze/yoSJnNf7LNKPn75TbPWFh3ge
+                  - generic [ref=e115]: 
+                - link "Edit Pricing Page Feedback" [ref=e116] [cursor=pointer]:
+                  - /url: /loops/22/edit
+                  - generic [ref=e117]: 
+                - button "Delete Pricing Page Feedback" [ref=e119] [cursor=pointer]:
+                  - generic [ref=e120]: 
+            - article [ref=e121]:
+              - generic [ref=e122]:
+                - generic [ref=e123]:
+                  - heading "Onboarding Pulse" [level=2] [ref=e124]
+                  - generic [ref=e125]: closed
+                - paragraph [ref=e126]: How new users feel in their first week.
+                - paragraph [ref=e127]: 33 responses · Created 1 day ago
+              - generic [ref=e128]:
+                - link "Analyze Onboarding Pulse" [ref=e129] [cursor=pointer]:
+                  - /url: /analyze/wAe98BTsDjmP6NxcBXiJ9Hzo
+                  - generic [ref=e130]: 
+                - link "Edit Onboarding Pulse" [ref=e131] [cursor=pointer]:
+                  - /url: /loops/21/edit
+                  - generic [ref=e132]: 
+                - button "Delete Onboarding Pulse" [ref=e134] [cursor=pointer]:
+                  - generic [ref=e135]: 

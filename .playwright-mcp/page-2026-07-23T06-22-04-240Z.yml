@@ -1,0 +1,124 @@
+- generic [ref=f3e2]:
+  - generic [ref=f3e3]:
+    - link "Loop AI home" [ref=f3e4] [cursor=pointer]:
+      - /url: /dashboard
+      - img "LoopAI" [ref=f3e5]
+    - complementary [ref=f3e6]:
+      - navigation "Primary navigation" [ref=f3e7]:
+        - link "Dashboard" [ref=f3e8] [cursor=pointer]:
+          - /url: /dashboard
+          - generic [ref=f3e9]: 
+        - link "Create" [ref=f3e11] [cursor=pointer]:
+          - /url: /loops/new
+          - generic [ref=f3e12]: +
+        - link "Launch" [ref=f3e14] [cursor=pointer]:
+          - /url: /deploy
+          - generic [ref=f3e15]: 
+        - link "Analyze" [ref=f3e17] [cursor=pointer]:
+          - /url: /analyze
+          - generic [ref=f3e18]: 
+  - generic [ref=f3e20]:
+    - navigation "Workspace actions" [ref=f3e21]:
+      - generic [ref=f3e22]:
+        - generic [ref=f3e23]:
+          - generic [ref=f3e24]: 
+          - searchbox "Search loops" [ref=f3e25]
+        - button "Notifications" [ref=f3e27] [cursor=pointer]:
+          - generic [ref=f3e28]: 
+        - link "New Loop" [ref=f3e29] [cursor=pointer]:
+          - /url: /loops/new
+          - generic [ref=f3e30]: +
+        - generic [ref=f3e32]:
+          - button "Open account menu" [ref=f3e33] [cursor=pointer]:
+            - generic [ref=f3e34]: 
+          - text:    
+    - main [ref=f3e35]:
+      - generic [ref=f3e36]:
+        - heading "Analyze" [level=1] [ref=f3e37]
+        - tablist [ref=f3e38]:
+          - tab "All loops" [active] [selected] [ref=f3e39] [cursor=pointer]
+          - tab "Per-loop overview" [ref=f3e40] [cursor=pointer]
+        - generic [ref=f3e41]:
+          - tabpanel [ref=f3e53]:
+            - generic [ref=f3e54]:
+              - generic [ref=f3e56]:
+                - generic [ref=f3e57]: Date range
+                - combobox "Date range" [ref=f3e58]:
+                  - option "Last 24 hours"
+                  - option "Last 7 days"
+                  - option "Last 14 days"
+                  - option "Last 30 days" [selected]
+                  - option "Custom range"
+              - heading "Feedback per loop (last 30 days)" [level=3] [ref=f3e60]
+              - generic [ref=f3e63]:
+                - generic [ref=f3e64]:
+                  - generic [ref=f3e65]: Status
+                  - combobox "Status" [ref=f3e66]:
+                    - option "All statuses" [selected]
+                    - option "Draft"
+                    - option "Active"
+                    - option "Closed"
+                - generic [ref=f3e67]:
+                  - generic [ref=f3e68]: Sort by
+                  - combobox "Sort by" [ref=f3e69]:
+                    - option "Newest first" [selected]
+                    - option "Name (A-Z)"
+                    - option "Most feedback first"
+            - table [ref=f3e72]:
+              - rowgroup [ref=f3e73]:
+                - row [ref=f3e74]:
+                  - columnheader "Name" [ref=f3e75]
+                  - columnheader "Status" [ref=f3e76]
+                  - columnheader "Created" [ref=f3e77]
+                  - columnheader "Feedback" [ref=f3e78]
+                  - columnheader "Description" [ref=f3e79]
+              - rowgroup [ref=f3e80]:
+                - row [ref=f3e81]:
+                  - cell [ref=f3e82]:
+                    - link "Gym Members Who Cancelled in June" [ref=f3e83] [cursor=pointer]:
+                      - /url: /analyze/aSRJadH43RxiPX92iWJ7SLeb?tab=per_loop
+                  - cell "active" [ref=f3e84]
+                  - cell "Jul 21, 2026" [ref=f3e86]
+                  - cell "0" [ref=f3e87]
+                  - cell "23 members cancelled their membership in June, and we want to understand why ..." [ref=f3e88]
+                - row [ref=f3e89]:
+                  - cell [ref=f3e90]:
+                    - link "Support Experience Review" [ref=f3e91] [cursor=pointer]:
+                      - /url: /analyze/yEkusW9Sk5sCgUKvKsEQratf?tab=per_loop
+                  - cell "closed" [ref=f3e92]
+                  - cell "Jul 21, 2026" [ref=f3e94]
+                  - cell "17" [ref=f3e95]
+                  - cell "Checking in after a support ticket to see how it went." [ref=f3e96]
+                - row [ref=f3e97]:
+                  - cell [ref=f3e98]:
+                    - link "Feature Request Roundup" [ref=f3e99] [cursor=pointer]:
+                      - /url: /analyze/7cNYCNrr4MVeC3tX8Zraa8Kc?tab=per_loop
+                  - cell "closed" [ref=f3e100]
+                  - cell "Jul 21, 2026" [ref=f3e102]
+                  - cell "21" [ref=f3e103]
+                  - cell "Understanding what to build next based on real user requests." [ref=f3e104]
+                - row [ref=f3e105]:
+                  - cell [ref=f3e106]:
+                    - link "Churned Users Check-in" [ref=f3e107] [cursor=pointer]:
+                      - /url: /analyze/6qCN2GUwvSUmVs2PcSxvjCf2?tab=per_loop
+                  - cell "draft" [ref=f3e108]
+                  - cell "Jul 21, 2026" [ref=f3e110]
+                  - cell "0" [ref=f3e111]
+                  - cell "Learning why customers cancel their subscription." [ref=f3e112]
+                - row [ref=f3e113]:
+                  - cell [ref=f3e114]:
+                    - link "Pricing Page Feedback" [ref=f3e115] [cursor=pointer]:
+                      - /url: /analyze/yoSJnNf7LNKPn75TbPWFh3ge?tab=per_loop
+                  - cell "closed" [ref=f3e116]
+                  - cell "Jul 21, 2026" [ref=f3e118]
+                  - cell "22" [ref=f3e119]
+                  - cell "Understanding hesitation around the new pricing tiers." [ref=f3e120]
+                - row [ref=f3e121]:
+                  - cell [ref=f3e122]:
+                    - link "Onboarding Pulse" [ref=f3e123] [cursor=pointer]:
+                      - /url: /analyze/wAe98BTsDjmP6NxcBXiJ9Hzo?tab=per_loop
+                  - cell "closed" [ref=f3e124]
+                  - cell "Jul 21, 2026" [ref=f3e126]
+                  - cell "33" [ref=f3e127]
+                  - cell "How new users feel in their first week." [ref=f3e128]
+          - text: 

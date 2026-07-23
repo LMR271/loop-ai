@@ -18,6 +18,16 @@ module AnalyzeHelper
     tag.span(label, class: "badge rounded-pill #{classes}")
   end
 
+  LOOP_STATUS_BADGES = {
+    "draft" => "bg-secondary-subtle text-secondary-emphasis",
+    "active" => "bg-success-subtle text-success-emphasis",
+    "closed" => "bg-dark-subtle text-dark-emphasis"
+  }.freeze
+
+  def loop_status_badge(status)
+    tag.span(status.capitalize, class: "badge rounded-pill #{LOOP_STATUS_BADGES.fetch(status)}")
+  end
+
   def range_label(range, from, to)
     case range
     when "24h" then "last 24 hours"

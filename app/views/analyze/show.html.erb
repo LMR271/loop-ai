@@ -97,7 +97,7 @@
         <% else %>
           <div class="analysis-card p-0">
             <div class="table-responsive">
-              <table class="table align-middle mb-0">
+              <table class="table align-middle mb-0 analysis-loops-table">
                 <thead>
                   <tr>
                     <th>Name</th>
@@ -110,10 +110,10 @@
                 <tbody>
                   <% @loops_table.each do |loop_record| %>
                     <tr>
-                      <td><%= link_to loop_record.name, analyze_path(loop_record.slug, tab: "per_loop") %></td>
-                      <td><span class="badge text-bg-light"><%= loop_record.status %></span></td>
-                      <td><%= loop_record.created_at.strftime("%b %d, %Y") %></td>
-                      <td><%= loop_record.feedbacks.size %></td>
+                      <td><%= link_to loop_record.name, analyze_path(loop_record.slug, tab: "per_loop"), class: "fw-semibold text-decoration-none" %></td>
+                      <td><%= loop_status_badge(loop_record.status) %></td>
+                      <td class="text-muted"><%= loop_record.created_at.strftime("%b %d, %Y") %></td>
+                      <td class="fw-semibold"><%= loop_record.feedbacks.size %></td>
                       <td class="text-muted small"><%= truncate(loop_record.description, length: 80) %></td>
                     </tr>
                   <% end %>

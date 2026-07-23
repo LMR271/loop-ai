@@ -46,16 +46,22 @@
 .analysis-tabs .nav-link {
   background: none;
   border: none;
-  border-bottom: 2px solid transparent;
-  border-radius: $radius-md;
+  border-radius: $radius-pill;
   color: var(--color-text-muted);
-  margin-right: $space-5;
-  padding: $space-3 $space-1;
+  margin-right: $space-2;
+  padding: $space-2 $space-4;
+  transition: background-color $transition-base $transition-easing, color $transition-base $transition-easing;
+}
+
+.analysis-tabs .nav-link:hover {
+  background: var(--color-surface-hover);
+  border: none;
 }
 
 .analysis-tabs .nav-link.active {
-  border-bottom-color: var(--color-text);
-  color: var(--color-text);
+  background: var(--color-surface-subtle);
+  border: none;
+  color: var(--color-text-strong);
   font-weight: 600;
 }
 
@@ -110,4 +116,31 @@
 
 .analysis-section-empty i {
   font-size: $font-size-xl;
+}
+
+.analysis-loops-table thead th {
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: $font-size-xs;
+  font-weight: 600;
+  letter-spacing: .03em;
+  padding: $space-4 $space-5;
+  text-transform: uppercase;
+}
+
+.analysis-loops-table tbody td {
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding: $space-3 $space-5;
+}
+
+.analysis-loops-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.analysis-loops-table tbody tr {
+  transition: background-color $transition-fast $transition-easing;
+}
+
+.analysis-loops-table tbody tr:hover {
+  background: var(--color-surface-hover);
 }
